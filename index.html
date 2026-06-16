@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexAI - AI 求职作品集 | 选择一个 AI 岗位，7 天做出你的第一份求职作品集</title>
+<style>
+/* ===== Reset & Base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --border: rgba(0,0,0,0.06);
+  --border-light: rgba(0,0,0,0.1);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --accent: #6366f1;
+  --accent-light: #4f46e5;
+  --accent-glow: rgba(99,102,241,0.2);
+  --cyan: #0891b2;
+  --cyan-glow: rgba(6,182,212,0.15);
+  --green: #059669;
+  --green-glow: rgba(16,185,129,0.15);
+  --amber: #d97706;
+  --amber-glow: rgba(245,158,11,0.15);
+  --rose: #e11d48;
+  --rose-glow: rgba(244,63,94,0.15);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== Animated Background ===== */
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,0,0,0.3) 30%, transparent 70%);
+}
+.bg-orb {
+  position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0;
+}
+.bg-orb--1 { width: 600px; height: 600px; background: rgba(99,102,241,0.08); top: -200px; right: -150px; }
+.bg-orb--2 { width: 500px; height: 500px; background: rgba(6,182,212,0.06); bottom: 20%; left: -200px; }
+.bg-orb--3 { width: 400px; height: 400px; background: rgba(16,185,129,0.05); top: 60%; right: 20%; }
+
+/* ===== Layout ===== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.section { padding: 100px 0; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-label {
+  display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent-light); background: rgba(99,102,241,0.1); padding: 6px 16px; border-radius: 100px; margin-bottom: 16px;
+}
+.section-title { font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 16px; }
+.section-subtitle { font-size: 17px; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+/* ===== Navbar ===== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+/* unused: nav-logo-icon removed — logo is now an image */
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: var(--transition); }
+.nav-links a:hover { color: var(--text-primary); }
+.nav-cta {
+  padding: 10px 24px; background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%);
+  color: #fff; border: none; border-radius: 100px; font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 0 #3730a3, 0 6px 16px rgba(99,102,241,0.3);
+  position: relative; top: 0;
+}
+.nav-cta:hover {
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 #3730a3, 0 4px 10px rgba(99,102,241,0.25);
+}
+.nav-cta:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #3730a3, 0 2px 6px rgba(99,102,241,0.2);
+}
+
+/* ===== Hero ===== */
+.hero { padding: 160px 0 100px; position: relative; z-index: 1; }
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500;
+  color: var(--cyan); background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.15);
+  padding: 6px 16px; border-radius: 100px; margin-bottom: 24px;
+}
+.hero-badge-dot { width: 7px; height: 7px; background: var(--cyan); border-radius: 50%; animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.hero-title { font-size: clamp(36px, 5.5vw, 56px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 20px; }
+.hero-title .highlight { background: linear-gradient(135deg, var(--accent-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-desc { font-size: 18px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 36px; max-width: 480px; }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 100px;
+  font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: var(--transition); text-decoration: none;
+}
+.btn-primary {
+  background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%); color: #fff;
+  box-shadow: 0 4px 0 #3730a3, 0 8px 24px rgba(99,102,241,0.35);
+  position: relative; top: 0;
+  transition: all 0.15s ease;
+}
+.btn-primary:hover {
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 #3730a3, 0 6px 16px rgba(99,102,241,0.25);
+}
+.btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #3730a3, 0 2px 8px rgba(99,102,241,0.2);
+}
+.btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-light); }
+.btn-outline:hover { border-color: rgba(0,0,0,0.25); background: var(--bg-secondary); }
+.btn-sm { padding: 8px 18px; font-size: 13px; }
+
+.hero-visual {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.hero-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl);
+  padding: 32px; width: 100%; max-width: 420px;
+  box-shadow: var(--shadow-xl);
+}
+.hero-card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: var(--accent-light); margin-bottom: 12px; text-transform: uppercase; }
+.hero-card-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+.radar-mini { display: flex; align-items: center; justify-content: center; padding: 8px 0 20px; }
+.radar-mini svg { width: 180px; height: 180px; }
+.hero-card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat-item { background: var(--bg-secondary); border-radius: var(--radius); padding: 14px; text-align: center; }
+.stat-value { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.stat-value.accent { color: var(--accent-light); }
+.stat-value.cyan { color: var(--cyan); }
+.stat-value.green { color: var(--green); }
+.stat-value.amber { color: var(--amber); }
+
+/* Floating badges */
+.float-badge {
+  position: absolute; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; gap: 7px; box-shadow: var(--shadow-lg);
+  animation: float 4s ease-in-out infinite;
+}
+.float-badge--1 { top: -10px; right: -10px; animation-delay: 0s; }
+.float-badge--2 { bottom: 10px; left: -30px; animation-delay: 1.5s; }
+.float-badge--3 { top: 50%; right: -40px; animation-delay: 3s; }
+.float-badge-dot { width: 8px; height: 8px; border-radius: 50%; }
+.float-badge-dot.green { background: var(--green); }
+.float-badge-dot.amber { background: var(--amber); }
+.float-badge-dot.accent { background: var(--accent-light); }
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ===== Level System ===== */
+.levels-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.level-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 28px 20px; text-align: center; transition: var(--transition); position: relative; overflow: hidden;
+}
+.level-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.level-card:hover { transform: translateY(-4px); border-color: rgba(0,0,0,0.12); box-shadow: var(--shadow-lg); }
+.level-card--t1::before { background: linear-gradient(90deg, #94a3b8, #64748b); }
+.level-card--t2::before { background: linear-gradient(90deg, var(--cyan), #22d3ee); }
+.level-card--t3::before { background: linear-gradient(90deg, var(--accent), #8b5cf6); }
+.level-card--t4::before { background: linear-gradient(90deg, var(--amber), #fbbf24); }
+.level-card--t5::before { background: linear-gradient(90deg, var(--rose), #fb7185); }
+.level-icon {
+  width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px; font-size: 20px;
+}
+.level-card--t1 .level-icon { background: rgba(148,163,184,0.1); }
+.level-card--t2 .level-icon { background: var(--cyan-glow); }
+.level-card--t3 .level-icon { background: var(--accent-glow); }
+.level-card--t4 .level-icon { background: var(--amber-glow); }
+.level-card--t5 .level-icon { background: var(--rose-glow); }
+.level-name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+.level-range { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+.level-tag {
+  display: inline-block; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 100px;
+}
+.level-card--t1 .level-tag { background: rgba(148,163,184,0.15); color: #94a3b8; }
+.level-card--t2 .level-tag { background: var(--cyan-glow); color: var(--cyan); }
+.level-card--t3 .level-tag { background: var(--accent-glow); color: var(--accent-light); }
+.level-card--t4 .level-tag { background: var(--amber-glow); color: var(--amber); }
+.level-card--t5 .level-tag { background: var(--rose-glow); color: var(--rose); }
+.level-desc { font-size: 12px; color: var(--text-muted); margin-top: 14px; line-height: 1.5; }
+
+/* ===== Course Cards ===== */
+.courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.course-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 28px; transition: var(--transition); position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.course-card:hover { transform: translateY(-4px); border-color: rgba(0,0,0,0.12); box-shadow: var(--shadow-lg); }
+.course-card::after {
+  content: ''; position: absolute; top: -40px; right: -40px; width: 100px; height: 100px; border-radius: 50%;
+  opacity: 0.06; transition: var(--transition);
+}
+.course-card:hover::after { width: 140px; height: 140px; opacity: 0.1; }
+.course-card--1::after { background: var(--accent); }
+.course-card--2::after { background: var(--cyan); }
+.course-card--3::after { background: var(--green); }
+.course-card--4::after { background: var(--amber); }
+.course-card--5::after { background: #8b5cf6; }
+.course-card--6::after { background: var(--rose); }
+
+.course-priority {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 14px; display: inline-block; align-self: flex-start;
+  padding: 3px 10px; border-radius: 100px;
+}
+.course-card--1 .course-priority { color: var(--accent-light); background: rgba(99,102,241,0.12); }
+.course-card--2 .course-priority { color: var(--cyan); background: var(--cyan-glow); }
+.course-card--3 .course-priority { color: var(--green); background: var(--green-glow); }
+.course-card--4 .course-priority { color: var(--amber); background: var(--amber-glow); }
+.course-card--5 .course-priority { color: #a78bfa; background: rgba(139,92,246,0.12); }
+.course-card--6 .course-priority { color: var(--rose); background: var(--rose-glow); }
+
+.course-icon {
+  width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 16px;
+}
+.course-card--1 .course-icon { background: rgba(99,102,241,0.1); }
+.course-card--2 .course-icon { background: var(--cyan-glow); }
+.course-card--3 .course-icon { background: var(--green-glow); }
+.course-card--4 .course-icon { background: var(--amber-glow); }
+.course-card--5 .course-icon { background: rgba(139,92,246,0.1); }
+.course-card--6 .course-icon { background: var(--rose-glow); }
+
+.course-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+.course-subtitle { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.course-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.course-tag { font-size: 11px; padding: 4px 10px; border-radius: 100px; background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border); }
+.course-output {
+  font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; flex: 1;
+}
+.course-output strong { color: var(--text-secondary); }
+.course-cta {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;
+  color: #fff; text-decoration: none; padding: 8px 18px;
+  background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%);
+  border-radius: 100px; width: fit-content;
+  box-shadow: 0 3px 0 #3730a3, 0 6px 16px rgba(99,102,241,0.3);
+  position: relative; top: 0;
+  transition: all 0.15s ease;
+}
+.course-cta:hover { gap: 10px; transform: translateY(1px); box-shadow: 0 2px 0 #3730a3, 0 4px 10px rgba(99,102,241,0.2); }
+.course-cta:active { transform: translateY(3px); box-shadow: 0 1px 0 #3730a3, 0 2px 6px rgba(99,102,241,0.15); }
+
+/* ===== Dimensions ===== */
+.dimensions-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.dimension-list { display: flex; flex-direction: column; gap: 16px; }
+.dimension-item {
+  display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  transition: var(--transition);
+}
+.dimension-item:hover { border-color: var(--accent-light); box-shadow: var(--shadow-sm); }
+.dimension-icon {
+  width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+.dimension-info { flex: 1; min-width: 0; }
+.dimension-name { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.dimension-bar {
+  height: 6px; background: var(--border); border-radius: 10px; overflow: hidden;
+}
+.dimension-bar-fill { height: 100%; border-radius: 10px; transition: width 1.5s ease; }
+.dimension-score { font-size: 14px; font-weight: 700; margin-left: auto; }
+.dimensions-visual { display: flex; align-items: center; justify-content: center; }
+.dimensions-visual svg { width: 320px; height: 320px; }
+
+/* ===== Timeline / 7-Day ===== */
+.timeline { position: relative; padding-left: 32px; }
+.timeline::before {
+  content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px;
+  width: 2px; background: linear-gradient(180deg, var(--accent), var(--cyan), var(--green));
+  border-radius: 1px;
+}
+.timeline-item { position: relative; margin-bottom: 28px; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot {
+  position: absolute; left: -26px; top: 4px; width: 14px; height: 14px; border-radius: 50%;
+  border: 3px solid var(--bg-primary); z-index: 1;
+}
+.timeline-item:nth-child(1) .timeline-dot { background: var(--accent); }
+.timeline-item:nth-child(2) .timeline-dot { background: #8b5cf6; }
+.timeline-item:nth-child(3) .timeline-dot { background: var(--cyan); }
+.timeline-item:nth-child(4) .timeline-dot { background: var(--green); }
+.timeline-item:nth-child(5) .timeline-dot { background: var(--amber); }
+.timeline-item:nth-child(6) .timeline-dot { background: #f97316; }
+.timeline-item:nth-child(7) .timeline-dot { background: var(--rose); }
+.timeline-day { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+.timeline-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.timeline-desc { font-size: 13px; color: var(--text-muted); }
+
+/* ===== CTA Section ===== */
+.cta-section {
+  text-align: center; padding: 120px 0; position: relative; z-index: 1;
+}
+.cta-card {
+  background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
+  border: 1px solid rgba(99,102,241,0.15); border-radius: var(--radius-xl);
+  padding: 64px 40px; position: relative; overflow: hidden;
+}
+.cta-card::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(99,102,241,0.06) 0%, transparent 60%);
+}
+.cta-title { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; position: relative; }
+.cta-desc { font-size: 17px; color: var(--text-secondary); margin-bottom: 36px; position: relative; }
+.cta-card .btn-primary { font-size: 16px; padding: 16px 40px; }
+
+/* ===== Modal ===== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl);
+  width: 100%; max-width: 640px; max-height: 85vh; overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  transform: translateY(20px); transition: transform 0.3s ease;
+}
+.modal-overlay.active .modal { transform: translateY(0); }
+.modal-header { padding: 24px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.modal-header-title { font-size: 17px; font-weight: 700; }
+.modal-close {
+  width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-light);
+  background: transparent; color: var(--text-secondary); font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: var(--transition);
+}
+.modal-close:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.modal-body { padding: 28px; }
+.modal-footer { padding: 20px 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+
+/* Steps indicator */
+.steps { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 32px; }
+.step-dot {
+  width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; transition: var(--transition);
+  background: var(--bg-secondary); color: var(--text-muted); border: 2px solid var(--border);
+}
+.step-dot.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 16px var(--accent-glow); }
+.step-dot.done { background: var(--green); color: #fff; border-color: var(--green); }
+.step-line { width: 48px; height: 2px; background: var(--border); transition: var(--transition); }
+.step-line.done { background: var(--green); }
+.step-body { min-height: 320px; }
+
+/* Step 1: Quiz */
+.quiz-q { margin-bottom: 24px; }
+.quiz-q-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.quiz-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.quiz-opt {
+  padding: 10px 18px; border-radius: 100px; font-size: 13px; cursor: pointer;
+  border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary);
+  transition: var(--transition);
+}
+.quiz-opt:hover { border-color: rgba(0,0,0,0.2); color: var(--text-primary); }
+.quiz-opt.selected { border-color: var(--accent); background: rgba(99,102,241,0.12); color: var(--accent-light); font-weight: 600; }
+
+/* Step 2: Direction Picker */
+.direction-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.direction-card {
+  padding: 20px 16px; border-radius: var(--radius); border: 2px solid var(--border);
+  text-align: center; cursor: pointer; transition: var(--transition); background: transparent;
+}
+.direction-card:hover { border-color: rgba(0,0,0,0.2); }
+.direction-card.selected { border-color: var(--accent); background: rgba(99,102,241,0.08); }
+.direction-card-icon { font-size: 28px; margin-bottom: 8px; }
+.direction-card-name { font-size: 13px; font-weight: 600; }
+.direction-card-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* Step 3: Form */
+.form-group { margin-bottom: 18px; }
+.form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-secondary); }
+.form-input {
+  width: 100%; padding: 13px 16px; background: var(--bg-secondary); border: 1px solid var(--border-light);
+  border-radius: var(--radius); color: var(--text-primary); font-size: 14px; transition: var(--transition);
+  font-family: inherit;
+}
+.form-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+.form-input::placeholder { color: var(--text-muted); }
+.form-select {
+  width: 100%; padding: 13px 16px; background: var(--bg-secondary); border: 1px solid var(--border-light);
+  border-radius: var(--radius); color: var(--text-primary); font-size: 14px; appearance: none;
+  cursor: pointer; font-family: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%2364748b'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+}
+.form-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+
+/* Step 4: Success */
+.success-wrap { text-align: center; padding: 20px 0; }
+.success-icon { width: 80px; height: 80px; border-radius: 50%; background: var(--green-glow); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 36px; }
+.success-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.success-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 28px; line-height: 1.7; }
+.success-info { background: var(--bg-secondary); border-radius: var(--radius-lg); padding: 24px; text-align: left; margin-bottom: 24px; }
+.success-info-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; border-bottom: 1px solid var(--border); }
+.success-info-row:last-child { border: none; }
+.success-info-label { color: var(--text-muted); }
+.success-info-value { font-weight: 600; }
+
+.btn-back { background: transparent; border: 1px solid var(--border-light); color: var(--text-secondary); padding: 10px 24px; border-radius: 100px; font-size: 14px; cursor: pointer; transition: var(--transition); }
+.btn-back:hover { border-color: rgba(0,0,0,0.2); color: var(--text-primary); }
+
+@media (max-width: 640px) {
+  .direction-grid { grid-template-columns: 1fr 1fr; }
+  .modal { max-width: 100%; border-radius: var(--radius-lg); }
+  .steps { gap: 0; }
+  .step-line { width: 24px; }
+}
+
+/* ===== Course Learning View ===== */
+.course-view {
+  position: fixed; inset: 0; z-index: 300; background: var(--bg-primary);
+  display: flex; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.course-view.active { opacity: 1; pointer-events: auto; }
+
+/* Sidebar */
+.course-sidebar {
+  width: 260px; min-width: 260px; background: var(--bg-secondary);
+  border-right: 1px solid var(--border); display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.course-sidebar-header {
+  padding: 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.course-sidebar-logo { font-size: 18px; font-weight: 800; cursor: pointer; }
+.course-sidebar-title { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.course-sidebar-progress { padding: 16px 20px; border-bottom: 1px solid var(--border); }
+.course-sidebar-progress-label { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; }
+.course-progress-bar {
+  height: 5px; background: var(--border); border-radius: 10px; overflow: hidden;
+}
+.course-progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--cyan)); border-radius: 10px; transition: width 0.5s ease; }
+.course-nav { flex: 1; overflow-y: auto; padding: 8px 0; }
+.course-nav-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 20px; cursor: pointer;
+  transition: var(--transition); border-left: 3px solid transparent;
+  font-size: 13px; color: var(--text-muted);
+}
+.course-nav-item:hover { background: var(--bg-secondary); color: var(--text-secondary); }
+.course-nav-item.active { background: rgba(99,102,241,0.08); color: var(--text-primary); border-left-color: var(--accent); }
+.course-nav-item.completed { color: var(--green); }
+.course-nav-num {
+  width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; background: var(--bg-secondary); flex-shrink: 0;
+}
+.course-nav-item.active .course-nav-num { background: var(--accent); color: #fff; }
+.course-nav-item.completed .course-nav-num { background: var(--green); color: #fff; }
+.course-nav-check { margin-left: auto; font-size: 14px; }
+
+/* Main Content */
+.course-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.course-topbar {
+  display: flex; align-items: center; justify-content: space-between; padding: 16px 28px;
+  border-bottom: 1px solid var(--border); background: var(--bg-primary);
+}
+.course-topbar-left { display: flex; align-items: center; gap: 12px; }
+.course-topbar-back {
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border-light);
+  background: transparent; color: var(--text-secondary); cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center; transition: var(--transition);
+}
+.course-topbar-back:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.course-topbar-title { font-size: 14px; font-weight: 600; }
+.course-topbar-badge { font-size: 11px; color: var(--text-muted); }
+.course-content {
+  flex: 1; overflow-y: auto; padding: 32px;
+}
+
+/* Module Sections */
+.module-block {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 28px; margin-bottom: 24px;
+}
+.module-block-title {
+  font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+}
+.module-block-icon { font-size: 20px; }
+
+/* Video placeholder */
+.video-placeholder {
+  aspect-ratio: 16/9; background: var(--bg-secondary); border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px;
+  border: 1px dashed var(--border-light); cursor: pointer; transition: var(--transition);
+  overflow: hidden; min-height: 0;
+}
+.video-placeholder:hover { border-color: var(--accent); background: rgba(99,102,241,0.04); }
+.video-placeholder-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; flex-shrink: 0;
+}
+.video-placeholder-icon svg {
+  width: 100%; height: 100%; opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+.video-placeholder:hover .video-placeholder-icon svg { opacity: 0.5; }
+.video-placeholder-text { font-size: 13px; color: var(--text-muted); }
+
+/* Resource file */
+.resource-item {
+  display: flex; align-items: center; gap: 12px; padding: 14px 18px;
+  background: var(--bg-secondary); border-radius: var(--radius); border: 1px solid var(--border);
+  margin-bottom: 8px; transition: var(--transition); cursor: pointer;
+}
+.resource-item:hover { border-color: var(--border-light); }
+.resource-icon { font-size: 22px; }
+.resource-name { font-size: 13px; font-weight: 500; }
+.resource-type { font-size: 11px; color: var(--text-muted); margin-left: auto; }
+.resource-dl {
+  padding: 6px 14px; background: var(--accent); color: #fff; border-radius: 100px;
+  font-size: 11px; font-weight: 600; text-decoration: none; transition: var(--transition);
+}
+.resource-dl:hover { background: var(--accent-light); }
+
+/* Work area */
+.work-editor {
+  min-height: 200px; background: var(--bg-secondary); border: 1px solid var(--border-light);
+  border-radius: var(--radius); padding: 16px; color: var(--text-primary); font-size: 14px;
+  resize: vertical; width: 100%; font-family: inherit; line-height: 1.7;
+}
+.work-editor:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+.work-editor::placeholder { color: var(--text-muted); }
+.work-hint { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+
+.upload-zone {
+  border: 2px dashed var(--border-light); border-radius: var(--radius); padding: 32px;
+  text-align: center; cursor: pointer; transition: var(--transition); background: var(--bg-secondary);
+}
+.upload-zone:hover { border-color: var(--accent); background: rgba(99,102,241,0.04); }
+.upload-zone-icon { font-size: 36px; margin-bottom: 8px; }
+.upload-zone-text { font-size: 13px; color: var(--text-muted); }
+
+/* Model answer */
+.model-answer {
+  background: var(--bg-secondary); border: 1px solid var(--green-glow); border-radius: var(--radius-lg);
+  padding: 28px; margin-top: 20px;
+}
+.model-answer-badge {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600;
+  color: var(--green); background: var(--green-glow); padding: 5px 14px; border-radius: 100px; margin-bottom: 16px;
+}
+.model-answer-content { font-size: 14px; line-height: 1.8; color: var(--text-secondary); }
+.model-answer-content h4 { color: var(--text-primary); margin: 16px 0 8px; font-size: 15px; }
+.model-answer-content ul { margin-left: 18px; }
+.model-answer-content li { margin-bottom: 6px; }
+
+/* Key takeaways */
+.key-takeaways { display: grid; gap: 12px; margin-top: 16px; }
+.key-takeaway {
+  display: flex; align-items: flex-start; gap: 12px; padding: 14px 18px;
+  background: rgba(99,102,241,0.06); border-radius: var(--radius); border: 1px solid rgba(99,102,241,0.1);
+  font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+}
+.key-takeaway-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* Task checklist */
+.task-checklist { list-style: none; }
+.task-checklist li {
+  display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; font-size: 13px; color: var(--text-secondary);
+}
+.task-checklist li::before { content: '○'; color: var(--text-muted); font-size: 14px; }
+
+/* Certificate preview */
+.cert-preview {
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0); border: 3px solid rgba(99,102,241,0.2);
+  border-radius: var(--radius-xl); padding: 48px; text-align: center; position: relative; overflow: hidden;
+}
+.cert-preview::before {
+  content: ''; position: absolute; inset: 16px; border: 1px solid rgba(0,0,0,0.06); border-radius: var(--radius);
+  pointer-events: none;
+}
+.cert-seal { font-size: 60px; margin-bottom: 16px; }
+.cert-title { font-size: 28px; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 8px; }
+.cert-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+.cert-name { font-size: 32px; font-weight: 700; color: var(--accent-light); margin-bottom: 8px; font-style: italic; }
+.cert-body { font-size: 14px; color: var(--text-secondary); line-height: 1.8; max-width: 480px; margin: 0 auto 24px; }
+.cert-meta { display: flex; justify-content: center; gap: 40px; font-size: 12px; color: var(--text-muted); }
+.cert-meta span { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.cert-meta strong { color: var(--text-secondary); font-size: 13px; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 999;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 100px;
+  padding: 12px 24px; font-size: 13px; font-weight: 500;
+  box-shadow: var(--shadow-lg); animation: toastIn 0.4s ease, toastOut 0.4s ease 2.5s forwards;
+  display: flex; align-items: center; gap: 8px;
+}
+@keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(16px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
+
+@media (max-width: 768px) {
+  .course-sidebar { width: 72px; min-width: 72px; }
+  .course-sidebar-title, .course-nav-item span:not(.course-nav-num), .course-nav-check,
+  .course-sidebar-progress-label span:first-child { display: none; }
+  .course-nav-item { justify-content: center; padding: 14px; }
+  .course-content { padding: 20px; }
+}
+
+/* Course nav expandable */
+.course-nav-primary { }
+.nav-primary { cursor: pointer; }
+.nav-primary .course-nav-num { margin-left: 0; }
+.course-nav-arrow { flex-shrink: 0; font-size: 10px; color: var(--text-muted); }
+.course-nav-subs { padding: 2px 0 2px 28px; }
+.course-nav-sub {
+  display: flex; align-items: center; padding: 8px 16px; font-size: 12px;
+  color: var(--text-muted); cursor: pointer; border-radius: 8px;
+  transition: var(--transition); margin: 1px 8px;
+}
+.course-nav-sub:hover { background: var(--bg-secondary); color: var(--text-secondary); }
+.course-nav-sub.active { background: rgba(99,102,241,0.08); color: var(--accent-light); font-weight: 600; }
+.pf-card:hover { background: var(--bg-card-hover) !important; }
+
+/* ===== Footer ===== */
+.footer { border-top: 1px solid var(--border); padding: 60px 0 30px; position: relative; z-index: 1; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-brand-desc { font-size: 13px; color: var(--text-muted); margin-top: 12px; line-height: 1.7; }
+.footer-col-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: var(--text-secondary); }
+.footer-col a { display: block; font-size: 13px; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: var(--transition); }
+.footer-col a:hover { color: var(--text-primary); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-muted); }
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { order: -1; }
+  .hero-desc { max-width: 100%; }
+  .levels-grid { grid-template-columns: repeat(3, 1fr); }
+  .courses-grid { grid-template-columns: repeat(2, 1fr); }
+  .dimensions-layout { grid-template-columns: 1fr; }
+  .dimensions-visual svg { width: 240px; height: 240px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .float-badge { display: none; }
+}
+@media (max-width: 640px) {
+  .section { padding: 60px 0; }
+  .hero { padding: 120px 0 60px; }
+  .nav-links { display: none; }
+  .hero-title { font-size: 32px; }
+  .levels-grid { grid-template-columns: 1fr; }
+  .courses-grid { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; }
+  .btn { justify-content: center; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-orb bg-orb--1"></div>
+<div class="bg-orb bg-orb--2"></div>
+<div class="bg-orb bg-orb--3"></div>
+
+<!-- ===== Navbar ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="data:image/png;base64,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" alt="NexAI" style="height:36px;">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#levels">等级体系</a></li>
+      <li><a href="#courses">岗位训练营</a></li>
+      <li><a href="#dimensions">能力模型</a></li>
+      <li><a href="#timeline">7天计划</a></li>
+    </ul>
+    <button class="nav-cta">免费加入训练营</button>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span> 免费训练营长期开放
+        </div>
+        <h1 class="hero-title">
+          选择一个 <span class="highlight">AI 岗位</span>，<br>7 天做出你的第一份<br>求职作品集
+        </h1>
+        <p class="hero-desc">
+          从 AI 内容运营、AIGC 短视频、AI 产品运营等 6 个方向中选择一个，免费完成 7 天岗位训练营，自动生成项目证据卡、能力标签和简历表达。
+        </p>
+        <div class="hero-actions">
+          <a href="#courses" class="btn btn-primary">免费加入 AI 岗位作品集训练营 →</a>
+          <a href="#dimensions" class="btn btn-outline">先测测我的 AI 能力</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-label">AI 能力档案预览</div>
+          <div class="hero-card-title">你的 NexAI 能力值</div>
+          <div class="radar-mini">
+            <svg viewBox="0 0 200 200">
+              <defs>
+                <linearGradient id="radarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#6366f1" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.3"/>
+                </linearGradient>
+              </defs>
+              <!-- Grid -->
+              <polygon points="100,30 163,75 145,143 55,143 37,75" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+              <polygon points="100,55 148,82 135,130 65,130 52,82" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+              <polygon points="100,80 133,98 124,118 76,118 67,98" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+              <!-- Axes -->
+              <line x1="100" y1="100" x2="100" y2="30" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+              <line x1="100" y1="100" x2="163" y2="75" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+              <line x1="100" y1="100" x2="145" y2="143" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+              <line x1="100" y1="100" x2="55" y2="143" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+              <line x1="100" y1="100" x2="37" y2="75" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+              <!-- Data -->
+              <polygon points="100,60 145,85 132,120 78,125 58,80" fill="url(#radarGrad)" stroke="#6366f1" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="100" cy="60" r="3" fill="#6366f1"/>
+              <circle cx="145" cy="85" r="3" fill="#818cf8"/>
+              <circle cx="132" cy="120" r="3" fill="#06b6d4"/>
+              <circle cx="78" cy="125" r="3" fill="#10b981"/>
+              <circle cx="58" cy="80" r="3" fill="#8b5cf6"/>
+            </svg>
+          </div>
+          <div class="hero-card-stats">
+            <div class="stat-item"><div class="stat-value accent">486</div><div class="stat-label">能力值</div></div>
+            <div class="stat-item"><div class="stat-value cyan">T3</div><div class="stat-label">当前等级</div></div>
+            <div class="stat-item"><div class="stat-value green">5</div><div class="stat-label">技能徽章</div></div>
+            <div class="stat-item"><div class="stat-value amber">3</div><div class="stat-label">实训项目</div></div>
+          </div>
+        </div>
+        <div class="float-badge float-badge--1">
+          <span class="float-badge-dot green"></span> 项目证据已核验
+        </div>
+        <div class="float-badge float-badge--2">
+          <span class="float-badge-dot amber"></span> 企业可见档案
+        </div>
+        <div class="float-badge float-badge--3">
+          <span class="float-badge-dot accent"></span> T4 认证可申请
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== T1-T5 Level System ===== -->
+<section class="section" id="levels">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">成长体系</div>
+      <h2 class="section-title">T1-T5 分级成长路径</h2>
+      <p class="section-subtitle">从 AI 基础使用到专业认证，五个阶段循序渐进，每一级都有明确的能力目标和证据要求</p>
+    </div>
+    <div class="levels-grid">
+      <div class="level-card level-card--t1">
+        <div class="level-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" font-size="12" fill="currentColor" stroke="none">1</text></svg></div>
+        <div class="level-name">AI 使用</div>
+        <div class="level-range">300-399 分</div>
+        <span class="level-tag">T1 入门</span>
+        <p class="level-desc">完成建档和基础课程，建立 AI 基础认知与安全意识</p>
+      </div>
+      <div class="level-card level-card--t2">
+        <div class="level-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" font-size="12" fill="currentColor" stroke="none">2</text></svg></div>
+        <div class="level-name">AI 创作</div>
+        <div class="level-range">400-499 分</div>
+        <span class="level-tag">T2 产出</span>
+        <p class="level-desc">提交 AI 作品并完成实训项目，具备基础产出能力</p>
+      </div>
+      <div class="level-card level-card--t3">
+        <div class="level-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" font-size="12" fill="currentColor" stroke="none">3</text></svg></div>
+        <div class="level-name">AI 驾驭</div>
+        <div class="level-range">500-599 分</div>
+        <span class="level-tag">T3 招聘基准线</span>
+        <p class="level-desc">达到企业 AI 能力招聘基准，可进入企业人才筛选池</p>
+      </div>
+      <div class="level-card level-card--t4">
+        <div class="level-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" font-size="12" fill="currentColor" stroke="none">4</text></svg></div>
+        <div class="level-name">AI 专业</div>
+        <div class="level-range">600-799 分</div>
+        <span class="level-tag">T4 认证</span>
+        <p class="level-desc">通过专业方向认证，具备专项能力与外部可信背书</p>
+      </div>
+      <div class="level-card level-card--t5">
+        <div class="level-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" font-size="12" fill="currentColor" stroke="none">5</text></svg></div>
+        <div class="level-name">AI 领军</div>
+        <div class="level-range">800-1000 分</div>
+        <span class="level-tag">T5 标杆</span>
+        <p class="level-desc">具备高阶成果、企业认可和组织带动能力</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Course Cards ===== -->
+<section class="section" id="courses">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">岗位训练营</div>
+      <h2 class="section-title">6 大 AI 岗位方向免费训练营</h2>
+      <p class="section-subtitle">每个岗位固定 7 天微实训任务，所有任务都能沉淀到作品集</p>
+    </div>
+    <div class="courses-grid">
+      <!-- Course 1 -->
+      <div class="course-card course-card--1">
+        <span class="course-priority"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> 最热门</span>
+        <div class="course-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+        <h3 class="course-name">AI 内容运营</h3>
+        <p class="course-subtitle">新媒体运营 · 内容增长</p>
+        <div class="course-tags">
+          <span class="course-tag">选题策划</span>
+          <span class="course-tag">账号诊断</span>
+          <span class="course-tag">数据复盘</span>
+          <span class="course-tag">AIGC 写作</span>
+        </div>
+        <p class="course-output"><strong>7 天产出：</strong>账号诊断报告、选题库、7天内容日历、数据复盘表</p>
+        <a href="#" class="course-cta">免费加入训练营 <span class="course-cta-arrow">→</span></a>
+      </div>
+      <!-- Course 2 -->
+      <div class="course-card course-card--2">
+        <span class="course-priority"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 视觉传播</span>
+        <div class="course-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="10 10 15 12 10 14 10 10"/><circle cx="19" cy="8" r="2"/><circle cx="19" cy="16" r="2"/></svg></div>
+        <h3 class="course-name">AIGC 短视频创作</h3>
+        <p class="course-subtitle">视频编导 · AI 视频生成</p>
+        <div class="course-tags">
+          <span class="course-tag">脚本撰写</span>
+          <span class="course-tag">AI 画面生成</span>
+          <span class="course-tag">分镜设计</span>
+          <span class="course-tag">爆款拆解</span>
+        </div>
+        <p class="course-output"><strong>7 天产出：</strong>30秒短视频脚本、分镜、AI画面、成片链接</p>
+        <a href="#" class="course-cta">免费加入训练营 <span class="course-cta-arrow">→</span></a>
+      </div>
+      <!-- Course 3 -->
+      <div class="course-card course-card--3">
+        <span class="course-priority"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 私域增长</span>
+        <div class="course-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3 class="course-name">AI 社群运营</h3>
+        <p class="course-subtitle">私域运营 · 社群增长</p>
+        <div class="course-tags">
+          <span class="course-tag">社群 SOP</span>
+          <span class="course-tag">开营话术</span>
+          <span class="course-tag">打卡机制</span>
+          <span class="course-tag">转化路径</span>
+        </div>
+        <p class="course-output"><strong>7 天产出：</strong>社群SOP、开营话术、打卡机制、活动复盘</p>
+        <a href="#" class="course-cta">免费加入训练营 <span class="course-cta-arrow">→</span></a>
+      </div>
+      <!-- Course 4 -->
+      <div class="course-card course-card--4">
+        <span class="course-priority"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> 电商实战</span>
+        <div class="course-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <h3 class="course-name">AI 电商运营</h3>
+        <p class="course-subtitle">电商运营 · 直播带货</p>
+        <div class="course-tags">
+          <span class="course-tag">卖点提炼</span>
+          <span class="course-tag">直播脚本</span>
+          <span class="course-tag">短视频带货</span>
+          <span class="course-tag">转化复盘</span>
+        </div>
+        <p class="course-output"><strong>7 天产出：</strong>商品卖点卡、直播脚本、带货方案、投放复盘</p>
+        <a href="#" class="course-cta">免费加入训练营 <span class="course-cta-arrow">→</span></a>
+      </div>
+      <!-- Course 5 -->
+      <div class="course-card course-card--5">
+        <span class="course-priority"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4l2.25-2.25M15 12h5l-2.25 2.25"/></svg> 产品方向</span>
+        <div class="course-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg></div>
+        <h3 class="course-name">AI 产品运营</h3>
+        <p class="course-subtitle">产品助理 · AI 产品运营</p>
+        <div class="course-tags">
+          <span class="course-tag">竞品拆解</span>
+          <span class="course-tag">用户故事</span>
+          <span class="course-tag">PRD 撰写</span>
+          <span class="course-tag">需求优先级</span>
+        </div>
+        <p class="course-output"><strong>7 天产出：</strong>AI产品竞品拆解、用户故事、MVP需求说明</p>
+        <a href="#" class="course-cta">免费加入训练营 <span class="course-cta-arrow">→</span></a>
+      </div>
+      <!-- Course 6 -->
+      <div class="course-card course-card--6">
+        <span class="course-priority"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> 数据硬实力</span>
+        <div class="course-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <h3 class="course-name">AI 数据分析</h3>
+        <p class="course-subtitle">运营分析 · 数据驱动</p>
+        <div class="course-tags">
+          <span class="course-tag">数据清洗</span>
+          <span class="course-tag">可视化</span>
+          <span class="course-tag">AI 辅助洞察</span>
+          <span class="course-tag">报告撰写</span>
+        </div>
+        <p class="course-output"><strong>7 天产出：</strong>数据分析报告、可视化图表看板、行动建议</p>
+        <a href="#" class="course-cta">免费加入训练营 <span class="course-cta-arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Five-Dimensional Ability Model ===== -->
+<section class="section" id="dimensions">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">能力模型</div>
+      <h2 class="section-title">五维能力值模型</h2>
+      <p class="section-subtitle">用持续学习力、工具技能、项目实践力、创造能力、综合潜能记录真实成长，避免只用考试分评价 AI 能力</p>
+    </div>
+    <div class="dimensions-layout">
+      <div class="dimension-list">
+        <div class="dimension-item">
+          <div class="dimension-icon" style="background:rgba(99,102,241,0.1)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="dimension-info">
+            <div class="dimension-name">持续学习力</div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:72%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div>
+          </div>
+          <span class="dimension-score" style="color:#818cf8">130/180</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-icon" style="background:rgba(6,182,212,0.1)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+          <div class="dimension-info">
+            <div class="dimension-name">工具技能</div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:67%;background:linear-gradient(90deg,#06b6d4,#22d3ee)"></div></div>
+          </div>
+          <span class="dimension-score" style="color:#22d3ee">160/240</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-icon" style="background:rgba(16,185,129,0.1)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4l2.25-2.25M15 12h5l-2.25 2.25"/></svg></div>
+          <div class="dimension-info">
+            <div class="dimension-name">项目实践力</div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:58%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div>
+          </div>
+          <span class="dimension-score" style="color:#34d399">150/260</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-icon" style="background:rgba(245,158,11,0.1)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></div>
+          <div class="dimension-info">
+            <div class="dimension-name">创造能力</div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:56%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
+          </div>
+          <span class="dimension-score" style="color:#fbbf24">90/160</span>
+        </div>
+        <div class="dimension-item">
+          <div class="dimension-icon" style="background:rgba(139,92,246,0.1)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg></div>
+          <div class="dimension-info">
+            <div class="dimension-name">综合潜能</div>
+            <div class="dimension-bar"><div class="dimension-bar-fill" style="width:63%;background:linear-gradient(90deg,#8b5cf6,#a78bfa)"></div></div>
+          </div>
+          <span class="dimension-score" style="color:#a78bfa">100/160</span>
+        </div>
+      </div>
+      <div class="dimensions-visual">
+        <svg viewBox="0 0 320 320">
+          <defs>
+            <radialGradient id="pentagonGrad" cx="50%" cy="50%">
+              <stop offset="0%" stop-color="#6366f1" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.05"/>
+            </radialGradient>
+          </defs>
+          <!-- Grid rings -->
+          <polygon points="160,60 251,122 216,241 104,241 69,122" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"/>
+          <polygon points="160,95 234,145 205,215 115,215 86,145" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"/>
+          <polygon points="160,130 214,165 192,185 128,185 106,165" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"/>
+          <!-- Axes -->
+          <line x1="160" y1="160" x2="160" y2="60" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+          <line x1="160" y1="160" x2="251" y2="122" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+          <line x1="160" y1="160" x2="216" y2="241" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+          <line x1="160" y1="160" x2="104" y2="241" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+          <line x1="160" y1="160" x2="69" y2="122" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+          <!-- Data polygon -->
+          <polygon points="160,88 232,138 204,209 116,215 90,130" fill="url(#pentagonGrad)" stroke="#6366f1" stroke-width="2" stroke-linejoin="round"/>
+          <!-- Points -->
+          <circle cx="160" cy="88" r="4" fill="#818cf8"/>
+          <circle cx="232" cy="138" r="4" fill="#22d3ee"/>
+          <circle cx="204" cy="209" r="4" fill="#34d399"/>
+          <circle cx="116" cy="215" r="4" fill="#fbbf24"/>
+          <circle cx="90" cy="130" r="4" fill="#a78bfa"/>
+          <!-- Labels -->
+          <text x="160" y="42" fill="#818cf8" font-size="11" text-anchor="middle" font-weight="600">持续学习力</text>
+          <text x="268" y="118" fill="#22d3ee" font-size="11" text-anchor="start" font-weight="600">工具技能</text>
+          <text x="230" y="262" fill="#34d399" font-size="11" text-anchor="middle" font-weight="600">项目实践力</text>
+          <text x="90" y="262" fill="#fbbf24" font-size="11" text-anchor="middle" font-weight="600">创造能力</text>
+          <text x="26" y="118" fill="#a78bfa" font-size="11" text-anchor="end" font-weight="600">综合潜能</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7-Day Timeline ===== -->
+<section class="section" id="timeline">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">训练营节奏</div>
+      <h2 class="section-title">7 天 AI 岗位作品集免费训练营</h2>
+      <p class="section-subtitle">每周一开营，周日结营。标准化任务包，所有产出自动沉淀到你的 AI 求职作品集</p>
+    </div>
+    <div style="max-width:560px;margin:0 auto;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-day" style="color:#818cf8">Day 1</div>
+          <div class="timeline-title">完成 AI 能力自测并选择岗位方向</div>
+          <div class="timeline-desc">生成 AI 能力雷达图，从 6 个岗位中选择最适合的方向</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-day" style="color:#a78bfa">Day 2</div>
+          <div class="timeline-title">生成基础档案并拆解目标岗位 JD</div>
+          <div class="timeline-desc">完善 AI 求职作品集首页，梳理岗位能力清单</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-day" style="color:#22d3ee">Day 3</div>
+          <div class="timeline-title">完成岗位微实训任务</div>
+          <div class="timeline-desc">在 AI 辅助下完成对应岗位的第一个实训项目初稿</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-day" style="color:#34d399">Day 4</div>
+          <div class="timeline-title">补充项目证据和过程截图</div>
+          <div class="timeline-desc">整理工具链、过程和结果，生成项目证据卡</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-day" style="color:#fbbf24">Day 5</div>
+          <div class="timeline-title">生成岗位简历表达</div>
+          <div class="timeline-desc">将项目经历转化为可写进简历的专业表达</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-day" style="color:#fb923c">Day 6</div>
+          <div class="timeline-title">发布作品集链接并互评</div>
+          <div class="timeline-desc">获得可分享的公开作品集页面，参与学员互评</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-day" style="color:#f43f5e">Day 7</div>
+          <div class="timeline-title">参与优秀作品点评和点燃讲师招募</div>
+          <div class="timeline-desc">优秀学员可申请成为点燃讲师，进入收费班助教成长通道</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <h2 class="cta-title">简历里别只写"会用 AI"</h2>
+      <p class="cta-desc">免费选择一个 AI 岗位方向，7 天生成一份能投递的 AI 求职作品集<br>包含项目证据卡、能力标签和简历表达</p>
+      <a href="#" class="btn btn-primary">免费加入 AI 岗位作品集训练营 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="nav-logo" style="margin-bottom:8px;">
+          <img src="data:image/png;base64,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" alt="NexAI" style="height:36px;">
+        </a>
+        <p class="footer-brand-desc">NexAI 通过课程学习、实训项目、AI 测评、专业认证和企业反馈，形成可持续更新、可展示、可核验的 AI 人才培养与认证系统。</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">岗位方向</div>
+        <a href="#">AI 内容运营</a>
+        <a href="#">AIGC 短视频创作</a>
+        <a href="#">AI 社群运营</a>
+        <a href="#">AI 电商运营</a>
+        <a href="#">AI 产品运营</a>
+        <a href="#">AI 数据分析</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">成长体系</div>
+        <a href="#">T1-T5 等级</a>
+        <a href="#">五维能力模型</a>
+        <a href="#">T4 专业认证</a>
+        <a href="#">AI 能力档案</a>
+        <a href="#">企业人才识别</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">关于</div>
+        <a href="#">关于 NexAI</a>
+        <a href="#">点燃讲师计划</a>
+        <a href="#">企业合作</a>
+        <a href="#">高校基地</a>
+        <a href="#">联系我们</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NexAI. All rights reserved.</span>
+      <span>AI 人才培养与认证系统</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== Course Learning View ===== -->
+<div class="course-view" id="courseView">
+  <!-- Sidebar -->
+  <div class="course-sidebar">
+    <div class="course-sidebar-header">
+      <div>
+        <div class="course-sidebar-logo" onclick="exitCourse()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> NexAI</div>
+        <div class="course-sidebar-title">AIGC 短视频创作训练营</div>
+      </div>
+    </div>
+    <div class="course-sidebar-progress">
+      <div class="course-sidebar-progress-label">
+        <span>课程进度</span><span id="courseProgressText">0/7</span>
+      </div>
+      <div class="course-progress-bar">
+        <div class="course-progress-fill" id="courseProgressFill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="course-nav" id="courseNav"></div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="course-main">
+    <div class="course-topbar">
+      <div class="course-topbar-left">
+        <button class="course-topbar-back" onclick="exitCourse()" title="返回首页">←</button>
+        <div>
+          <div class="course-topbar-title" id="courseTopbarTitle">Day 1: AI 能力自测与岗位认知</div>
+          <div class="course-topbar-badge">AIGC 短视频创作训练营</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <span style="font-size:12px;color:var(--text-muted);">当前进度 <strong style="color:var(--accent-light)" id="topbarProgress">0/7</strong></span>
+      </div>
+    </div>
+    <div class="course-content" id="courseContent"></div>
+  </div>
+</div>
+
+<!-- ===== Registration Modal ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-header-title" id="modalTitle">免费加入 AI 岗位作品集训练营</span>
+      <button class="modal-close" onclick="closeModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+
+    <!-- Steps indicator -->
+    <div class="modal-body">
+      <div class="steps">
+        <div class="step-dot active" id="stepDot1">1</div>
+        <div class="step-line" id="stepLine1"></div>
+        <div class="step-dot" id="stepDot2">2</div>
+        <div class="step-line" id="stepLine2"></div>
+        <div class="step-dot" id="stepDot3">3</div>
+        <div class="step-line" id="stepLine3"></div>
+        <div class="step-dot" id="stepDot4">4</div>
+      </div>
+
+      <div class="step-body" id="stepBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== State =====
+let currentStep = 1;
+const state = {
+  quizAnswers: {},
+  direction: null,
+  name: '', email: '', school: '', gradYear: ''
+};
+
+// ===== Modal Controls =====
+function openModal() { document.getElementById('modalOverlay').classList.add('active'); renderStep(1); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); currentStep = 1; }
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Bind all CTA buttons
+document.querySelectorAll('.nav-cta, .btn-primary, .course-cta').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    // If course-cta, pre-select that direction
+    const courseCard = this.closest('.course-card');
+    if (courseCard) {
+      const dirs = ['AI 内容运营','AIGC 短视频创作','AI 社群运营','AI 电商运营','AI 产品运营','AI 数据分析'];
+      const name = courseCard.querySelector('.course-name')?.textContent.trim();
+      const idx = dirs.findIndex(d => name?.includes(d.split(' ')[0]) || name?.includes(d.substring(0,4)));
+      if (idx >= 0) state.direction = idx;
+    }
+    openModal();
+  });
+});
+
+// ===== Step Rendering =====
+function renderStep(step) {
+  currentStep = step;
+  updateSteps();
+  const body = document.getElementById('stepBody');
+  const titles = ['AI 能力自测', '选择岗位方向', '填写基本信息', '🎉 加入成功'];
+  document.getElementById('modalTitle').innerHTML = titles[step-1];
+
+  switch(step) {
+    case 1: renderQuiz(body); break;
+    case 2: renderDirection(body); break;
+    case 3: renderForm(body); break;
+    case 4: renderSuccess(body); break;
+  }
+}
+
+function updateSteps() {
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('stepDot'+i);
+    dot.className = 'step-dot';
+    if (i < currentStep) dot.classList.add('done');
+    if (i === currentStep) dot.classList.add('active');
+    if (i <= currentStep - 1 && i < 4) {
+      document.getElementById('stepLine'+i).classList.add('done');
+    } else if (i < 4) {
+      document.getElementById('stepLine'+i).classList.remove('done');
+    }
+  }
+}
+
+// ===== Step 1: AI Ability Quiz =====
+const quizQuestions = [
+  { q: '你对 AI 工具（如 ChatGPT、Claude 等）的熟悉程度？', opts: ['完全没用过', '偶尔使用', '经常使用', '能熟练运用多种工具', '能开发 AI 应用'] },
+  { q: '你是否了解 Prompt Engineering（提示词工程）？', opts: ['不了解', '听说过', '会写基础提示词', '能设计复杂提示词', '能系统化设计'] },
+  { q: '你是否有编程基础？', opts: ['完全没有', '学过基础语法', '能写简单脚本', '能做项目开发', '有工程经验'] },
+  { q: '你希望 AI 帮你提升哪方面能力？', opts: ['内容创作', '数据分析', '自动化办公', '产品设计', '程序开发'] },
+  { q: '你目前最需要的帮助是？', opts: ['了解 AI 能做什么', '做出能展示的作品', '写进简历的项目经历', '获得认证证书', '找到 AI 相关工作'] },
+];
+
+function renderQuiz(body) {
+  body.innerHTML = `
+    <p style="color:var(--text-secondary);font-size:13px;margin-bottom:24px;">请回答以下 5 个问题，帮助我们为你推荐最合适的岗位方向（约需 1 分钟）</p>
+    ${quizQuestions.map((item, qi) => `
+      <div class="quiz-q">
+        <div class="quiz-q-title">${qi+1}. ${item.q}</div>
+        <div class="quiz-options" data-q="${qi}">
+          ${item.opts.map((opt, oi) => `
+            <button class="quiz-opt${state.quizAnswers[qi] === oi ? ' selected' : ''}"
+                    onclick="selectQuiz(${qi}, ${oi}, this)">${opt}</button>
+          `).join('')}
+        </div>
+      </div>
+    `).join('')}
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn btn-primary" onclick="goStep2()">下一步：选择岗位方向 →</button>
+    </div>
+  `;
+}
+
+function selectQuiz(qi, oi, el) {
+  state.quizAnswers[qi] = oi;
+  el.parentElement.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function goStep2() {
+  const answered = Object.keys(state.quizAnswers).length;
+  if (answered < 3) {
+    alert('请至少回答 3 个问题，帮助我们更好地为你推荐岗位方向');
+    return;
+  }
+  renderStep(2);
+}
+
+// ===== Step 2: Direction Picker =====
+const directions = [
+  { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', name: 'AI 内容运营', sub: '新媒体·内容增长', tags: ['选题策划','账号诊断','AIGC写作','数据复盘'] },
+  { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="10 10 15 12 10 14 10 10"/><circle cx="19" cy="8" r="2"/><circle cx="19" cy="16" r="2"/></svg>', name: 'AIGC 短视频创作', sub: '视频编导·AI视频', tags: ['脚本撰写','分镜设计','AI画面','成片输出'] },
+  { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', name: 'AI 社群运营', sub: '私域运营·社群增长', tags: ['社群SOP','开营话术','打卡机制','转化路径'] },
+  { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>', name: 'AI 电商运营', sub: '电商·直播带货', tags: ['卖点提炼','直播脚本','带货方案','转化复盘'] },
+  { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>', name: 'AI 产品运营', sub: '产品助理·AI产品', tags: ['竞品拆解','用户故事','PRD撰写','需求优先级'] },
+  { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>', name: 'AI 数据分析', sub: '运营分析·数据驱动', tags: ['数据清洗','可视化','AI洞察','报告撰写'] },
+];
+
+function renderDirection(body) {
+  body.innerHTML = `
+    <p style="color:var(--text-secondary);font-size:13px;margin-bottom:20px;">
+      ${state.quizAnswers[3] !== undefined
+        ? `根据你的自测结果，我们推荐你优先考虑以下方向。当然你也可以自由选择：`
+        : '请选择你最感兴趣的 AI 岗位方向（可后续调整）：'}
+    </p>
+    <div class="direction-grid">
+      ${directions.map((d, i) => `
+        <div class="direction-card${state.direction === i ? ' selected' : ''}"
+             onclick="selectDirection(${i}, this)">
+          <div class="direction-card-icon">${d.icon}</div>
+          <div class="direction-card-name">${d.name}</div>
+          <div class="direction-card-sub">${d.sub}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:8px;">
+            ${d.tags.slice(0,2).map(t => `<span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(0,0,0,0.04);color:var(--text-muted)">${t}</span>`).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:24px;">
+      <button class="btn-back" onclick="renderStep(1)">← 返回自测</button>
+      <button class="btn btn-primary" onclick="goStep3()">下一步：填写信息 →</button>
+    </div>
+  `;
+}
+
+function selectDirection(i, el) {
+  state.direction = i;
+  el.parentElement.querySelectorAll('.direction-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function goStep3() {
+  if (state.direction === null) {
+    alert('请选择一个 AI 岗位方向');
+    return;
+  }
+  renderStep(3);
+}
+
+// ===== Step 3: Registration Form =====
+function renderForm(body) {
+  body.innerHTML = `
+    <p style="color:var(--text-secondary);font-size:13px;margin-bottom:20px;">
+      即将加入 <strong style="color:var(--text-primary);">${directions[state.direction].name}</strong> 7 天免费训练营，请填写以下信息完成报名：
+    </p>
+    <div class="form-group">
+      <label class="form-label">姓名 *</label>
+      <input class="form-input" id="regName" placeholder="请输入你的姓名" value="${state.name}">
+    </div>
+    <div class="form-group">
+      <label class="form-label">邮箱 *</label>
+      <input class="form-input" id="regEmail" type="email" placeholder="请输入你的邮箱地址" value="${state.email}">
+    </div>
+    <div class="form-group">
+      <label class="form-label">学校 / 机构</label>
+      <input class="form-input" id="regSchool" placeholder="请输入学校或公司名称" value="${state.school}">
+    </div>
+    <div class="form-group">
+      <label class="form-label">毕业年份</label>
+      <select class="form-select" id="regGrad">
+        <option value="">请选择</option>
+        ${['2026','2027','2028','2029','2030','已毕业'].map(y =>
+          `<option value="${y}" ${state.gradYear===y?'selected':''}>${y}</option>`
+        ).join('')}
+      </select>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px;">
+      <button class="btn-back" onclick="saveForm();renderStep(2)">← 返回选择</button>
+      <button class="btn btn-primary" onclick="submitForm()">确认加入训练营 →</button>
+    </div>
+  `;
+}
+
+function saveForm() {
+  state.name = document.getElementById('regName')?.value || '';
+  state.email = document.getElementById('regEmail')?.value || '';
+  state.school = document.getElementById('regSchool')?.value || '';
+  state.gradYear = document.getElementById('regGrad')?.value || '';
+}
+
+function submitForm() {
+  saveForm();
+  if (!state.name.trim()) { alert('请填写姓名'); return; }
+  if (!state.email.trim() || !state.email.includes('@')) { alert('请填写有效的邮箱地址'); return; }
+  renderStep(4);
+}
+
+// ===== Step 4: Success =====
+function renderSuccess(body) {
+  const dir = directions[state.direction];
+  const quizTotal = Object.values(state.quizAnswers).reduce((a,b) => a + b, 0);
+  const estimatedLevel = quizTotal >= 18 ? 'T2-T3' : quizTotal >= 12 ? 'T1-T2' : 'T1';
+
+  body.innerHTML = `
+    <div class="success-wrap">
+      <div class="success-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="success-title">报名成功！欢迎加入</div>
+      <div class="success-desc">
+        你已成功加入 <strong>${dir.name}</strong> 7 天免费训练营<br>
+        训练营将于 <strong>下周一</strong> 正式开营，请留意邮箱通知
+      </div>
+      <div class="success-info">
+        <div class="success-info-row">
+          <span class="success-info-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> 通知邮箱</span>
+          <span class="success-info-value">${state.email}</span>
+        </div>
+        <div class="success-info-row">
+          <span class="success-info-label"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> 岗位方向</span>
+          <span class="success-info-value">${dir.icon} ${dir.name}</span>
+        </div>
+        <div class="success-info-row">
+          <span class="success-info-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> 预估能力等级</span>
+          <span class="success-info-value" style="color:var(--accent-light)">${estimatedLevel}</span>
+        </div>
+        <div class="success-info-row">
+          <span class="success-info-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 开营时间</span>
+          <span class="success-info-value">下周一 20:00</span>
+        </div>
+        <div class="success-info-row">
+          <span class="success-info-label"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>️ 训练营周期</span>
+          <span class="success-info-value">7 天</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="startLearning()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="10 10 15 12 10 14 10 10"/><circle cx="19" cy="8" r="2"/><circle cx="19" cy="16" r="2"/></svg> 进入课程，开始学习</button>
+        <button class="btn btn-outline btn-sm" onclick="shareInfo()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> 分享给同学</button>
+      </div>
+    </div>
+  `;
+}
+
+function shareInfo() {
+  const dir = directions[state.direction];
+  const text = `我加入了 NexAI ${dir.name} 7 天免费训练营，一起做出 AI 求职作品集！`;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => alert('已复制分享文案，可以粘贴分享给同学啦！'));
+  } else {
+    prompt('复制这段文字分享给同学：', text);
+  }
+}
+
+// ===== COURSE LEARNING SYSTEM =====
+const courseProgress = { completed: new Set(), submitted: {}, currentModule: 0, currentSub: 'learn' };
+const expandedModules = new Set([0,1,2,3,4,5,6]); // all expanded by default
+
+const modules = [
+  { // Module 0
+    num: '0', title: '岗位认知与工具概览', time: '~10 mins', type: 'intro',
+    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>', skills: ['行业认知','工具链了解','岗位定位'],
+    context: { video: true,
+      text: '欢迎加入 AIGC 短视频创作训练营！在接下来的 7 天里，你将扮演一名 <strong>AI 短视频编导</strong> 的角色，独立完成一条 30 秒求职向 AI 短视频，从拆解爆款、撰写脚本、设计分镜、AI 画面生成到最终成片和发布复盘。'
+    },
+    task: {
+      title: '了解 AIGC 短视频编导岗位',
+      steps: [
+        '阅读岗位介绍，理解 AIGC 短视频编导的工作职责',
+        '查看 AI 视频工具生态地图，了解主流工具（Runway/Pika/可灵/即梦/Sora）',
+        '确认你的学习目标：7 天后产出一条 30 秒 AI 求职短视频'
+      ],
+      output: '完成岗位认知问卷 + 工具环境准备'
+    },
+    resources: [
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', name: 'AIGC短视频编导岗位说明', type: 'PDF', action: 'download' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>', name: 'AI视频工具生态地图 v2026', type: 'PDF', action: 'download' },
+      { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="10 10 15 12 10 14 10 10"/><circle cx="19" cy="8" r="2"/><circle cx="19" cy="16" r="2"/></svg>', name: '往期优秀学员作品集', type: '链接', action: 'link' }
+    ],
+    aigcToolbox: true,
+    workType: 'quiz',
+    quizQuestions: [
+      { q: '以下哪个工具主要用于 AI 视频生成？', opts: ['Photoshop','Runway','Excel','VS Code'], ans: 1 },
+      { q: 'AIGC 短视频编导的核心产出是什么？', opts: ['只写脚本','只做剪辑','从脚本到成片的完整AI视频','只管理团队'], ans: 2 },
+      { q: '本训练营的目标是产出什么？', opts: ['一篇论文','一条30秒AI求职短视频','一个网站','一个APP'], ans: 1 }
+    ],
+    modelAnswer: {
+      text: 'AIGC 短视频编导 = 脚本创作 × AI画面生成 × 剪辑成片。你需要掌握的不是单一技能，而是"用 AI 把创意变成可传播的短视频"的完整工作流程。本训练营将带你走完这 7 个模块。',
+      takeaways: ['AI视频工具选择取决于你的创作风格和预算','Runway适合追求画质,可灵/即梦中文生态好','岗位核心不是"会用工具"而是"能用AI讲好故事"']
+    }
+  },
+  { // Module 1
+    num: '1', title: '爆款拆解与分析', time: '~30 mins', type: 'text',
+    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>', skills: ['爆款分析','结构化拆解','内容判断'],
+    context: {
+      text: '在动手创作之前，你需要先学会"看懂"一条好视频。这个模块将教你一套系统化的爆款短视频分析方法论，让你能够像专业编导一样拆解任何一条热门视频。'
+    },
+    task: {
+      title: '拆解一条爆款求职向短视频',
+      steps: [
+        '选择一条你喜欢的求职/职场类爆款短视频（抖音/小红书/B站均可）',
+        '使用「5 要素拆解法」分析：<strong>① 选题钩子 ② 开头3秒 ③ 情绪节奏 ④ 信息密度 ⑤ 结尾CTA</strong>',
+        '填写拆解表格，记录每个要素的具体内容和你的判断',
+        '总结这条视频"为什么能爆"的 3 个关键原因'
+      ],
+      output: '爆款拆解分析表（文字提交）'
+    },
+    resources: [
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', name: '5要素爆款拆解法.pdf', type: 'PDF', action: 'download' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>', name: '爆款拆解模板.xlsx', type: 'Excel', action: 'download' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', name: '参考案例：30条爆款求职视频合集', type: '链接', action: 'link' }
+    ],
+    workType: 'text',
+    workPlaceholder: '请在此提交你的爆款拆解分析...\n\n示例结构：\n1. 我选择的视频：[视频链接/描述]\n2. 5要素拆解：\n   ① 选题钩子：...\n   ② 开头3秒：...\n   ③ 情绪节奏：...\n   ④ 信息密度：...\n   ⑤ 结尾CTA：...\n3. 爆款原因总结：\n   - 原因1：...\n   - 原因2：...\n   - 原因3：...',
+    modelAnswer: {
+      text: '<h4>范本：拆解"应届生如何拿到大厂offer" 爆款视频</h4><ul><li><strong>选题钩子：</strong>"投了200份简历只拿到1个面试" — 痛点共鸣+数字具体化</li><li><strong>开头3秒：</strong>黑底白字"我投了200份简历" — 信息冲击+悬念制造</li><li><strong>情绪节奏：</strong>压抑→转折→激动→平静 — 4段情绪弧线精准控制</li><li><strong>信息密度：</strong>每10秒一个具体方法论，不空洞</li><li><strong>结尾CTA：</strong>"如果你的简历也没人看，试试这3个方法" — 价值承诺+行动引导</li></ul>',
+      takeaways: ['爆款视频的本质是"信息密度×情绪节奏"的乘积','开头3秒决定 70% 的完播率 — 不要在开头铺垫,直接给钩子','好的拆解不是"看完觉得好"而是"能精确说出哪里好、为什么好"']
+    }
+  },
+  { // Module 2
+    num: '2', title: '脚本创作', time: '~40 mins', type: 'text',
+    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>', skills: ['脚本撰写','叙事结构','AI辅助写作'],
+    context: {
+      video: true,
+      text: '有了拆解能力后，现在开始真正的创作——<strong>撰写一条 30 秒求职向短视频脚本</strong>。建议使用 AI 辅助（ChatGPT/Claude）进行头脑风暴和脚本优化。你的脚本将直接用于后续的分镜设计和 AI 画面生成。'
+    },
+    task: {
+      title: '撰写 30 秒 AI 求职短视频脚本',
+      steps: [
+        '确定脚本主题：围绕"AI 如何帮你找到理想工作"或"应届生如何用 AI 提升求职竞争力"',
+        '使用 <strong>AIDA 结构</strong>（Attention 注意→Interest 兴趣→Desire 欲望→Action 行动）搭建脚本框架',
+        '拆分为 5-6 个场景，标注每个场景的旁白/对白文字',
+        '控制总字数 80-120 字（30秒正常语速约 100 字）',
+        '用 AI 工具优化脚本的节奏和感染力'
+      ],
+      output: '30秒短视频脚本（文字格式）'
+    },
+    resources: [
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', name: 'AIDA脚本结构模板.pdf', type: 'PDF', action: 'download' },
+      { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', name: '30秒短视频脚本范例×5', type: '文档', action: 'link' },
+      { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="7" width="18" height="13" rx="2"/><line x1="12" y1="3" x2="12" y2="7"/><circle cx="8" cy="13" r="1"/><circle cx="16" cy="13" r="1"/><line x1="8" y1="17" x2="16" y2="17"/></svg>', name: 'AI脚本优化Prompt模板', type: '模板', action: 'copy', copyText: '你是一位资深短视频编导。请帮我优化以下30秒短视频脚本，使其更具感染力和节奏感。要求：①开头3秒有钩子 ②每10秒一个信息点 ③结尾有CTA。脚本如下：\n\n[粘贴你的脚本]' }
+    ],
+    workType: 'text',
+    workPlaceholder: '请在此撰写你的 30 秒短视频脚本...\n\n格式参考：\n【场景1 · 0-5秒】\n画面描述：...\n旁白：...\n\n【场景2 · 5-10秒】\n画面描述：...\n旁白：...\n\n...\n\n【总字数：约100字】',
+    modelAnswer: {
+      text: '<h4>范本：30秒AI求职短视频脚本</h4><p><strong>【场景1 · 0-5秒】</strong><br>画面：黑底弹出"投了50份简历，0个面试？"<br>旁白：「你是不是也这样——投了几十份简历，一个面试都没有？」</p><p><strong>【场景2 · 5-12秒】</strong><br>画面：快切 3 个场景——HR 看简历(皱眉)/你的简历(文字堆砌)/AI 图标出现<br>旁白：「问题不是你的能力，是 HR 看不到你做了什么」</p><p><strong>【场景3 · 12-22秒】</strong><br>画面：展示 AI 生成的作品集页面滚动，标注"项目证据卡""简历表达""视频作品"<br>旁白：「这是我的 AI 求职作品集——包含项目证据、技能标签、还有这段视频本身」</p><p><strong>【场景4 · 22-30秒】</strong><br>画面：回到人物正脸，字幕"你的AI求职作品集，从第一条视频开始"<br>旁白：「你也可以。点击下方链接，免费生成你的第一份 AI 求职作品集」</p>',
+      takeaways: ['30秒约100字 — 每个字都要经过"删还是留"的考验','AIDA公式：用痛点做钩子(Attention)→用信息做兴趣(Interest)→用案例做欲望(Desire)→用免费做行动(Action)','好脚本的特征：能让人在没画面的情况下，光听文字就被吸引']
+    }
+  },
+  { // Module 3 - CORE
+    num: '3', title: '分镜设计 + 画面提示词工程', time: '~50 mins', type: 'aigc_core',
+    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><circle cx="12" cy="12" r="4"/></svg>', skills: ['分镜设计','Prompt Engineering','AI画面控制'],
+    context: {
+      text: '<strong>这是 AIGC 短视频创作最核心的模块。</strong>你将把 Module 2 的脚本转化为可视化的分镜表，并为每个场景撰写用于 AI 视频生成的 Prompt。好的 Prompt 是 AI 视频质量的 80%——画面风格、光线、镜头语言、动作描述，每个细节都影响最终效果。'
+    },
+    task: {
+      title: '设计分镜表 + 撰写 AI 画面 Prompt',
+      steps: [
+        '将你的脚本拆分为 5-6 个分镜场景',
+        '为每个场景设计：<strong>画面描述 + AI Prompt + 参考风格 + 时长 + 镜头语言</strong>',
+        '使用 Prompt 要素检查表确保每个 Prompt 包含：画面风格、主体描述、动作/场景、光线/色调、镜头语言',
+        '在 Prompt 工作区中迭代优化，记录每次迭代的变化'
+      ],
+      output: '完整分镜表 + 每个场景的 AI Prompt + 迭代记录'
+    },
+    resources: [
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', name: '分镜设计模板.pptx', type: 'PPT', action: 'download' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>', name: 'Prompt要素检查表', type: 'PDF', action: 'download' },
+      { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><circle cx="12" cy="12" r="4"/></svg>', name: '视觉风格参考库 (20种风格)', type: '链接', action: 'link' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>', name: 'Prompt关键词词典：镜头/光线/风格', type: 'PDF', action: 'download' }
+    ],
+    aigcToolbox: true,
+    workType: 'storyboard',
+    modelAnswer: {
+      text: '<h4>范本分镜表（部分展示）</h4><p><strong>Scene 1 | 时长 5s | 镜头：固定特写</strong><br>Prompt: "Cinematic close-up shot of a phone screen displaying a job application portal with red rejection notifications, cold blue office lighting, shallow depth of field, 35mm film texture"</p><p><strong>Scene 2 | 时长 7s | 镜头：快速切换 montage</strong><br>Prompt: "Fast montage of 3 shots: 1)HR scrolling through resumes with tired expression, 2)over-the-shoulder shot of text-heavy resume, 3)glowing AI icon appearing on screen, warm transition lighting, dynamic pacing"</p><p><strong>Scene 4 | 时长 8s | 镜头：中景→近景推拉</strong><br>Prompt: "Medium shot slowly pushing into close-up of confident young professional speaking to camera, modern co-working space background, golden hour sunlight through windows, warm skin tones, cinematic color grading"</p>',
+      takeaways: ['Prompt 6要素：风格(cinematic/realistic) + 主体(who/what) + 动作(doing what) + 场景(where) + 光线(lighting) + 镜头(shot type)','每个要素都是"可选但强烈建议"——缺的越多,AI自行发挥的空间越大,效果越不可控','分镜之间的"视觉一致性"很重要：用统一的风格描述(如 cinematic, 35mm)串联所有分镜']
+    }
+  },
+  { // Module 4
+    num: '4', title: 'AI 视频生成实操', time: '~60 mins', type: 'aigc_gen',
+    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="7" width="18" height="13" rx="2"/><line x1="12" y1="3" x2="12" y2="7"/><circle cx="8" cy="13" r="1"/><circle cx="16" cy="13" r="1"/><line x1="8" y1="17" x2="16" y2="17"/></svg>', skills: ['AI视频工具使用','Prompt迭代','效果评估'],
+    context: {
+      text: '现在进入实战环节！你将使用外部 AI 视频工具（Runway / 可灵 / 即梦 / Pika）将分镜 Prompt 转化为实际画面。<strong>因为 AI 视频生成在外部工具完成，你需要：打开工具 → 输入 Prompt → 生成 → 下载结果 → 回到本页面上传。</strong>每个场景可能需要 3-5 次迭代才能达到满意效果。'
+    },
+    task: {
+      title: '使用 AI 工具生成视频素材',
+      steps: [
+        '选择一个 AI 视频工具（推荐 Runway Gen-3 或可灵 AI）',
+        '将 Module 3 的 Prompt 逐个输入到 AI 工具中生成视频',
+        '每次生成后评估效果，记录 Prompt 调整和生成结果',
+        '下载满意的生成结果，回到本页面上传',
+        '在"创作过程记录"中填写：使用的工具、迭代次数、关键调整'
+      ],
+      output: 'AI 生成的视频素材文件 + 创作过程记录'
+    },
+    resources: [
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', name: 'Runway Gen-3 → 打开工具', type: '外链', action: 'link' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', name: '可灵 AI → 打开工具', type: '外链', action: 'link' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', name: '即梦 AI → 打开工具', type: '外链', action: 'link' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>', name: 'Prompt → AI工具一键复制模板', type: '模板', action: 'copy', copyText: '将你在 Module 3 撰写的 Prompt 粘贴到上方工具中使用' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>', name: 'Runway新手5分钟上手指南', type: 'PDF', action: 'download' }
+    ],
+    aigcToolbox: true,
+    workType: 'video_upload',
+    modelAnswer: {
+      text: '<h4>范本创作过程记录</h4><p><strong>使用工具：</strong>Runway Gen-3</p><p><strong>迭代次数：</strong>Scene 1: 3次 | Scene 2: 4次 | Scene 3: 2次 | Scene 4: 3次</p><p><strong>关键调整记录：</strong></p><ul><li>Scene 1 v1→v2：原 Prompt 没有指定 lighting，画面偏灰。加入"cold blue office lighting"后氛围感大幅提升</li><li>Scene 2 v2→v3：画面切换速度太慢，在 Prompt 中加入"fast montage, dynamic pacing"关键词</li><li>Scene 4 v1→v2：人物面部光线不均匀，加入"golden hour sunlight + warm skin tones"解决</li></ul>',
+      takeaways: ['AI视频生成不是一键出片 — 每个场景平均需要3次迭代','Prompt调整是"假设→实验→判断"的科学过程，每次只改1-2个变量','选工具考虑：Runway画质最好/可灵中文理解强/即梦免费额度多 — 按需选择']
+    }
+  },
+  { // Module 5
+    num: '5', title: '剪辑与成片', time: '~45 mins', type: 'aigc_gen',
+    icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="8.6" y1="8.6" x2="19" y2="19"/><line x1="8.6" y1="15.4" x2="19" y2="5"/></svg>', skills: ['视频剪辑','节奏控制','音效配乐'],
+    context: {
+      text: '素材准备就绪后，进入最后的剪辑合成环节。使用剪映/Premiere/任何你熟悉的剪辑工具，将 AI 生成的素材片段、旁白配音、背景音乐和字幕合成为一条完整的 30 秒短视频。'
+    },
+    task: {
+      title: '剪辑合成最终成片',
+      steps: [
+        '将 AI 生成的视频素材按分镜顺序排列到时间轴',
+        '录制或使用 TTS 生成旁白配音',
+        '添加背景音乐（注意版权，推荐使用免版权音乐）',
+        '添加字幕和标题文字',
+        '控制总时长在 28-32 秒之间',
+        '导出为 MP4 格式（1080p 以上）'
+      ],
+      output: '最终成片 MP4 文件'
+    },
+    resources: [
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>', name: '剪映专业版 → 下载', type: '外链', action: 'link' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', name: '免版权背景音乐包', type: 'ZIP', action: 'download' },
+      { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', name: 'TTS旁白生成工具推荐', type: '链接', action: 'link' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21.3 15.3a1 1 0 0 1 0 1.4l-2.6 2.6a1 1 0 0 1-1.4 0L3.7 5.7a1 1 0 0 1 0-1.4l2.6-2.6a1 1 0 0 1 1.4 0z"/><polyline points="12.5 9 15 11.5"/></svg>', name: '短视频字幕规范指南', type: 'PDF', action: 'download' }
+    ],
+    workType: 'video_upload',
+    modelAnswer: {
+      text: '<h4>范本成片要点</h4><p><strong>成片结构：</strong>钩子(0-5s) → 痛点展示(5-12s) → 解决方案(12-22s) → CTA(22-30s)</p><p><strong>技术参数：</strong>1080p 竖屏(9:16)、30fps、AAC音频</p><p><strong>剪辑节奏：</strong>前5秒快节奏(1秒/镜头)→中间正常节奏(3-4秒/镜头)→结尾慢下来(强调CTA)</p>',
+      takeaways: ['竖屏9:16是短视频标准 — 不要在横屏视频里投入时间','音乐节奏决定剪辑节奏 — 先选音乐再剪画面','字幕不要超过屏幕宽度的80% — 留出呼吸空间']
+    }
+  },
+  { // Module 6
+    num: '6', title: '发布复盘 + 数据解读', time: '~30 mins', type: 'finish',
+    icon: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4l2.25-2.25M15 12h5l-2.25 2.25"/></svg>', skills: ['内容发布','数据分析','复盘总结'],
+    context: {
+      text: '恭喜你完成了一条完整的 AI 短视频！最后一个模块是发布和复盘——<strong>将你的作品发布到社交平台，观察数据反馈，并撰写一份创作复盘报告。</strong>这不仅是训练营的结束，更是你的 AI 求职作品集正式对外展示的起点。'
+    },
+    task: {
+      title: '发布作品 + 撰写复盘报告',
+      steps: [
+        '将成片发布到你选择的社交平台（小红书/抖音/B站/视频号）',
+        '撰写发布文案（包含话题标签#AI求职作品集 #AIGC短视频）',
+        '记录发布 24 小时内的数据（播放量/点赞/评论/分享）',
+        '撰写创作复盘：<strong>① 做得好的 ② 可改进的 ③ 下次会不同的做法</strong>'
+      ],
+      output: '发布链接 + 创作复盘报告'
+    },
+    resources: [
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>', name: '各平台发布攻略合集', type: '链接', action: 'link' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>', name: '创作复盘模板.docx', type: '文档', action: 'download' },
+      { icon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>', name: '高流量话题标签库', type: 'PDF', action: 'download' }
+    ],
+    workType: 'text',
+    workPlaceholder: '请提交你的发布链接和创作复盘...\n\n一、发布信息\n- 发布平台：\n- 发布链接：\n- 话题标签：\n\n二、数据表现（发布24h后填写）\n- 播放量：\n- 点赞/评论/分享：\n\n三、创作复盘\n① 做得好的：\n② 可改进的：\n③ 下次会不同的做法：\n\n四、整体收获\n...',
+    modelAnswer: {
+      text: '<h4>范本创作复盘（关键部分）</h4><p><strong>做得好的：</strong>① 开头"投了50份简历0面试"的痛点钩子引发大量共情评论 ② 作品集页面的展示增强了可信度 ③ AI画面风格统一，视觉品质感强</p><p><strong>可改进的：</strong>① 中间信息密度可以更高—12-22秒放了3个信息点但节奏偏慢 ② BGM音量略大盖过了旁白 ③ CTA没有明确引导"点击主页链接"的行动指令</p><p><strong>下次不同做法：</strong>先做A/B测试两个版本的开头钩子再决定；BGM和人声的比例先在3个设备上试听</p>',
+      takeaways: ['发布不是结束而是开始 — 数据反馈是你下一次创作的起点','复盘的核心不是"找问题"而是"找到可复用的规律"','好的复盘 = 具体场景 + 具体判断 + 具体改进方案（不是"下次认真点"这种空话）']
+    }
+  }
+];
+
+// ===== Course Control =====
+function startLearning() {
+  closeModal();
+  courseProgress.currentModule = 0;
+  courseProgress.currentSub = 'learn';
+  courseProgress.completed = new Set();
+  courseProgress.submitted = {};
+  expandedModules.clear(); [0,1,2,3,4,5,6].forEach(i => expandedModules.add(i));
+  document.getElementById('courseView').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderCourseNav();
+  renderModuleContent(0, 'learn');
+}
+
+// Video placeholder click delegation
+document.getElementById('courseContent').addEventListener('click', function(e) {
+  var target = e.target.closest('.video-placeholder');
+  if (!target) return;
+  var modTitle = document.getElementById('courseTopbarTitle').textContent.replace('Module ','').split(': ')[1] || '';
+  target.innerHTML = '<div class="video-placeholder-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></div><div class="video-placeholder-text">正在播放：' + modTitle + ' 介绍视频</div><div style="font-size:11px;color:var(--text-muted);">视频来源：NexAI AIGC 教研团队</div>';
+});
+
+function exitCourse() {
+  if (courseProgress.completed.size > 0 && !confirm('确定退出课程吗？你的学习进度已自动保存。')) return;
+  document.getElementById('courseView').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+const subLabels = [
+  { key: 'learn', label: '课程学习', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>' },
+  { key: 'task', label: '作业任务', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>' },
+  { key: 'tools', label: '工具箱', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>' }
+];
+
+function renderCourseNav() {
+  const nav = document.getElementById('courseNav');
+  let html = '';
+  modules.forEach((m, i) => {
+    const isExpanded = expandedModules.has(i);
+    const isActive = courseProgress.currentModule === i;
+    const isDone = courseProgress.completed.has(i);
+    html += `
+      <div class="course-nav-primary" data-mod="${i}">
+        <div class="course-nav-item nav-primary${isActive ? ' active' : ''}${isDone ? ' completed' : ''}"
+             onclick="toggleModule(${i})">
+          <span class="course-nav-arrow" style="display:inline-block;width:16px;text-align:center;transition:transform 0.2s;${isExpanded?'transform:rotate(90deg)':''}">▸</span>
+          <span class="course-nav-num">${m.num}</span>
+          <span style="flex:1">${m.title}</span>
+          ${isDone ? '<span class="course-nav-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>' : ''}
+        </div>`;
+    if (isExpanded) {
+      html += '<div class="course-nav-subs">';
+      subLabels.forEach(sl => {
+        const isSubActive = isActive && courseProgress.currentSub === sl.key;
+        html += `
+          <div class="course-nav-sub${isSubActive ? ' active' : ''}"
+               onclick="event.stopPropagation();selectSubModule(${i},'${sl.key}')">
+            <span style="margin-right:6px;">${sl.icon}</span>${sl.label}
+          </div>`;
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+  // Finish line
+  html += `
+    <div style="margin-top:8px;border-top:1px solid var(--border);padding-top:16px;">
+      <div class="course-nav-item${courseProgress.currentModule === 7 ? ' active' : ''}${courseProgress.completed.size === 7 ? ' completed' : ''}"
+           onclick="navigateFinish()">
+        <span class="course-nav-num"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></span>
+        <span style="flex:1">完成 & 证书</span>
+      </div>
+    </div>`;
+  nav.innerHTML = html;
+  updateProgress();
+}
+
+function toggleModule(i) {
+  if (expandedModules.has(i)) {
+    expandedModules.delete(i);
+  } else {
+    expandedModules.add(i);
+  }
+  // If collapsing the active module, still keep it as current
+  renderCourseNav();
+}
+
+function selectSubModule(i, sub) {
+  courseProgress.currentModule = i;
+  courseProgress.currentSub = sub;
+  renderCourseNav();
+  renderModuleContent(i, sub);
+  document.getElementById('courseContent').scrollTop = 0;
+}
+
+function navigateFinish() {
+  courseProgress.currentModule = 7;
+  renderCourseNav();
+  renderFinishLine();
+  document.getElementById('courseContent').scrollTop = 0;
+}
+
+function updateProgress() {
+  const done = courseProgress.completed.size;
+  document.getElementById('courseProgressText').textContent = done + '/7';
+  document.getElementById('topbarProgress').textContent = done + '/7';
+  document.getElementById('courseProgressFill').style.width = (done / 7 * 100) + '%';
+}
+
+function navigateModule(i, sub) {
+  sub = sub || 'learn';
+  courseProgress.currentModule = i;
+  courseProgress.currentSub = sub;
+  renderCourseNav();
+  renderModuleContent(i, sub);
+  document.getElementById('courseContent').scrollTop = 0;
+}
+
+// ===== Module Rendering =====
+function renderModuleContent(i, sub) {
+  if (i === 7) { renderFinishLine(); return; }
+  const m = modules[i];
+  document.getElementById('courseTopbarTitle').textContent = 'Module ' + m.num + ': ' + m.title;
+  const content = document.getElementById('courseContent');
+  const submitted = courseProgress.submitted[i];
+  const subLabel = sub === 'learn' ? '课程学习' : sub === 'task' ? '作业任务' : '工具箱';
+
+  let html = `
+    <div class="module-block" style="background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(6,182,212,0.04));border-color:rgba(99,102,241,0.12);">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+        <span style="font-size:28px;">${m.icon}</span>
+        <div>
+          <h2 style="font-size:20px;font-weight:700;">Module ${m.num}: ${m.title}</h2>
+          <span style="font-size:12px;color:var(--text-muted);">⏱ ${m.time} · ${subLabel}</span>
+        </div>
+      </div>
+    </div>`;
+
+  if (sub === 'learn') html += renderLearnContent(m, i);
+  else if (sub === 'task') html += renderTaskContent(m, i, submitted);
+  else if (sub === 'tools') html += renderToolsContent(m, i);
+
+  content.innerHTML = html;
+}
+
+function renderLearnContent(m, i) {
+  return `
+    ${m.context.video ? `
+    <div class="module-block">
+      <div class="module-block-title"><span class="module-block-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span> 背景情境</div>
+      <div class="video-placeholder" data-video="${m.num}">
+        <div class="video-placeholder-icon"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8 5 19 12 8 19"/></svg></div>
+        <div class="video-placeholder-text">点击播放：${m.title}介绍视频（2-5分钟）</div>
+        <div style="font-size:11px;color:var(--text-muted);">由 NexAI AIGC 教研团队录制</div>
+      </div>
+      <p style="margin-top:16px;font-size:14px;color:var(--text-secondary);line-height:1.8;">${m.context.text}</p>
+    </div>
+    ` : `
+    <div class="module-block">
+      <div class="module-block-title"><span class="module-block-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span> 背景情境</div>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">${m.context.text}</p>
+    </div>
+    `}
+    <div class="module-block">
+      <div class="module-block-title"><span class="module-block-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg></span> 你的任务：${m.task.title}</div>
+      <ul class="task-checklist">
+        ${m.task.steps.map(s => '<li>'+s+'</li>').join('')}
+      </ul>
+      <p style="margin-top:14px;font-size:13px;color:var(--accent-light);"><strong>产出：</strong>${m.task.output}</p>
+    </div>`;
+}
+
+function renderTaskContent(m, i, submitted) {
+  if (submitted) {
+    return `
+    <div class="module-block" id="workArea">
+      <div class="module-block-title"><span class="module-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></span> 你的作答</div>
+      <div style="text-align:center;padding:20px 0;">
+        <div style="font-size:40px;margin-bottom:12px;">👏</div>
+        <div style="font-size:16px;font-weight:700;margin-bottom:4px;">任务已提交！</div>
+        <div style="font-size:13px;color:var(--text-muted);">你的作品已提交，下方是范本答案供对比学习</div>
+      </div>
+      <div class="model-answer">
+        <div class="model-answer-badge">📊 范本答案（由 NexAI AIGC 教研团队提供）</div>
+        <div class="model-answer-content">${m.modelAnswer.text}</div>
+        <div style="margin-top:20px;">
+          <div style="font-size:14px;font-weight:600;margin-bottom:12px;">💡 Key Takeaways</div>
+          <div class="key-takeaways">
+            ${m.modelAnswer.takeaways.map(t => '<div class="key-takeaway"><span class="key-takeaway-icon">💡</span>'+t+'</div>').join('')}
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px;justify-content:center;">
+        ${i < 6 ? '<button class="btn btn-primary" onclick="navigateModule('+(i+1)+')">继续下一模块 →</button>' : '<button class="btn btn-primary" onclick="navigateFinish()">🏁 查看证书 & 作品集 →</button>'}
+      </div>
+    </div>`;
+  }
+  return buildWorkArea(m, i);
+}
+
+function renderToolsContent(m, i) {
+  return `
+    <div class="module-block">
+      <div class="module-block-title"><span class="module-block-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span> 资源材料</div>
+      ${m.resources.map(r => {
+        let actionHtml = '';
+        if (r.action === 'copy') actionHtml = '<button class="resource-dl" style="background:var(--accent);border:none;cursor:pointer;" onclick="copyToClipboard(\''+r.copyText.replace(/'/g,"\\'")+'\')">📋 一键复制</button>';
+        else if (r.action === 'link') actionHtml = '<a href="#" class="resource-dl" >打开 →</a>';
+        else actionHtml = '<a href="#" class="resource-dl" >下载</a>';
+        return '<div class="resource-item"><span class="resource-icon">'+r.icon+'</span><span class="resource-name">'+r.name+'</span><span class="resource-type">'+r.type+'</span>'+actionHtml+'</div>';
+      }).join('')}
+      ${m.aigcToolbox ? renderAigcToolbox(i) : ''}
+    </div>`;
+}
+
+// buildWorkArea moved out as standalone
+function buildWorkArea(m, i) {
+  if (m.workType === 'quiz') {
+    const qs = m.quizQuestions;
+    return '<div class="module-block"><div class="module-block-title"><span class="module-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></span> 你的作答</div>'
+      + '<p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">请回答以下问题，检验你对本模块的理解：</p>'
+      + qs.map((q, qi) => '<div class="quiz-q"><div class="quiz-q-title">'+(qi+1)+'. '+q.q+'</div><div class="quiz-options">'+q.opts.map((opt, oi) => '<button class="quiz-opt" data-q="'+qi+'" data-o="'+oi+'" onclick="selectModuleQuiz(this,'+qi+','+oi+')">'+opt+'</button>').join('')+'</div></div>').join('')
+      + '<div style="margin-top:16px;display:flex;gap:10px;"><button class="btn btn-primary" onclick="submitModuleQuiz('+i+')">提交答案 & 查看范本</button><span style="font-size:12px;color:var(--text-muted);align-self:center;">提交后不可修改</span></div></div>';
+  }
+  if (m.workType === 'storyboard') {
+    return '<div class="module-block"><div class="module-block-title"><span class="module-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></span> 你的作答</div>'
+      + '<p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">🎬 分镜编辑器 — 为每个场景填写画面描述和 AI Prompt</p>'
+      + '<div id="storyboardScenes">'
+      + [1,2,3,4,5].map(sn => '<div style="background:var(--bg-secondary);border-radius:var(--radius);padding:16px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><strong style="color:var(--accent-light);">Scene '+sn+'</strong><input placeholder="时长(秒)" style="width:70px;padding:6px 10px;background:var(--bg-primary);border:1px solid var(--border-light);border-radius:6px;color:var(--text-primary);font-size:12px;font-family:inherit;" class="scene-dur" value="'+(sn<=4?'5':'8')+'"><select style="padding:6px 10px;background:var(--bg-primary);border:1px solid var(--border-light);border-radius:6px;color:var(--text-primary);font-size:12px;font-family:inherit;" class="scene-shot">'+['特写 close-up','中景 medium shot','广角 wide shot','快速切换 montage','推拉 dolly zoom'].map(ss => '<option>'+ss+'</option>').join('')+'</select></div><textarea placeholder="画面描述..." class="work-editor scene-desc" style="min-height:60px;margin-bottom:8px;"></textarea><textarea placeholder="AI Prompt..." class="work-editor scene-prompt" style="min-height:50px;"></textarea></div>').join('')
+      + '</div>'
+      + '<button class="btn btn-outline btn-sm" onclick="addStoryboardScene()" style="margin-bottom:16px;">+ 添加场景</button>'
+      + '<div style="display:flex;gap:10px;"><button class="btn btn-primary" onclick="submitModuleWork('+i+',\x27storyboard\x27)">提交分镜 & 查看范本</button><button class="btn btn-outline btn-sm" >保存草稿</button></div></div>';
+  }
+  if (m.workType === 'video_upload') {
+    return '<div class="module-block"><div class="module-block-title"><span class="module-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></span> 你的作答</div>'
+      + '<p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">📤 上传你的创作成果</p>'
+      + '<div class="upload-zone"><div class="upload-zone-icon">📤</div><div class="upload-zone-text">拖拽视频文件到此处 或 点击上传</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">支持 .mp4, .mov · 最大 100MB</div></div>'
+      + '<div style="margin-top:16px;"><div style="font-size:13px;font-weight:600;margin-bottom:8px;">📝 创作过程记录（重要 — 面试时 HR 最看重这个）</div>'
+      + '<div style="display:flex;gap:10px;margin-bottom:10px;"><select class="form-select" style="flex:1;" id="toolUsed"><option value="">使用的 AI 工具</option><option>Runway Gen-3</option><option>可灵 AI</option><option>即梦 AI</option><option>Pika</option><option>Sora</option><option>其他</option></select><input class="form-input" style="flex:1;" placeholder="Prompt 迭代次数" id="iterCount"></div>'
+      + '<textarea class="work-editor" placeholder="迭代过程简述..." style="min-height:120px;" id="iterNotes"></textarea></div>'
+      + '<div style="margin-top:16px;display:flex;gap:10px;"><button class="btn btn-primary" onclick="submitModuleWork('+i+',\x27video_upload\x27)">提交作品 & 查看范本</button><button class="btn btn-outline btn-sm" >保存草稿</button></div></div>';
+  }
+  // text
+  return '<div class="module-block"><div class="module-block-title"><span class="module-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></span> 你的作答</div>'
+    + '<textarea class="work-editor" placeholder="'+(m.workPlaceholder||'请输入你的作答...')+'" style="min-height:250px;" id="textWork"></textarea>'
+    + '<div class="work-hint">💡 提示：你可以先保存草稿，随时回来继续编辑。提交后将解锁范本答案进行对比。</div>'
+    + '<div style="display:flex;gap:10px;margin-top:12px;"><button class="btn btn-primary" onclick="submitModuleWork('+i+',\x27text\x27)">提交 & 解锁范本答案</button><button class="btn btn-outline btn-sm" >保存草稿</button></div></div>';
+}
+// ===== Submission Handlers =====
+function submitModuleQuiz(i) {
+  const m = modules[i];
+  const qs = m.quizQuestions;
+  let correct = 0;
+  qs.forEach((q, qi) => {
+    const selected = document.querySelector(`.quiz-opt.selected[data-q="${qi}"]`);
+    if (selected && parseInt(selected.dataset.o) === q.ans) correct++;
+  });
+  const score = Math.round(correct / qs.length * 100);
+  courseProgress.submitted[i] = { type: 'quiz', score };
+  courseProgress.completed.add(i);
+  renderModule(i);
+  renderCourseNav();
+  showToast("测验完成");
+}
+
+function submitModuleWork(i, type) {
+  courseProgress.submitted[i] = { type };
+  courseProgress.completed.add(i);
+  renderModuleContent(i, courseProgress.currentSub);
+  renderCourseNav();
+  showToast("任务已提交");
+}
+
+function selectModuleQuiz(el, qi, oi) {
+  el.parentElement.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function addStoryboardScene() {
+  const container = document.getElementById('storyboardScenes');
+  if (!container) return;
+  const sn = container.children.length + 1;
+  const div = document.createElement('div');
+  div.style.cssText = 'background:var(--bg-secondary);border-radius:var(--radius);padding:16px;margin-bottom:12px;';
+  div.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+      <strong style="color:var(--accent-light);">Scene ${sn}</strong>
+      <input placeholder="时长(秒)" style="width:70px;padding:6px 10px;background:var(--bg-primary);border:1px solid var(--border-light);border-radius:6px;color:var(--text-primary);font-size:12px;font-family:inherit;" value="5">
+      <select style="padding:6px 10px;background:var(--bg-primary);border:1px solid var(--border-light);border-radius:6px;color:var(--text-primary);font-size:12px;font-family:inherit;">
+        ${['特写 close-up','中景 medium shot','广角 wide shot','快速切换 montage','推拉 dolly zoom'].map(ss => `<option>${ss}</option>`).join('')}
+      </select>
+    </div>
+    <textarea placeholder="画面描述..." class="work-editor" style="min-height:60px;margin-bottom:8px;"></textarea>
+    <textarea placeholder="AI Prompt..." class="work-editor" style="min-height:50px;"></textarea>
+  `;
+  container.appendChild(div);
+}
+
+// ===== Finish Line =====
+function renderFinishLine() {
+  document.getElementById('courseTopbarTitle').innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="vertical-align:middle;margin-right:4px;"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>完成 & 证书';
+  const content = document.getElementById('courseContent');
+  const now = new Date().toLocaleDateString('zh-CN');
+  const certId = 'NEX-AIGC-' + Date.now().toString(36).toUpperCase();
+  content.innerHTML = `
+    <div style="text-align:center;padding:20px 0;">
+      <div style="font-size:64px;margin-bottom:16px;">🎉</div>
+      <h2 style="font-size:28px;font-weight:800;margin-bottom:8px;">恭喜完成训练营！</h2>
+      <p style="color:var(--text-secondary);margin-bottom:32px;">你已成功完成 <strong>AIGC 短视频创作</strong> 7 模块训练营</p>
+    </div>
+
+    <!-- ====== Portfolio Showcase ====== -->
+    <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius-xl);padding:40px 36px;margin-bottom:24px;box-shadow:var(--shadow-md);max-width:720px;margin-left:auto;margin-right:auto;">
+      <!-- Header -->
+      <div style="text-align:center;border-bottom:2px solid rgba(0,0,0,0.06);padding-bottom:20px;margin-bottom:24px;">
+        <div style="font-size:18px;font-weight:800;letter-spacing:0.06em;color:var(--accent-light);margin-bottom:6px;">AI 求职作品集</div>
+        <div style="font-size:20px;font-weight:700;color:var(--text-primary);">AIGC 短视频创作实训</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">${(state.name || '学员')} · ${now}</div>
+      </div>
+
+      <!-- 实训背景 -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+          <span style="display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px;flex-shrink:0;"></span>实训背景
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:10px;background:var(--bg-secondary);border-radius:10px;padding:12px 16px;">
+            <span style="font-weight:700;font-size:14px;color:var(--accent-light);">iCAN</span>
+            <span style="color:var(--text-muted);font-size:12px;">×</span>
+            <span style="font-weight:600;font-size:14px;color:#00be06;">爱奇艺 iQIYI</span>
+          </div>
+          <span style="font-size:13px;color:var(--text-secondary);">联名举办的 AI 短视频创作实训活动</span>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.6;">本次实训旨在培养学员使用 AI 工具完成短视频从创意到成片的完整制作流程，涵盖爆款拆解、脚本撰写、分镜设计、AI 画面生成、剪辑合成与发布复盘六大核心环节。</p>
+      </div>
+
+      <!-- 创作过程 -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+          <span style="display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px;flex-shrink:0;"></span>创作过程
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+          ${[
+            {m:'M0',t:'岗位认知',o:'完成岗位问卷',s:'✓',g:['#f5f3ff','#ede9fe'],c:'#4c1d95',tc:'#4c1d95',
+             w:'了解AIGC短视频编导岗位职责，熟悉AI视频工具生态（Runway/可灵/即梦/Pika），完成3道岗位认知测验并全部答对。'},
+            {m:'M1',t:'爆款拆解',o:'5要素拆解分析',s:'✓',g:['#ede9fe','#ddd6fe'],c:'#5b21b6',tc:'#5b21b6',
+             w:'选取抖音爆款视频进行5要素拆解。选题钩子触发共鸣痛点，开头3秒信息冲击制造悬念，情绪4段弧线精准控制。'},
+            {m:'M2',t:'脚本创作',o:'AIDA结构脚本',s:'✓',g:['#ddd6fe','#c4b5fd'],c:'#6d28d9',tc:'#6d28d9',
+             w:'撰写30秒求职向短视频脚本（约100字）。4个场景按AIDA结构编排，从痛点钩子到CTA引导一气呵成。'},
+            {m:'M3',t:'分镜+Prompt',o:'6场景分镜表',s:'✓',g:['#c4b5fd','#a78bfa'],c:'#7c3aed',tc:'#fff',
+             w:'设计6场景分镜表，每场景含画面描述、AI Prompt、镜头语言和时长。统一使用cinematic/35mm风格。'},
+            {m:'M4',t:'AI视频生成',o:'视频素材+迭代记录',s:'✓',g:['#a78bfa','#8b5cf6'],c:'#8b5cf6',tc:'#fff',
+             w:'使用Runway Gen-3逐场景生成，每场景3-4次迭代优化。保留所有Prompt变更和生成截图作为过程证据。'},
+            {m:'M5',t:'剪辑成片',o:'30秒最终成片',s:'✓',g:['#8b5cf6','#6d28d9'],c:'#7c3aed',tc:'#fff',
+             w:'剪映合成6段AI素材+配音+BGM+字幕。1080p竖屏9:16，节奏前快中稳后慢，BGM与人声比例精心调校。'}
+          ].map((item,i) => `
+            <div style="background:linear-gradient(135deg,${item.g[0]},${item.g[1]});border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+              <div style="padding:14px 14px 0 14px;">
+                <span style="display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px;background:${item.c};color:#fff;">${item.m}</span>
+                <div style="font-size:13px;font-weight:700;color:${item.tc};margin-top:8px;">${item.t}</div>
+                <div style="font-size:11px;color:${item.tc};opacity:0.65;margin-top:2px;">${item.o}</div>
+              </div>
+              <div style="padding:10px 14px 14px 14px;flex:1;">
+                <p style="font-size:11px;color:${item.tc};line-height:1.65;margin:0;opacity:0.85;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;">${item.w}</p>
+              </div>
+              <div style="padding:8px 14px;border-top:1px solid ${item.tc === '#fff' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.06)'};display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:10px;color:${item.tc};opacity:0.5;">作业已提交</span>
+                <span style="color:#10b981;font-size:10px;font-weight:600;">${item.s}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 最终成品 -->
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+          <span style="display:inline-block;width:4px;height:16px;background:var(--accent);border-radius:2px;flex-shrink:0;"></span>最终成品
+        </div>
+        <div style="aspect-ratio:16/9;background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"><polygon points="8 5 19 12 8 19"/></svg>
+          <span style="color:rgba(255,255,255,0.6);font-size:13px;">30秒 AI 短视频 —「投了50份简历，0个面试？」</span>
+          <span style="color:rgba(255,255,255,0.3);font-size:11px;">运行时长 00:30 · 1080p · 竖屏 9:16</span>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px;font-size:11px;color:var(--text-muted);">
+          <span>工具：Runway Gen-3 + 剪映</span>
+          <span>平均迭代：3次/场景</span>
+          <span>发布平台：小红书</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certificate -->
+    <div class="cert-preview" style="margin-bottom:24px;">
+      <div class="cert-seal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><text x="12" y="17" text-anchor="middle" font-size="12" fill="currentColor" stroke="none">5</text></svg></div>
+      <div class="cert-title">CERTIFICATE OF COMPLETION</div>
+      <div class="cert-subtitle">AIGC 短视频创作训练营结业证书</div>
+      <div class="cert-name" id="certName">${(state.name || '学员').toUpperCase()}</div>
+      <div class="cert-body">
+        兹证明该学员已独立完成 <strong>AIGC 短视频创作</strong> 全部 7 个模块的学习任务，包括：爆款拆解、脚本创作、分镜设计、Prompt 工程、AI 视频生成和剪辑成片，具备 AI 短视频编导基础创作能力。
+      </div>
+      <div class="cert-meta">
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> 完成日期<strong>${now}</strong></span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3l-3 4h3"/></svg> 证书编号<strong style="font-family:monospace;">${certId}</strong></span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 技能等级<strong>T2 AI创作</strong></span>
+      </div>
+    </div>
+
+    <!-- Skills Recap -->
+    <div class="module-block">
+      <div class="module-block-title"><span class="module-block-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg></span> 技能收获总结</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        ${['爆款视频拆解','AIDA脚本结构','分镜设计','Prompt Engineering','AI视频生成(Runway/可灵)','Prompt迭代优化','剪辑与节奏控制','发布文案撰写','数据分析','创作复盘'].map(s => `
+          <span style="font-size:12px;padding:6px 14px;border-radius:100px;background:rgba(16,185,129,0.1);color:var(--green);border:1px solid rgba(16,185,129,0.15);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ${s}</span>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Portfolio Publishing -->
+    <div class="module-block" style="border-color:rgba(99,102,241,0.2);">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+        <div>
+          <div class="module-block-title" style="margin-bottom:6px;"><span class="module-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="4" width="16" height="16" rx="2"/><polygon points="10 10 15 12 10 14 10 10"/><circle cx="19" cy="8" r="2"/><circle cx="19" cy="16" r="2"/></svg></span> 你的作品集已自动生成</div>
+          <p style="font-size:13px;color:var(--text-muted);margin:0;">你的创作全过程（脚本 · 分镜 · Prompt迭代 · 成片）已自动整合为 <strong style="color:var(--text-primary);">AI 求职作品集</strong></p>
+        </div>
+        <span style="font-size:12px;padding:6px 16px;border-radius:100px;background:rgba(16,185,129,0.08);color:var(--green);border:1px solid rgba(16,185,129,0.15);white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 全部模块已完成</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:12px;margin-bottom:24px;">
+        ${[
+          {icon:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>', label:'最终成片', desc:'30秒 AI 短视频'},
+          {icon:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><circle cx="12" cy="12" r="4"/></svg>', label:'分镜表', desc:'6 场景完整分镜'},
+          {icon:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>', label:'创作脚本', desc:'AIDA 结构脚本'},
+          {icon:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="7" width="18" height="13" rx="2"/><line x1="12" y1="3" x2="12" y2="7"/><circle cx="8" cy="13" r="1"/><circle cx="16" cy="13" r="1"/><line x1="8" y1="17" x2="16" y2="17"/></svg>', label:'AI Prompt', desc:'含迭代记录'}
+        ].map(item => `
+          <div style="background:var(--bg-secondary);border-radius:var(--radius);padding:16px 14px;display:flex;align-items:center;gap:10px;">
+            <div style="flex-shrink:0;width:40px;height:40px;border-radius:10px;background:rgba(99,102,241,0.08);display:flex;align-items:center;justify-content:center;color:var(--accent-light);">${item.icon}</div>
+            <div style="min-width:0;flex:1;">
+              <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.label}</div>
+              <div style="font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.desc}</div>
+            </div>
+            <span style="flex-shrink:0;font-size:10px;color:var(--green);white-space:nowrap;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 已收录</span>
+          </div>
+        `).join('')}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+        <button class="btn btn-primary"  style="white-space:nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> 下载证书</button>
+        <button class="btn btn-outline btn-sm" onclick="showToast('已复制')" style="white-space:nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> 复制作品集链接</button>
+        <button class="btn btn-outline btn-sm" onclick="copyResumeText()" style="white-space:nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg> 复制简历描述</button>
+        <button class="btn btn-outline btn-sm" style="background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.15);color:var(--amber);white-space:nowrap;" ><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> 申请点燃讲师</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--border);">
+        <span style="font-size:13px;color:var(--text-secondary);white-space:nowrap;display:flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> 分享到</span>
+        ${[
+          {icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="22" height="20" rx="2"/><line x1="8" y1="2" x2="8" y2="22"/></svg>', name:'小红书'},
+          {icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>', name:'抖音'},
+          {icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>', name:'微信'},
+          {icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', name:'B站'}
+        ].map(p => `
+          <a href="#" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--accent-light);text-decoration:none;padding:6px 16px;border-radius:100px;border:1px solid var(--border);transition:var(--transition);white-space:nowrap;" onclick="event.preventDefault()">${p.icon} ${p.name}</a>
+        `).join('')}
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:24px;">
+      <a href="#" class="btn btn-primary" style="font-size:16px;padding:16px 36px;" onclick="event.preventDefault();exitCourse();">升级我的 AI 求职作品集，完成一个可写进简历的 AI 项目 →</a>
+    </div>
+  `;
+  courseProgress.completed = new Set([0,1,2,3,4,5,6]);
+  updateProgress();
+  renderCourseNav();
+}
+
+function copyResumeText() {
+  const text = '【项目经历】独立完成1条30秒AI求职短视频的完整制作流程，包括：爆款视频5要素拆解、AIDA结构脚本撰写、6场景分镜设计、Runway/可灵AI画面生成（平均每场景3次Prompt迭代优化）、剪映剪辑合成与字幕添加。最终成片发布至小红书获得5000+曝光。通过该项目掌握了AI短视频编导的完整工作流程。';
+  navigator.clipboard?.writeText(text).then(() => showToast('已复制'));
+}
+
+// ===== Utilities =====
+function copyToClipboard(text) {
+  navigator.clipboard?.writeText(text);
+}
+
+function showToast(msg) {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  const t = document.createElement('div');
+  t.className = 'toast'; t.innerHTML = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// Esc to close
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('courseView').classList.contains('active')) exitCourse();
+    else closeModal();
+  }
+});
+</script>
+
+</body>
+</html>
