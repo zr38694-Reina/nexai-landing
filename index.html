@@ -570,6 +570,51 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
 }
 .task-checklist li::before { content: '○'; color: var(--text-muted); font-size: 14px; }
 
+/* Task page - Individual task blocks */
+.task-blocks { display: flex; flex-direction: column; gap: 20px; }
+.task-block {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 24px;
+}
+.task-block-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.task-block-num {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--accent); color: #fff; font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.task-block-title { font-size: 15px; font-weight: 700; line-height: 32px; }
+.task-block-desc {
+  font-size: 13px; color: var(--text-secondary); line-height: 1.7;
+  margin-bottom: 14px; padding-left: 44px;
+}
+.task-editor-wrapper {
+  border: 1px solid var(--border-light);
+  border-radius: 10px; overflow: hidden;
+}
+.task-mini-toolbar {
+  display: flex; gap: 4px; padding: 6px 10px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+.task-mini-toolbar-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; font-size: 11px; font-weight: 500;
+  color: var(--text-muted); background: transparent;
+  border: none; border-radius: 6px; cursor: pointer;
+  transition: all 0.15s ease;
+}
+.task-mini-toolbar-btn:hover {
+  background: var(--bg-card); color: var(--accent-light);
+}
+.task-mini-toolbar-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+.task-editor {
+  width: 100%; min-height: 160px; font-family: 'SF Mono', Monaco, Menlo, Consolas, monospace;
+  font-size: 13px; line-height: 1.8; padding: 16px; color: var(--text-primary);
+  background: var(--bg-card); border: none; resize: vertical; box-sizing: border-box;
+}
+.task-editor:focus { outline: none; }
+.task-editor::placeholder { color: var(--text-muted); }
+
 /* Task page - Table of Contents */
 .task-toc { display: flex; flex-direction: column; gap: 2px; }
 .task-toc-item {
@@ -1435,7 +1480,7 @@ const learningState = {
   showingIntro: false,   // for course intro page
   taskWorkTitle: '',     // 作品标题
   taskCoverUrl: '',      // 作品封面 (data URL)
-  taskContent: '',       // Markdown editor content
+  taskContents: ['', '', '', '', ''], // 5 task markdown editors
   taskCategory: '',      // 分类
   taskTags: [],          // 标签
   completedChapters: new Set(),
@@ -1666,7 +1711,7 @@ function startLearning() {
   learningState.taskSubmitted = false;
   learningState.taskWorkTitle = '';
   learningState.taskCoverUrl = '';
-  learningState.taskContent = '';
+  learningState.taskContents = ['', '', '', '', ''];
   learningState.taskCategory = '';
   learningState.taskTags = [];
   learningState.completedChapters = new Set();
@@ -2377,31 +2422,44 @@ function renderLearningChapter(ch) {
 
 function renderTaskChapter(ch) {
   var submitted = learningState.taskSubmitted;
-  var taskContent = learningState.taskContent || '';
+  var taskContents = learningState.taskContents || ['', '', '', '', ''];
   var taskTags = learningState.taskTags || [];
 
-  // ---- Left: Markdown editor ----
-  var editorHtml = '<div class="module-block" style="margin-bottom:0;">' +
-    '<div class="module-block-title"><span class="module-block-icon">📝</span> Markdown 编辑器</div>' +
-    (submitted ?
-      '<div class="task-submitted-badge" style="margin-bottom:12px;">✅ 已提交</div>' +
-      '<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:12px;padding:20px;font-size:13px;line-height:1.8;color:var(--text-secondary);white-space:pre-wrap;min-height:520px;">' + (taskContent || '（内容为空）') + '</div>' :
-      '<div class="editor-toolbar">' +
-        '<button class="editor-toolbar-btn" onclick="insertImageToEditor()" title="插入图片">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>' +
-          '图片' +
-        '</button>' +
-        '<button class="editor-toolbar-btn" onclick="insertVideoToEditor()" title="插入视频">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polygon points="10 8 16 12 10 16" fill="currentColor" stroke="none"/></svg>' +
-          '视频' +
-        '</button>' +
-        '<span class="editor-toolbar-divider"></span>' +
-        '<span style="font-size:11px;color:var(--text-muted);margin-left:auto;display:flex;align-items:center;">支持拖拽上传或点击上方按钮插入</span>' +
+  // ---- Left: Individual task blocks with per-task markdown editors ----
+  var editorHtml = '';
+  if (submitted) {
+    editorHtml += '<div class="task-submitted-badge" style="margin-bottom:12px;">✅ 已提交</div>';
+  }
+  editorHtml += '<div class="task-blocks">';
+  ch.tasks.forEach(function(task, i) {
+    var content = taskContents[i] || '';
+    editorHtml += '<div class="task-block">' +
+      '<div class="task-block-header">' +
+        '<span class="task-block-num">' + task.label + '</span>' +
+        '<span class="task-block-title">' + task.title + '</span>' +
       '</div>' +
-      '<textarea id="taskMarkdownEditor" class="has-toolbar" placeholder="请使用 Markdown 格式编写实训方案...&#10;&#10;### 行业与工具规划&#10;&#10;在此编写你的方案内容...&#10;&#10;### 原创短剧剧本创作&#10;&#10;在此编写你的方案内容...&#10;&#10;### 标准化分镜设计&#10;&#10;在此编写你的方案内容...&#10;&#10;### AI 视频生成与镜头优化&#10;&#10;在此编写你的方案内容...&#10;&#10;### 后期成片输出&#10;&#10;在此编写你的方案内容...">' + taskContent + '</textarea>') +
-  '</div>' +
-  '<input type="file" id="editorImageInput" accept="image/*" style="display:none;" onchange="handleEditorImageUpload(event)">' +
-  '<input type="file" id="editorVideoInput" accept="video/*" style="display:none;" onchange="handleEditorVideoUpload(event)">';
+      '<div class="task-block-desc">' + task.desc + '</div>' +
+      (submitted ?
+        '<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-secondary);white-space:pre-wrap;min-height:120px;">' + (content || '（未填写）') + '</div>' :
+        '<div class="task-editor-wrapper">' +
+          '<div class="task-mini-toolbar">' +
+            '<button class="task-mini-toolbar-btn" onclick="insertImageToEditor(' + i + ')" title="插入图片">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>' +
+              '图片' +
+            '</button>' +
+            '<button class="task-mini-toolbar-btn" onclick="insertVideoToEditor(' + i + ')" title="插入视频">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polygon points="10 8 16 12 10 16" fill="currentColor" stroke="none"/></svg>' +
+              '视频' +
+            '</button>' +
+          '</div>' +
+          '<textarea id="taskEditor' + i + '" class="task-editor" placeholder="请在此编写「' + task.title + '」的方案内容..." oninput="learningState.taskContents[' + i + ']=this.value">' + content + '</textarea>' +
+        '</div>') +
+    '</div>';
+  });
+  editorHtml += '</div>';
+  // Hidden inputs for image/video upload (shared, target set dynamically)
+  editorHtml += '<input type="file" id="editorImageInput" accept="image/*" style="display:none;" onchange="handleEditorImageUpload(event)">';
+  editorHtml += '<input type="file" id="editorVideoInput" accept="video/*" style="display:none;" onchange="handleEditorVideoUpload(event)">';
 
   // ---- Right: Metadata form ----
   var tagsHtml = submitted ? '' : tagInputHtml(taskTags);
@@ -2594,15 +2652,22 @@ function goToTask() {
 }
 
 function submitTask() {
-  var editor = document.getElementById('taskMarkdownEditor');
-  var taskContent = editor ? editor.value.trim() : '';
+  // Collect content from all 5 task editors
+  var taskContents = [];
+  var hasContent = false;
+  for (var i = 0; i < 5; i++) {
+    var editor = document.getElementById('taskEditor' + i);
+    var val = editor ? editor.value.trim() : (learningState.taskContents && learningState.taskContents[i] ? learningState.taskContents[i].trim() : '');
+    taskContents.push(val);
+    if (val) hasContent = true;
+  }
   var titleEl = document.getElementById('taskWorkTitle');
   var workTitle = titleEl ? titleEl.value.trim() : '';
-  if (!taskContent && !workTitle) {
-    showToast('请至少填写作品标题或方案内容再提交');
+  if (!hasContent && !workTitle) {
+    showToast('请至少填写作品标题或一项方案内容再提交');
     return;
   }
-  learningState.taskContent = taskContent;
+  learningState.taskContents = taskContents;
   learningState.taskWorkTitle = workTitle;
   learningState.taskCategory = document.getElementById('taskCategory') ? document.getElementById('taskCategory').value : '';
   learningState.taskSubmitted = true;
@@ -2615,8 +2680,11 @@ function submitTask() {
 }
 
 function saveTaskDraft() {
-  var editor = document.getElementById('taskMarkdownEditor');
-  if (editor) learningState.taskContent = editor.value;
+  // Save all 5 task editors
+  for (var i = 0; i < 5; i++) {
+    var editor = document.getElementById('taskEditor' + i);
+    if (editor) learningState.taskContents[i] = editor.value;
+  }
   var titleEl = document.getElementById('taskWorkTitle');
   if (titleEl) learningState.taskWorkTitle = titleEl.value.trim();
   var catEl = document.getElementById('taskCategory');
@@ -2626,11 +2694,15 @@ function saveTaskDraft() {
 }
 
 // ---- Editor upload helpers ----
-function insertImageToEditor() {
+var _activeTaskEditorIdx = 0;
+
+function insertImageToEditor(idx) {
+  if (typeof idx === 'number') _activeTaskEditorIdx = idx;
   document.getElementById('editorImageInput').click();
 }
 
-function insertVideoToEditor() {
+function insertVideoToEditor(idx) {
+  if (typeof idx === 'number') _activeTaskEditorIdx = idx;
   document.getElementById('editorVideoInput').click();
 }
 
@@ -2639,11 +2711,15 @@ function handleEditorImageUpload(event) {
   if (!file) return;
   if (!file.type.startsWith('image/')) { showToast('请选择图片文件'); return; }
   if (file.size > 20 * 1024 * 1024) { showToast('图片文件不能超过 20MB'); return; }
+  var targetId = 'taskEditor' + _activeTaskEditorIdx;
   var reader = new FileReader();
   reader.onload = function(e) {
     var dataUrl = e.target.result;
     var md = '![图片: ' + file.name + '](' + dataUrl + ')';
-    insertTextAtCursor('taskMarkdownEditor', md);
+    insertTextAtCursor(targetId, md);
+    // Also update the in-memory content
+    var editor = document.getElementById(targetId);
+    if (editor && learningState.taskContents) learningState.taskContents[_activeTaskEditorIdx] = editor.value;
     showToast('图片已插入');
   };
   reader.readAsDataURL(file);
@@ -2655,11 +2731,15 @@ function handleEditorVideoUpload(event) {
   if (!file) return;
   if (!file.type.startsWith('video/')) { showToast('请选择视频文件'); return; }
   if (file.size > 100 * 1024 * 1024) { showToast('视频文件不能超过 100MB'); return; }
+  var targetId = 'taskEditor' + _activeTaskEditorIdx;
   var reader = new FileReader();
   reader.onload = function(e) {
     var dataUrl = e.target.result;
     var md = '[🎬 视频: ' + file.name + '](' + dataUrl + ')';
-    insertTextAtCursor('taskMarkdownEditor', md);
+    insertTextAtCursor(targetId, md);
+    // Also update the in-memory content
+    var editor = document.getElementById(targetId);
+    if (editor && learningState.taskContents) learningState.taskContents[_activeTaskEditorIdx] = editor.value;
     showToast('视频已插入');
     event.target.value = '';
   };
