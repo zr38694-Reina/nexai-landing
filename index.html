@@ -1086,13 +1086,7 @@ body.publish-mode .publish-page { display: flex; }
         <p style="color:var(--text-muted);font-size:14px;">已报名学员将在此展示，功能开发中</p>
       </div>
     </div>
-    <div class="course-tab-content" id="tab-homework" style="padding:20px 12px;overflow-y:auto;">
-      <div style="max-width:720px;margin:0 auto;text-align:center;padding:60px 0;">
-        <div style="font-size:48px;margin-bottom:16px;">📄</div>
-        <h3 style="font-size:18px;font-weight:700;margin-bottom:8px;">作业</h3>
-        <p style="color:var(--text-muted);font-size:14px;">实训作业将在此展示，功能开发中</p>
-      </div>
-    </div>
+    <div class="course-tab-content" id="tab-homework" style="padding:20px 12px;overflow-y:auto;"></div>
     <div class="course-tab-content" id="tab-progress" style="padding:20px 12px;overflow-y:auto;"></div>
     <div class="course-tab-content" id="tab-learn" style="position:relative;">
       <div class="course-learning-layout">
@@ -1483,6 +1477,10 @@ const learningState = {
   taskContents: ['', '', '', '', ''], // 5 task markdown editors
   taskCategory: '',      // 分类
   taskTags: [],          // 标签
+  homeworkName: '',      // 作业 - 姓名
+  homeworkSchool: '',    // 作业 - 学校
+  homeworkPhone: '',     // 作业 - 手机号
+  homeworkWork: '',      // 作业 - 关联作品
   completedChapters: new Set(),
   unlockedChapters: new Set([0]),  // chapter 0 is always unlocked
   startedChapters: new Set(),     // chapters the user has entered at least once
@@ -1743,8 +1741,107 @@ function switchCourseTab(tab) {
       renderChapterNav(); renderChapterContent();
     }
   }
+  if (tab === 'homework') renderHomeworkTab();
   if (tab === 'portfolio') renderPortfolioTab();
   if (tab === 'progress') renderProgressTab();
+}
+
+function renderHomeworkTab() {
+  var el = document.getElementById('tab-homework');
+  if (!el) return;
+
+  // Build options for associated work dropdown
+  var workOptions = '<option value="">请选择关联作品</option>';
+  // Add current course as an option
+  if (typeof state !== 'undefined' && state.direction >= 0 && directions[state.direction]) {
+    workOptions += '<option value="course:' + state.direction + '">📖 ' + directions[state.direction].name + ' 实训</option>';
+  }
+  // Add any submitted task titles
+  if (learningState.taskSubmitted && learningState.taskWorkTitle) {
+    workOptions += '<option value="task:' + learningState.taskWorkTitle + '">📝 ' + learningState.taskWorkTitle + '</option>';
+  }
+  // Add task content titles (first non-empty task content summarized)
+  if (learningState.taskContents && learningState.taskContents.length) {
+    var chaptersData = chapters.find(function(c) { return c.isTask; });
+    if (chaptersData && chaptersData.tasks) {
+      chaptersData.tasks.forEach(function(task, i) {
+        if (learningState.taskContents[i] && learningState.taskContents[i].trim()) {
+          workOptions += '<option value="task' + i + '">📝 实训任务: ' + task.title + '</option>';
+        }
+      });
+    }
+  }
+
+  var hw = learningState;
+  var submitted = hw.taskSubmitted;
+
+  el.innerHTML = '<div style="max-width:720px;margin:0 auto;">' +
+    '<div style="margin-bottom:24px;">' +
+      '<h3 style="font-size:20px;font-weight:700;margin-bottom:4px;">📄 作业信息</h3>' +
+      '<p style="font-size:13px;color:var(--text-muted);">请填写个人信息，证书将发放至此账号</p>' +
+    '</div>' +
+    '<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;">' +
+      '<div class="form-group">' +
+        '<label class="form-label">姓名 <span class="form-required">*</span></label>' +
+        '<input type="text" class="form-input" id="hwName" placeholder="请输入你的姓名" value="' + (hw.homeworkName || '') + '" maxlength="30" oninput="learningState.homeworkName=this.value">' +
+      '</div>' +
+      '<div class="form-group">' +
+        '<label class="form-label">学校 <span class="form-required">*</span></label>' +
+        '<input type="text" class="form-input" id="hwSchool" placeholder="请输入你的学校" value="' + (hw.homeworkSchool || '') + '" maxlength="50" oninput="learningState.homeworkSchool=this.value">' +
+      '</div>' +
+      '<div class="form-group">' +
+        '<label class="form-label">手机号 <span class="form-required">*</span></label>' +
+        '<input type="text" class="form-input" id="hwPhone" placeholder="请输入手机号" value="' + (hw.homeworkPhone || '') + '" maxlength="11" oninput="learningState.homeworkPhone=this.value">' +
+        '<div style="font-size:11px;color:var(--amber);margin-top:6px;display:flex;align-items:center;gap:4px;">' +
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
+          '证书将发放在此账号，请确保信息准确' +
+        '</div>' +
+      '</div>' +
+      '<div class="form-group">' +
+        '<label class="form-label">关联作品</label>' +
+        '<select class="form-select" id="hwWork" onchange="learningState.homeworkWork=this.value">' +
+          workOptions +
+        '</select>' +
+      '</div>' +
+      '<div style="display:flex;gap:12px;margin-top:24px;">' +
+        '<button class="btn btn-secondary" onclick="saveHomeworkDraft()" style="font-size:13px;padding:10px 24px;">保存草稿</button>' +
+        '<button class="btn btn-primary" onclick="submitHomework()" style="font-size:14px;padding:12px 28px;">提交作业信息</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+
+  // Set selected value for work dropdown after rendering
+  setTimeout(function() {
+    var sel = document.getElementById('hwWork');
+    if (sel && hw.homeworkWork) sel.value = hw.homeworkWork;
+  }, 0);
+}
+
+function saveHomeworkDraft() {
+  var nameEl = document.getElementById('hwName');
+  var schoolEl = document.getElementById('hwSchool');
+  var phoneEl = document.getElementById('hwPhone');
+  var workEl = document.getElementById('hwWork');
+  if (nameEl) learningState.homeworkName = nameEl.value.trim();
+  if (schoolEl) learningState.homeworkSchool = schoolEl.value.trim();
+  if (phoneEl) learningState.homeworkPhone = phoneEl.value.trim();
+  if (workEl) learningState.homeworkWork = workEl.value;
+  showToast('作业信息草稿已保存');
+}
+
+function submitHomework() {
+  // Sync from inputs first
+  saveHomeworkDraft();
+  var hw = learningState;
+  if (!hw.homeworkName || !hw.homeworkSchool || !hw.homeworkPhone) {
+    showToast('请填写姓名、学校、手机号后再提交');
+    return;
+  }
+  if (!/^1\d{10}$/.test(hw.homeworkPhone)) {
+    showToast('请输入正确的11位手机号');
+    return;
+  }
+  showToast('✅ 作业信息已提交！证书将发放至 ' + hw.homeworkPhone);
 }
 
 function renderDetailTab() {
