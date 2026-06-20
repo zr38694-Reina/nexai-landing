@@ -2441,24 +2441,24 @@ function renderLearningChapter(ch) {
 		    } else {
 		      // Single-select: enabled only when correct answer is chosen
 		      btnEnabled = !!(learningState.correctAnswers[chapterId] && learningState.correctAnswers[chapterId][qi]);
+		    }
 
-				// For the last question's submit button, require ALL questions to be answered correctly
-				if (isLastQ && btnEnabled) {
-				  for (var checkQi = 0; checkQi < quizLen; checkQi++) {
-				    var checkQ = ch.quiz[checkQi];
-				    if (checkQ.type === 'multiple') {
-				      var checkSel = learningState.multiSelectAnswers[chapterId] && learningState.multiSelectAnswers[chapterId][checkQi] ? learningState.multiSelectAnswers[chapterId][checkQi] : {};
-				      var allOk = checkQ.ans.every(function(ai) { return !!checkSel[ai]; });
-				      var anyWrong = checkQ.opts.some(function(_, oi) { return !!checkSel[oi] && checkQ.ans.indexOf(oi) === -1; });
-				      if (!allOk || anyWrong) { btnEnabled = false; break; }
-				    } else {
-				      if (!(learningState.correctAnswers[chapterId] && learningState.correctAnswers[chapterId][checkQi])) {
-				        btnEnabled = false;
-				        break;
-				      }
-				    }
-				  }
-				}
+		    // For the last question's submit button, require ALL questions to be answered correctly
+		    if (isLastQ && btnEnabled) {
+		      for (var checkQi = 0; checkQi < quizLen; checkQi++) {
+		        var checkQ = ch.quiz[checkQi];
+		        if (checkQ.type === 'multiple') {
+		          var checkSel = learningState.multiSelectAnswers[chapterId] && learningState.multiSelectAnswers[chapterId][checkQi] ? learningState.multiSelectAnswers[chapterId][checkQi] : {};
+		          var allOk = checkQ.ans.every(function(ai) { return !!checkSel[ai]; });
+		          var anyWrong = checkQ.opts.some(function(_, oi) { return !!checkSel[oi] && checkQ.ans.indexOf(oi) === -1; });
+		          if (!allOk || anyWrong) { btnEnabled = false; break; }
+		        } else {
+		          if (!(learningState.correctAnswers[chapterId] && learningState.correctAnswers[chapterId][checkQi])) {
+		            btnEnabled = false;
+		            break;
+		          }
+		        }
+		      }
 		    }
 
 		    var btnLabel, btnAction;
