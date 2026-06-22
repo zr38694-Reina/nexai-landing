@@ -2577,62 +2577,17 @@ function renderTaskChapter(ch) {
   editorHtml += '<input type="file" id="editorImageInput" accept="image/*" style="display:none;" onchange="handleEditorImageUpload(event)">';
   editorHtml += '<input type="file" id="editorVideoInput" accept="video/*" style="display:none;" onchange="handleEditorVideoUpload(event)">';
 
-  // ---- Right: Metadata form ----
-  var tagsHtml = submitted ? '' : tagInputHtml(taskTags);
 
-  var metaHtml = '<div class="module-block">' +
-    '<div class="module-block-title"><span class="module-block-icon">📋</span> 作品信息</div>' +
-    '<div class="form-group">' +
-      '<label class="form-label">作品标题 <span class="form-required">*</span></label>' +
-      '<input type="text" class="form-input" id="taskWorkTitle" placeholder="请输入作品标题" value="' + (learningState.taskWorkTitle || '') + '"' + (submitted ? ' disabled' : '') + ' oninput="learningState.taskWorkTitle=this.value;var c=document.getElementById(\'taskTitleCount\');if(c)c.textContent=this.value.length+\' / 100\';">' +
-      '<div class="form-hint" id="taskTitleCount">' + (learningState.taskWorkTitle ? learningState.taskWorkTitle.length : 0) + ' / 100</div>' +
-    '</div>' +
-    '<div class="form-group">' +
-      '<label class="form-label">作品封面</label>' +
-      '<div class="upload-zone" onclick="if(!' + submitted + '){document.getElementById(\'taskCoverInput\').click();}" style="' + (submitted ? 'pointer-events:none;opacity:0.6;' : '') + '">' +
-        (learningState.taskCoverUrl ?
-          '<img src="' + learningState.taskCoverUrl + '" style="max-width:100%;max-height:160px;border-radius:8px;margin-bottom:4px;">' +
-          '<div style="font-size:11px;color:var(--text-muted);">点击更换封面</div>' :
-          '<div class="upload-zone-icon">+</div>' +
-          '<div class="upload-zone-text">上传封面</div>') +
-        '<input type="file" id="taskCoverInput" accept="image/*" style="display:none;" onchange="handleTaskCoverUpload(event)"' + (submitted ? ' disabled' : '') + '>' +
-      '</div>' +
-    '</div>' +
-    '<div class="form-group">' +
-      '<label class="form-label">分类 <span class="form-required">*</span></label>' +
-      '<select class="form-select" id="taskCategory"' + (submitted ? ' disabled' : '') + ' onchange="learningState.taskCategory=this.value">' +
-        '<option value="">选择分类</option>' +
-        '<option value="short-drama"' + (learningState.taskCategory === 'short-drama' ? ' selected' : '') + '>短剧</option>' +
-        '<option value="commercial"' + (learningState.taskCategory === 'commercial' ? ' selected' : '') + '>商业广告</option>' +
-        '<option value="social"' + (learningState.taskCategory === 'social' ? ' selected' : '') + '>社交媒体</option>' +
-        '<option value="narrative"' + (learningState.taskCategory === 'narrative' ? ' selected' : '') + '>剧情叙事</option>' +
-        '<option value="other"' + (learningState.taskCategory === 'other' ? ' selected' : '') + '>其他</option>' +
-      '</select>' +
-    '</div>' +
-    '<div class="form-group">' +
-      '<label class="form-label">标签</label>' +
-      tagsHtml +
-    '</div>' +
-    '<div class="form-group">' +
-      '<label class="form-label">附件</label>' +
-      '<div class="upload-zone" style="' + (submitted ? 'pointer-events:none;opacity:0.6;' : '') + '">' +
-        '<div class="upload-zone-icon" style="font-size:28px;">📤</div>' +
-        '<div class="upload-zone-text">上传源文件 / 附件</div>' +
-        '<div style="font-size:11px;color:var(--text-muted);margin-top:4px;">支持 ZIP, PDF, DOCX 等格式，文件不超过 20MB</div>' +
-      '</div>' +
-    '</div>' +
-    (submitted ? '' :
-    '<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">' +
+  // ---- Buttons after task blocks ----
+  if (!submitted) {
+    editorHtml += '<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">' +
       '<button class="btn btn-secondary" onclick="saveTaskDraft()" style="font-size:13px;padding:11px 20px;">保存草稿</button>' +
-      '<button class="btn btn-primary" onclick="submitTask()" style="font-size:14px;padding:13px 20px;">提交作品</button>' +
-    '</div>') +
-  '</div>';
+      '<button class="btn btn-primary" onclick="submitTask()" style="font-size:14px;padding:13px 20px;">合成作品</button>' +
+    '</div>';
+  }
 
-  return '<div class="task-layout">' +
-    '<div class="task-editor-pane">' + editorHtml + '</div>' +
-    '<div class="task-meta-pane">' + metaHtml + '</div>' +
-  '</div>';
-}
+  return editorHtml;
+	}
 
 function tagInputHtml(tags) {
   var chipsHtml = (tags || []).map(function(t, i) {
