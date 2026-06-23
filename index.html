@@ -1653,6 +1653,7 @@ const learningState = {
   task2Contents: ['', '', '', ''], // 4 task2 markdown editors
   task2Files: [null, null, null, null], // 4 task2 file data URLs
   task2FileNames: [null, null, null, null], // 4 task2 file names
+  chapterTaskContent: { 0: '', 1: '', 2: '', 3: '' },
   homeworkName: '',      // 作业 - 姓名
   homeworkSchool: '',    // 作业 - 学校
   homeworkPhone: '',     // 作业 - 手机号
@@ -1707,7 +1708,12 @@ const chapters = [
         ans: [0, 1],
         type: 'multiple'
       }
-    ]
+    ],
+    task: {
+      title: '行业与工具规划',
+      desc: '自选热门短剧题材，梳理赛道创作难度；分类整理 AI 视频生成、剪辑、修图工具清单并标注适用场景，结合课程四步制作流程写出完整前期创作方案。',
+      scoring: '前期规划（15 分）：题材贴合市场热点，工具分类准确，四步制作流程方案逻辑清晰、可落地，无行业常识错误。'
+    }
   },
   { // Chapter 2
     id: 1,
@@ -1733,7 +1739,12 @@ const chapters = [
         opts: ['完全照搬爆款剧本内容', '提取热点元素与通用创作逻辑复用', '单纯欣赏优秀作品', '提高视频剪辑速度'],
         ans: 1
       }
-    ]
+    ],
+    task: {
+      title: '原创短剧剧本创作',
+      desc: '搜集同赛道爆款拆解热点元素，提炼剧情核心冲突与 2-3 个情绪爆点；选用一段故事 / 小说素材，规避原文大段心理描写，改编为带场景、画面、动作、音效标注的专业短剧剧本，采用老题材创新叙事的思路提升故事看点。',
+      scoring: '短剧剧本创作（25 分）：精准提炼冲突与情绪爆点，区分小说与剧本格式，画面、音效、动作要素齐全，具备老题材新叙事的创新思路，剧情节奏紧凑。'
+    }
   },
   { // Chapter 3
     id: 2,
@@ -1759,7 +1770,12 @@ const chapters = [
         opts: ['剪辑软件问题', '未提前固定人物形象与风格', '视频分辨率过低', '提示词字数太少'],
         ans: 1
       }
-    ]
+    ],
+    task: {
+      title: '标准化分镜设计',
+      desc: '统一固定主角形象、穿搭、场景美术风格、整体色调；遵循 "剧本 - 分镜 - 成片" 流程，为剧本设计 6-8 组完整分镜；若创作灵感不足，使用 AI 生成分镜初稿并人工调整，全程保证人物、场景风格无割裂。',
+      scoring: '分镜规范设计（20 分）：人物、场景、画风统一标准明确，分镜数量达标且一一对应剧本剧情，画面无形象错乱、风格割裂问题。'
+    }
   },
   { // Chapter 4
     id: 3,
@@ -1785,7 +1801,12 @@ const chapters = [
         opts: ['提高音量', '贴合人设，匹配剧情情绪，优化音色语速', '统一固定语速', '增加混响效果即可'],
         ans: 1
       }
-    ]
+    ],
+    task: {
+      title: 'AI 视频生成与镜头优化',
+      desc: '使用首尾帧关联法生成分镜视频片段，实现镜头无缝衔接；根据剧情情绪切换远景、特写、多角度镜头，用镜头语言烘托氛围；借助 AI 生成贴合人设、带有情绪起伏的人物对白配音。',
+      scoring: '视频生成与镜头运用（20 分）：分段视频首尾帧衔接流畅无断层；镜头远近、视角切换贴合人物情绪与剧情氛围；AI 人声自然有情绪，无机械生硬感。'
+    }
   },
   { // Chapter 5 - 实训任务
     id: 4,
@@ -1793,26 +1814,6 @@ const chapters = [
     time: '综合实训',
     isTask: true,
     tasks: [
-      {
-        label: '1',
-        title: '行业与工具规划',
-        desc: '自选热门短剧题材，梳理赛道创作难度；分类整理 AI 视频生成、剪辑、修图工具清单并标注适用场景，结合课程四步制作流程写出完整前期创作方案。'
-      },
-      {
-        label: '2',
-        title: '原创短剧剧本创作',
-        desc: '搜集同赛道爆款拆解热点元素，提炼剧情核心冲突与 2-3 个情绪爆点；选用一段故事 / 小说素材，规避原文大段心理描写，改编为带场景、画面、动作、音效标注的专业短剧剧本，采用老题材创新叙事的思路提升故事看点。'
-      },
-      {
-        label: '3',
-        title: '标准化分镜设计',
-        desc: '统一固定主角形象、穿搭、场景美术风格、整体色调；遵循 "剧本 - 分镜 - 成片" 流程，为剧本设计 6-8 组完整分镜；若创作灵感不足，使用 AI 生成分镜初稿并人工调整，全程保证人物、场景风格无割裂。'
-      },
-      {
-        label: '4',
-        title: 'AI 视频生成与镜头优化',
-        desc: '使用首尾帧关联法生成分镜视频片段，实现镜头无缝衔接；根据剧情情绪切换远景、特写、多角度镜头，用镜头语言烘托氛围；借助 AI 生成贴合人设、带有情绪起伏的人物对白配音。'
-      },
       {
         label: '5',
         title: '后期成片输出',
@@ -1909,6 +1910,8 @@ function renderProgressCard() {
 // ===== Course Control =====
 function startLearning() {
   closeModal();
+  state.registered = true;
+  sessionStorage.setItem('learnRegistered', 'true');
   learningState.currentChapter = 0;
   learningState.currentStep = 0;
   learningState.startedChapters.add(0);
@@ -1927,6 +1930,8 @@ function startLearning() {
   learningState.task2Contents = ['', '', '', ''];
   learningState.task2Files = [null, null, null, null];
   learningState.task2FileNames = [null, null, null, null];
+  learningState.chapterTaskContent = { 0: '', 1: '', 2: '', 3: '' };
+  learningState.showingIntro = true;
   learningState.completedChapters = new Set();
   learningState.unlockedChapters = new Set([0]);
   document.getElementById('sectionTitle').textContent = directions[state.direction].name;
@@ -1936,7 +1941,7 @@ function startLearning() {
   document.getElementById('coursesGrid').style.display = 'none';
   document.getElementById('courseView').classList.add('active');
   document.body.classList.add('course-mode');
-  switchCourseTab('detail');
+  switchCourseTab('learn');
 }
 // ===== Course Tab Switching =====
 function switchCourseTab(tab) {
@@ -2186,6 +2191,9 @@ function restoreProgressFromStorage() {
   savedStarted.forEach(function(c) { learningState.startedChapters.add(c); });
   // Restore per-chapter step positions
   learningState.chapterSteps = JSON.parse(sessionStorage.getItem('chapterStep') || '{}');
+  // Restore per-chapter task content
+  var savedTaskContent = JSON.parse(sessionStorage.getItem('chapterTaskContent') || '{}');
+  learningState.chapterTaskContent = { 0: savedTaskContent[0] || '', 1: savedTaskContent[1] || '', 2: savedTaskContent[2] || '', 3: savedTaskContent[3] || '' };
 }
 function buildProgressItems() {
   restoreProgressFromStorage();
@@ -2309,7 +2317,7 @@ document.getElementById('courseContent').addEventListener('click', function(e) {
 function backToCourseDetail() {
   var ch = chapters[learningState.currentChapter];
   if (learningState.currentStep > 0) {
-    // On quiz question: go back to previous step in same chapter
+    // Go back to previous step in same chapter
     learningState.currentStep--;
     renderChapterContent();
     document.getElementById('courseContent').scrollTop = 0;
@@ -2321,16 +2329,20 @@ function backToCourseDetail() {
       switchCourseTab('detail');
     }
   } else if (ch.isTask) {
-    // On task chapter: go back to previous chapter's last question
+    // On task chapter: go back to previous chapter's completion page
+    var prevCh = chapters[3];
+    var prevQuizLen = prevCh.quiz ? prevCh.quiz.length : 0;
     learningState.currentChapter = 3;
-    learningState.currentStep = 5;
+    learningState.currentStep = 3 + prevQuizLen; // completion step
     renderChapterNav();
     renderChapterContent();
     document.getElementById('courseContent').scrollTop = 0;
   } else {
-    // On video page of chapter > 0: go back to previous chapter's last question
+    // On video/keypoints page of chapter > 0: go back to previous chapter's completion
     learningState.currentChapter--;
-    learningState.currentStep = 5;
+    var prevCh2 = chapters[learningState.currentChapter];
+    var prevQuizLen2 = prevCh2.quiz ? prevCh2.quiz.length : 0;
+    learningState.currentStep = 3 + prevQuizLen2; // completion step
     renderChapterNav();
     renderChapterContent();
     document.getElementById('courseContent').scrollTop = 0;
@@ -2357,20 +2369,14 @@ function renderChapterNav() {
   var nav = document.getElementById('courseNav');
   var html = '';
 
-
-  // Section 0: Course Intro
+  // 课程介绍
   var introActive = learningState.showingIntro;
-  html += '<div style="margin-bottom:4px;padding:0 4px 4px 4px;border-bottom:1px solid var(--border);">' +
-    '<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;padding:4px 12px 8px 12px;">📋 课程介绍</div>' +
-    '<div class="course-nav-item' + (introActive ? ' active' : '') + '" onclick="showCourseIntro()">' +
-      '<span class="course-nav-num" style="' + (introActive ? '' : 'background:var(--accent);color:#fff;') + '">📖</span>' +
-      '<div class="course-nav-text"><span style="font-size:13px;font-weight:600;">课程介绍</span></div>' +
-    '</div>' +
+  html += '<div class="course-nav-item' + (introActive ? ' active' : '') + '" onclick="showCourseIntro()">' +
+    '<span class="course-nav-num" style="' + (introActive ? '' : 'background:var(--accent);color:#fff;') + '">📖</span>' +
+    '<div class="course-nav-text"><span style="font-size:13px;font-weight:600;">课程介绍</span></div>' +
   '</div>';
 
-  // Section 1: Chapters 1-4 (learning chapters)
-  html += '<div style="margin-bottom:4px;padding:0 4px 4px 4px;">' +
-    '<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;padding:4px 12px 8px 12px;">📖 课程学习</div>';
+  // Chapters 1-4
   for (var i = 0; i < 4; i++) {
     var ch = chapters[i];
     var isActive = learningState.currentChapter === i;
@@ -2386,42 +2392,35 @@ function renderChapterNav() {
       (isLocked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
       '</div>';
   }
-  html += '</div>';
 
-  // Section 2: 实训任务 (task chapter)
+  // 实训任务
   var taskCh = chapters[4];
   var taskActive = learningState.currentChapter === 4;
   var taskDone = learningState.completedChapters.has(4);
   var taskLocked = !learningState.unlockedChapters.has(4);
   var tCls = (taskActive ? ' active' : '') + (taskDone ? ' completed' : '') + (taskLocked ? ' locked' : '');
-  html += '<div style="margin-top:4px;border-top:1px solid var(--border);padding:8px 4px 0 4px;">' +
-    '<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;padding:4px 12px 8px 12px;">📝 实训任务</div>' +
-    '<div class="course-nav-item course-nav-item--task' + tCls + '"' + (taskLocked ? '' : ' onclick="navigateChapter(4)"') + '>' +
-      '<span class="course-nav-num" style="' + (taskLocked ? '' : 'background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;') + '">' + (taskLocked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>' : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>') + '</span>' +
-      '<div class="course-nav-text">' +
-        '<span style="font-size:13px;font-weight:600;color:' + (taskActive ? '#d97706' : 'var(--text-primary)') + ';">实训任务</span>' +
-        '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + taskCh.title + '</span>' +
-      '</div>' +
-      (taskLocked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
+  html += '<div class="course-nav-item course-nav-item--task' + tCls + '"' + (taskLocked ? '' : ' onclick="navigateChapter(4)"') + '>' +
+    '<span class="course-nav-num" style="' + (taskLocked ? '' : 'background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;') + '">' + (taskLocked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>' : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>') + '</span>' +
+    '<div class="course-nav-text">' +
+      '<span style="font-size:13px;font-weight:600;color:' + (taskActive ? '#d97706' : 'var(--text-primary)') + ';">实训任务</span>' +
+      '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + taskCh.title + '</span>' +
     '</div>' +
+    (taskLocked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
   '</div>';
 
-  // Section 3: 实训任务2 (task2 chapter)
+  // 实训任务2
   var task2Ch = chapters[5];
   var task2Active = learningState.currentChapter === 5;
   var task2Done = learningState.completedChapters.has(5);
   var task2Locked = !learningState.unlockedChapters.has(5);
   var t2Cls = (task2Active ? ' active' : '') + (task2Done ? ' completed' : '') + (task2Locked ? ' locked' : '');
-  html += '<div style="margin-top:4px;border-top:1px solid var(--border);padding:8px 4px 0 4px;">' +
-    '<div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;padding:4px 12px 8px 12px;">📝 实训任务2</div>' +
-    '<div class="course-nav-item course-nav-item--task' + t2Cls + '"' + (task2Locked ? '' : ' onclick="navigateChapter(5)"') + '>' +
-      '<span class="course-nav-num" style="' + (task2Locked ? '' : 'background:linear-gradient(135deg,#0891b2,#06b6d4);color:#fff;') + '">' + (task2Locked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>' : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>') + '</span>' +
-      '<div class="course-nav-text">' +
-        '<span style="font-size:13px;font-weight:600;color:' + (task2Active ? '#0891b2' : 'var(--text-primary)') + ';">实训任务2</span>' +
-        '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + task2Ch.title + '</span>' +
-      '</div>' +
-      (task2Locked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
+  html += '<div class="course-nav-item course-nav-item--task' + t2Cls + '"' + (task2Locked ? '' : ' onclick="navigateChapter(5)"') + '>' +
+    '<span class="course-nav-num" style="' + (task2Locked ? '' : 'background:linear-gradient(135deg,#0891b2,#06b6d4);color:#fff;') + '">' + (task2Locked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>' : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>') + '</span>' +
+    '<div class="course-nav-text">' +
+      '<span style="font-size:13px;font-weight:600;color:' + (task2Active ? '#0891b2' : 'var(--text-primary)') + ';">实训任务2</span>' +
+      '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + task2Ch.title + '</span>' +
     '</div>' +
+    (task2Locked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
   '</div>';
   nav.innerHTML = html;
   updateChapterProgress();
@@ -2761,116 +2760,109 @@ function renderLearningChapter(ch) {
 		    return quizBlock;
 		  }
 	
-	  // Chapter completion congratulations (after all quiz questions)
-	  var _quizLen = ch.quiz ? ch.quiz.length : 0;
-	  if (step === 2 + _quizLen) {
-	    return '<div style="text-align:center;padding:40px 20px;">' +
-	      '<div style="font-size:72px;margin-bottom:20px;">🎉</div>' +
-	      '<h2 style="font-size:26px;font-weight:800;margin-bottom:12px;color:var(--text-primary);">真棒！你已完成第' + (ch.id + 1) + '章节的学习</h2>' +
-	      '<p style="font-size:15px;color:var(--text-secondary);margin-bottom:8px;">你已掌握「<strong>' + ch.title + '</strong>」的全部核心知识点</p>' +
-	      '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">' +
-	        '<button class="btn btn-secondary" onclick="learningState.currentStep=4;renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;" style="font-size:13px;padding:10px 20px;">' +
-	          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polyline points="15 18 9 12 15 6"/></svg> 返回题目' +
-	        '</button>' +
-	        (chapterId === 3 ?
-	          '<button class="btn btn-primary" onclick="goToTask()" style="font-size:14px;padding:12px 28px;">参加实训任务 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg></button>' :
-	          '<button class="btn btn-primary" onclick="advanceChapter()" style="font-size:14px;padding:12px 28px;">下一章节 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg></button>') +
-	      '</div>' +
-	    '</div>';
-	  }
-	
-	  return '';
-	}
+	  // Task step (after all quiz questions)
+  var _quizLen = ch.quiz ? ch.quiz.length : 0;
+  if (step === 2 + _quizLen && ch.task) {
+    var taskContent = (learningState.chapterTaskContent && learningState.chapterTaskContent[chapterId]) || '';
+    return '<div class="module-block">' +
+      '<div class="module-block-title"><span class="module-block-icon">📝</span> 实训任务</div>' +
+      '<div class="task-block">' +
+        '<div class="task-block-header">' +
+          '<span class="task-block-num">' + (chapterId + 1) + '</span>' +
+          '<span class="task-block-title">' + ch.task.title + '</span>' +
+          '<button class="task-scoring-btn" onclick="toggleScoring(event, ' + (10 + chapterId) + ')">评分标准<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>' +
+        '</div>' +
+        '<div class="task-scoring-dropdown" id="scoringDropdown' + (10 + chapterId) + '" style="display:none;">' +
+          '<div class="task-scoring-content">' + ch.task.scoring + '</div>' +
+        '</div>' +
+        '<div class="task-block-desc">' + ch.task.desc + '</div>' +
+        '<div class="task-editor-wrapper">' +
+          '<textarea id="chapterTaskEditor' + chapterId + '" class="task-editor" placeholder="请在此编写「' + ch.task.title + '」的方案内容..." oninput="learningState.chapterTaskContent[' + chapterId + ']=this.value">' + taskContent + '</textarea>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:flex-end;margin-top:16px;">' +
+        '<button class="btn btn-primary" onclick="advanceStep()">保存并继续 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  // Chapter completion (after task)
+  if (step === 3 + _quizLen) {
+    var _hasQ = _quizLen > 0;
+    var returnStep = (ch.task ? (2 + _quizLen) : (_hasQ ? (1 + _quizLen) : 1));
+    var returnLabel = ch.task ? '返回实训任务' : '返回题目';
+    return '<div style="text-align:center;padding:40px 20px;">' +
+      '<div style="font-size:72px;margin-bottom:20px;">🎉</div>' +
+      '<h2 style="font-size:26px;font-weight:800;margin-bottom:12px;color:var(--text-primary);">真棒！你已完成第' + (ch.id + 1) + '章节的学习</h2>' +
+      '<p style="font-size:15px;color:var(--text-secondary);margin-bottom:8px;">你已掌握「<strong>' + ch.title + '</strong>」的全部核心知识点' + (ch.task ? '并完成实训任务' : '') + '</p>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">' +
+        '<button class="btn btn-secondary" onclick="learningState.currentStep=' + returnStep + ';renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;" style="font-size:13px;padding:10px 20px;">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polyline points="15 18 9 12 15 6"/></svg> ' + returnLabel +
+        '</button>' +
+        (chapterId === 3 ?
+          '<button class="btn btn-primary" onclick="goToTask()" style="font-size:14px;padding:12px 28px;">进入实训任务（后期成片输出） <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg></button>' :
+          '<button class="btn btn-primary" onclick="advanceChapter()" style="font-size:14px;padding:12px 28px;">下一章节 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg></button>') +
+      '</div>' +
+    '</div>';
+  }
+
+  return '';
+}
 
 function renderTaskChapter(ch) {
   if (ch.isTask2) return renderTask2Chapter(ch);
   var submitted = learningState.taskSubmitted;
-  var taskContents = learningState.taskContents || ['', '', '', '', ''];
-  var taskTags = learningState.taskTags || [];
+  var task = ch.tasks && ch.tasks[0];
 
-  // ---- Left: Individual task blocks with per-task markdown editors ----
   var editorHtml = '';
   if (submitted) {
     editorHtml += '<div class="task-submitted-badge" style="margin-bottom:12px;">✅ 已提交</div>';
   }
-  editorHtml += '<div class="task-blocks">';
-  var scoringCriteria = [
-    '前期规划（15 分）：题材贴合市场热点，工具分类准确，四步制作流程方案逻辑清晰、可落地，无行业常识错误。',
-    '短剧剧本创作（25 分）：精准提炼冲突与情绪爆点，区分小说与剧本格式，画面、音效、动作要素齐全，具备老题材新叙事的创新思路，剧情节奏紧凑。',
-    '分镜规范设计（20 分）：人物、场景、画风统一标准明确，分镜数量达标且一一对应剧本剧情，画面无形象错乱、风格割裂问题。',
-    '视频生成与镜头运用（20 分）：分段视频首尾帧衔接流畅无断层；镜头远近、视角切换贴合人物情绪与剧情氛围；AI 人声自然有情绪，无机械生硬感。',
-    '后期剪辑与完整成片（20 分）：剪辑流程完整，字幕、配乐、音效搭配适配；整体剧情连贯、风格统一，成片完成度高，符合商业化 AIGC 短剧出品标准。'
-  ];
-  ch.tasks.forEach(function(task, i) {
-    var content = taskContents[i] || '';
-    var isLast = (i === 4);
-    editorHtml += '<div class="task-block">' +
-      '<div class="task-block-header">' +
-        '<span class="task-block-num">' + task.label + '</span>' +
-        '<span class="task-block-title">' + task.title + '</span>' +
-        '<button class="task-scoring-btn" onclick="toggleScoring(event, ' + i + ')">评分标准<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>' +
-      '</div>' +
-      '<div class="task-scoring-dropdown" id="scoringDropdown' + i + '" style="display:none;">' +
-        '<div class="task-scoring-content">' + scoringCriteria[i] + '</div>' +
-      '</div>' +
-      '<div class="task-block-desc">' + task.desc + '</div>';
-    if (isLast) {
-      // Task 5: MP4 video upload
-      if (submitted) {
-        editorHtml += '<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-secondary);min-height:80px;">' +
-          (learningState.taskVideoName ? '🎬 已上传视频：' + learningState.taskVideoName : '（未上传）') + '</div>';
-      } else {
-        var hasVideo = !!(learningState.taskVideoData && learningState.taskVideoName);
-        if (!hasVideo) {
-          editorHtml += '<div class="task-video-upload" onclick="triggerTaskVideoUpload()">' +
-            '<span class="task-video-upload-icon">🎬</span>' +
-            '<div class="task-video-upload-text">点击上传 MP4 视频</div>' +
-            '<div class="task-video-upload-hint">支持 mp4 格式，文件大小不超过 200MB</div>' +
-            '</div>';
-        } else {
-          editorHtml += '<div class="task-video-uploaded">' +
-            '<div class="task-video-uploaded-info">' +
-              '<span class="task-video-uploaded-icon">🎬</span>' +
-              '<span class="task-video-uploaded-name">' + learningState.taskVideoName + '</span>' +
-            '</div>' +
-            '<div class="task-video-uploaded-actions">' +
-              '<button class="task-video-replace-btn" onclick="event.stopPropagation(); triggerTaskVideoUpload()">' +
-                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
-                '替换文件' +
-              '</button>' +
-            '</div>' +
-            '<video class="task-video-preview" src="' + learningState.taskVideoData + '" controls style="margin-top:12px;"></video>' +
-            '</div>';
-        }
-      }
+  if (task) {
+    editorHtml += '<div class="task-blocks">' +
+      '<div class="task-block">' +
+        '<div class="task-block-header">' +
+          '<span class="task-block-num">5</span>' +
+          '<span class="task-block-title">' + task.title + '</span>' +
+          '<button class="task-scoring-btn" onclick="toggleScoring(event, 0)">评分标准<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>' +
+        '</div>' +
+        '<div class="task-scoring-dropdown" id="scoringDropdown0" style="display:none;">' +
+          '<div class="task-scoring-content">后期剪辑与完整成片（20 分）：剪辑流程完整，字幕、配乐、音效搭配适配；整体剧情连贯、风格统一，成片完成度高，符合商业化 AIGC 短剧出品标准。</div>' +
+        '</div>' +
+        '<div class="task-block-desc">' + task.desc + '</div>';
+    if (submitted) {
+      editorHtml += '<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-secondary);min-height:80px;">' +
+        (learningState.taskVideoName ? '🎬 已上传视频：' + learningState.taskVideoName : '（未上传）') + '</div>';
     } else {
-      // Tasks 1-4: markdown textarea
-      editorHtml += (submitted ?
-        '<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-secondary);white-space:pre-wrap;min-height:120px;">' + (content || '（未填写）') + '</div>' :
-        '<div class="task-editor-wrapper">' +
-          '<div class="task-mini-toolbar">' +
-            '<button class="task-mini-toolbar-btn" onclick="insertImageToEditor(' + i + ')" title="插入图片">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>' +
-              '图片' +
-            '</button>' +
-            '<button class="task-mini-toolbar-btn" onclick="insertVideoToEditor(' + i + ')" title="插入视频">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polygon points="10 8 16 12 10 16" fill="currentColor" stroke="none"/></svg>' +
-              '视频' +
+      var hasVideo = !!(learningState.taskVideoData && learningState.taskVideoName);
+      if (!hasVideo) {
+        editorHtml += '<div class="task-video-upload" onclick="triggerTaskVideoUpload()">' +
+          '<span class="task-video-upload-icon">🎬</span>' +
+          '<div class="task-video-upload-text">点击上传 MP4 视频</div>' +
+          '<div class="task-video-upload-hint">支持 mp4 格式，文件大小不超过 200MB</div>' +
+          '</div>';
+      } else {
+        editorHtml += '<div class="task-video-uploaded">' +
+          '<div class="task-video-uploaded-info">' +
+            '<span class="task-video-uploaded-icon">🎬</span>' +
+            '<span class="task-video-uploaded-name">' + learningState.taskVideoName + '</span>' +
+          '</div>' +
+          '<div class="task-video-uploaded-actions">' +
+            '<button class="task-video-replace-btn" onclick="event.stopPropagation(); triggerTaskVideoUpload()">' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+              '替换文件' +
             '</button>' +
           '</div>' +
-          '<textarea id="taskEditor' + i + '" class="task-editor" placeholder="请在此编写「' + task.title + '」的方案内容..." oninput="learningState.taskContents[' + i + ']=this.value">' + content + '</textarea>' +
-        '</div>');
+          '<video class="task-video-preview" src="' + learningState.taskVideoData + '" controls style="margin-top:12px;"></video>' +
+          '</div>';
+      }
     }
-    editorHtml += '</div>';
-  });
-  editorHtml += '</div>';
-  // Hidden inputs for image/video upload (shared, target set dynamically)
-  editorHtml += '<input type="file" id="editorImageInput" accept="image/*" style="display:none;" onchange="handleEditorImageUpload(event)">';
-  editorHtml += '<input type="file" id="editorVideoInput" accept="video/*" style="display:none;" onchange="handleEditorVideoUpload(event)">';
+    editorHtml += '</div></div>';
+  }
+  // Hidden input for video upload
   editorHtml += '<input type="file" id="taskVideoInput" accept="video/mp4" style="display:none;" onchange="handleTaskVideoFileSelect(event)">';
 
-
-  // ---- Buttons after task blocks ----
+  // Buttons
   if (!submitted) {
     editorHtml += '<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">' +
       '<button class="btn btn-secondary" onclick="saveTaskDraft()" style="font-size:13px;padding:11px 20px;">保存草稿</button>' +
@@ -2879,8 +2871,7 @@ function renderTaskChapter(ch) {
   }
 
   return editorHtml;
-	}
-
+}
 function renderTask2Chapter(ch) {
   var submitted = learningState.task2Submitted;
   var taskContents = learningState.task2Contents || ['', '', '', ''];
@@ -3056,6 +3047,8 @@ function saveChapterProgress() {
   var chSteps = JSON.parse(sessionStorage.getItem('chapterStep') || '{}');
   chSteps[String(learningState.currentChapter)] = learningState.currentStep;
   sessionStorage.setItem('chapterStep', JSON.stringify(chSteps));
+  // Save per-chapter task content
+  sessionStorage.setItem('chapterTaskContent', JSON.stringify(learningState.chapterTaskContent || {}));
 }
 
 function advanceChapter() {
@@ -3089,8 +3082,9 @@ function toggleScoring(event, idx) {
   event.stopPropagation();
   var dropdown = document.getElementById('scoringDropdown' + idx);
   if (!dropdown) return;
-  // Close all other dropdowns first
-  for (var j = 0; j < 5; j++) {
+  // Close all other dropdowns first (0-4 for task chapters, 10-13 for in-chapter tasks)
+  for (var j = 0; j < 14; j++) {
+    if (j >= 5 && j <= 9) continue; // skip unused range
     var other = document.getElementById('scoringDropdown' + j);
     if (other && other !== dropdown) {
       other.style.display = 'none';
@@ -3101,31 +3095,13 @@ function toggleScoring(event, idx) {
 }
 
 function submitTask() {
-  // Collect content from all 5 task editors
-  var taskContents = [];
-  var hasContent = false;
-  for (var i = 0; i < 5; i++) {
-    if (i === 4) {
-      // Task 5: video upload instead of textarea
-      var videoVal = learningState.taskVideoName || '';
-      taskContents.push(videoVal);
-      if (videoVal) hasContent = true;
-    } else {
-      var editor = document.getElementById('taskEditor' + i);
-      var val = editor ? editor.value.trim() : (learningState.taskContents && learningState.taskContents[i] ? learningState.taskContents[i].trim() : '');
-      taskContents.push(val);
-      if (val) hasContent = true;
-    }
-  }
-  var titleEl = document.getElementById('taskWorkTitle');
-  var workTitle = titleEl ? titleEl.value.trim() : '';
-  if (!hasContent && !workTitle) {
-    showToast('请至少填写作品标题或一项方案内容再提交');
+  // Validate task 5: video upload required
+  var videoVal = learningState.taskVideoName || '';
+  if (!videoVal) {
+    showToast('请先上传后期成片 MP4 视频再提交');
     return;
   }
-  learningState.taskContents = taskContents;
-  learningState.taskWorkTitle = workTitle;
-  learningState.taskCategory = document.getElementById('taskCategory') ? document.getElementById('taskCategory').value : '';
+  learningState.taskContents = [videoVal];
   learningState.taskSubmitted = true;
   learningState.completedChapters.add(4);
   learningState.unlockedChapters.add(5);
@@ -3141,20 +3117,8 @@ function viewSynthesizedWork() {
 }
 
 function saveTaskDraft() {
-  // Save all 5 task editors
-  for (var i = 0; i < 5; i++) {
-    if (i === 4) {
-      // Task 5: video data is already in learningState.taskVideoData/taskVideoName
-      learningState.taskContents[4] = learningState.taskVideoName || '';
-    } else {
-      var editor = document.getElementById('taskEditor' + i);
-      if (editor) learningState.taskContents[i] = editor.value;
-    }
-  }
-  var titleEl = document.getElementById('taskWorkTitle');
-  if (titleEl) learningState.taskWorkTitle = titleEl.value.trim();
-  var catEl = document.getElementById('taskCategory');
-  if (catEl) learningState.taskCategory = catEl.value;
+  // Save task 5 video name
+  learningState.taskContents[4] = learningState.taskVideoName || '';
   saveChapterProgress();
   showToast('草稿已保存');
 }
@@ -3468,6 +3432,9 @@ document.addEventListener('keydown', function(e) {
     learningState.startedChapters.add(resumeChapter);
     var resumeStep = parseInt(sessionStorage.getItem('learnResumeStep'));
     learningState.currentStep = (!isNaN(resumeStep) && resumeStep >= 0) ? resumeStep : 0;
+  } else if (learningState.completedChapters.size === 0) {
+    // Fresh enrollment — show course intro first
+    learningState.showingIntro = true;
   } else {
     learningState.currentChapter = 0;
     learningState.currentStep = 0;
