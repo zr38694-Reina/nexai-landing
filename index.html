@@ -722,57 +722,8 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
   color: var(--text-secondary);
 }
 
-/* Task page - Task2 file upload */
-.task2-file-upload {
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 12px;
-  border: 1px dashed var(--border);
-  border-radius: 10px;
-  padding: 28px 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-secondary);
-}
-.task2-file-upload-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.task2-file-upload-btn {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 6px 12px; font-size: 11px; font-weight: 500;
-  color: var(--accent-light); background: var(--bg-card);
-  border: 1px solid var(--accent-light); border-radius: 6px;
-  cursor: pointer; transition: all 0.15s ease;
-}
-.task2-file-upload-btn:hover { background: var(--accent); color: #fff; }
-.task2-file-upload-btn svg { width: 13px; height: 13px; }
-.task2-file-upload-hint {
-  font-size: 10px; color: var(--text-muted);
-}
-.task2-file-uploaded {
-  margin-top: 12px;
-  display: flex; align-items: center; gap: 10px;
-  background: rgba(8,145,178,0.04); border: 1px solid rgba(8,145,178,0.15);
-  border-radius: 10px; padding: 10px 14px;
-}
-.task2-file-uploaded-icon { font-size: 20px; flex-shrink: 0; }
-.task2-file-uploaded-name {
-  font-size: 12px; font-weight: 500; color: var(--text-primary);
-  flex: 1; min-width: 0; word-break: break-all;
-}
-.task2-file-replace-btn {
-  display: inline-flex; align-items: center; gap: 3px;
-  padding: 4px 10px; font-size: 10px; font-weight: 500;
-  color: #0891b2; background: var(--bg-card);
-  border: 1px solid rgba(8,145,178,0.3); border-radius: 5px;
-  cursor: pointer; transition: all 0.15s ease;
-  flex-shrink: 0;
-}
-.task2-file-replace-btn:hover { background: #0891b2; color: #fff; }
-.task2-file-replace-btn svg { width: 11px; height: 11px; }
+
+
 
 /* Task page - Table of Contents */
 .task-toc { display: flex; flex-direction: column; gap: 2px; }
@@ -1649,10 +1600,7 @@ const learningState = {
   taskVideoName: null,   // task 5 MP4 video file name
   taskCategory: '',      // 分类
   taskTags: [],          // 标签
-  task2Submitted: false, // 实训任务2 submitted
-  task2Contents: ['', '', '', ''], // 4 task2 markdown editors
-  task2Files: [null, null, null, null], // 4 task2 file data URLs
-  task2FileNames: [null, null, null, null], // 4 task2 file names
+
   chapterTaskContent: { 0: '', 1: '', 2: '', 3: '' },
   homeworkName: '',      // 作业 - 姓名
   homeworkSchool: '',    // 作业 - 学校
@@ -1810,7 +1758,7 @@ const chapters = [
   },
   { // Chapter 5 - 实训任务
     id: 4,
-    title: '实训任务',
+    title: '任务5',
     time: '综合实训',
     isTask: true,
     tasks: [
@@ -1820,40 +1768,8 @@ const chapters = [
         desc: '使用剪映完成全片剪辑，包含素材拼接、画面裁剪、字幕排版、配乐、音效添加、节奏卡点调整，最终输出完整可播放的 AIGC 短剧成品。'
       }
     ]
-  },
-  { // Chapter 6 - 实训任务2
-    id: 5,
-    title: 'AI金融聊天机器人实训',
-    time: '综合实训',
-    isTask: true,
-    isTask2: true,
-    tasks: [
-      {
-        label: '1',
-        title: '前期准备与数据回顾',
-        desc: '快速回顾你在任务一中分析的财务数据，刷新对公司营收、净利润、现金流等核心指标的记忆；确保 Python 环境及 pandas、Flask 等必要库已安装并可正常使用。',
-        accept: '.py,.ipynb,.txt,.pdf,.json,.csv,.xlsx'
-      },
-      {
-        label: '2',
-        title: '聊天机器人设计与数据准备',
-        desc: '选定 3~5 个常见财务查询问题（如「公司总营收是多少？」「净利润同比变化如何？」），并基于已分析的财务数据为每个问题准备精确的预设回复，建立问题-答案映射表。',
-        accept: '.json,.csv,.xlsx,.txt'
-      },
-      {
-        label: '3',
-        title: '基础聊天机器人开发',
-        desc: '使用 Python 编写简单的 if-else 逻辑匹配用户输入与预设回复；可采用 input() 实现命令行交互，或使用 Flask 搭建简易 Web 对话界面，完成一个可响应用户财务提问的原型机器人。',
-        accept: '.py'
-      },
-      {
-        label: '4',
-        title: '演示与文档编写',
-        desc: '用 5~10 分钟测试聊天机器人的各项预设查询，确保回复准确无误；撰写简要说明文档，阐述机器人工作原理、可响应的查询范围及当前局限，最后将代码、测试结果与文档打包提交。',
-        accept: '.pdf,.docx,.md,.txt,.zip'
-      }
-    ]
   }
+
 ];
 
 
@@ -1926,10 +1842,7 @@ function startLearning() {
   learningState.taskVideoName = null;
   learningState.taskCategory = '';
   learningState.taskTags = [];
-  learningState.task2Submitted = false;
-  learningState.task2Contents = ['', '', '', ''];
-  learningState.task2Files = [null, null, null, null];
-  learningState.task2FileNames = [null, null, null, null];
+
   learningState.chapterTaskContent = { 0: '', 1: '', 2: '', 3: '' };
   learningState.showingIntro = true;
   learningState.completedChapters = new Set();
@@ -2070,7 +1983,7 @@ function renderDetailTab() {
   var colors = ['var(--accent-light)','#0891b2','#059669','#d97706','#7c3aed','#e11d48','#0891b2'];
   var schedHtml = chapters.filter(function(c) { return !c.isTask; }).map(function(c, i) {
     return '<div style="display:flex;align-items:center;gap:12px;background:var(--bg-secondary);border-radius:10px;padding:14px 18px;border-left:3px solid ' + colors[i] + ';">' +
-      '<div style="width:48px;height:48px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:13px;color:var(--accent-light);">第' + (i+1) + '节</div>' +
+      '<div style="width:48px;height:48px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:13px;color:var(--accent-light);">' + (i+1) + '</div>' +
       '<div style="flex:1;min-width:0;">' +
         '<div style="font-size:13px;font-weight:600;">' + c.title + '</div>' +
         '<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">' + c.video.desc + '</div>' +
@@ -2170,12 +2083,11 @@ function restoreProgressFromStorage() {
   learningState.unlockedChapters.clear();
   learningState.startedChapters.clear();
   learningState.taskSubmitted = false;
-  learningState.task2Submitted = false;
+
   // Restore completed chapters
   var savedProgress = JSON.parse(sessionStorage.getItem('chapterProgress') || '{}');
   Object.keys(savedProgress).forEach(function(k) {
     if (k === 'task') { learningState.taskSubmitted = true; }
-    else if (k === 'task2') { learningState.task2Submitted = true; }
     else { learningState.completedChapters.add(parseInt(k)); }
   });
   // Restore explicitly unlocked chapters
@@ -2203,11 +2115,7 @@ function buildProgressItems() {
     var status, statusLabel, dotBg, lineColor;
     if (ch.isTask) {
       var taskDone, taskUnlocked, prevChapter;
-      if (ch.isTask2) {
-        taskDone = learningState.task2Submitted;
-        taskUnlocked = learningState.unlockedChapters.has(5);
-        prevChapter = 4;
-      } else {
+      {
         taskDone = learningState.taskSubmitted;
         taskUnlocked = learningState.unlockedChapters.has(4);
         prevChapter = 3;
@@ -2226,7 +2134,7 @@ function buildProgressItems() {
     if (status === 'done') {
       statusLabel = '已完成'; dotBg = 'var(--green)'; lineColor = 'var(--green)';
     } else if (status === 'current') {
-      var started = learningState.startedChapters.has(i) || (ch.isTask && !ch.isTask2 && learningState.startedChapters.has(4)) || (ch.isTask2 && learningState.startedChapters.has(5));
+      var started = learningState.startedChapters.has(i) || (ch.isTask && learningState.startedChapters.has(4));
       statusLabel = started ? '学习中' : '待开始'; dotBg = 'var(--accent-light)'; lineColor = 'var(--border)';
     } else if (status === 'unlockable') {
       statusLabel = '待解锁'; dotBg = 'var(--amber)'; lineColor = 'var(--border)';
@@ -2234,10 +2142,15 @@ function buildProgressItems() {
       statusLabel = '未解锁'; dotBg = 'var(--border)'; lineColor = 'var(--border)';
     }
     var icon = ch.isTask ? '📝' : String(i+1);
-    var label = ch.isTask ? '<strong>' + ch.title + '</strong>' : '第' + (i+1) + '节：' + ch.title;
+    var label;
+    if (ch.isTask) {
+      label = '<strong>任务5：后期成片输出</strong>';
+    } else {
+      label = '任务' + (i+1) + '：' + ch.title;
+    }
     var actionBtn = '';
     if (status === 'current') {
-      var started2 = learningState.startedChapters.has(i) || (ch.isTask && !ch.isTask2 && learningState.startedChapters.has(4)) || (ch.isTask2 && learningState.startedChapters.has(5));
+      var started2 = learningState.startedChapters.has(i) || (ch.isTask && learningState.startedChapters.has(4));
       if (started2) {
         actionBtn = ' <button class="btn btn-primary" style="font-size:12px;padding:7px 16px;margin-left:auto;flex-shrink:0;" onclick="event.stopPropagation();resumeLearning(' + i + ')">继续学习 →</button>';
       } else {
@@ -2386,7 +2299,7 @@ function renderChapterNav() {
     html += '<div class="course-nav-item' + cls + '"' + (isLocked ? '' : ' onclick="navigateChapter(' + i + ')"') + '>' +
       '<span class="course-nav-num">' + (isLocked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>' : (i + 1)) + '</span>' +
       '<div class="course-nav-text">' +
-        '<span style="font-size:13px;font-weight:600;color:' + (isActive ? 'var(--accent-light)' : 'var(--text-primary)') + ';">第 ' + (i+1) + ' 节</span>' +
+        '<span style="font-size:13px;font-weight:600;color:' + (isActive ? 'var(--accent-light)' : 'var(--text-primary)') + ';">任务' + (i+1) + '</span>' +
         '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + ch.title + '</span>' +
       '</div>' +
       (isLocked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
@@ -2402,26 +2315,12 @@ function renderChapterNav() {
   html += '<div class="course-nav-item course-nav-item--task' + tCls + '"' + (taskLocked ? '' : ' onclick="navigateChapter(4)"') + '>' +
     '<span class="course-nav-num" style="' + (taskLocked ? '' : 'background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;') + '">' + (taskLocked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>' : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>') + '</span>' +
     '<div class="course-nav-text">' +
-      '<span style="font-size:13px;font-weight:600;color:' + (taskActive ? '#d97706' : 'var(--text-primary)') + ';">实训任务</span>' +
-      '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + taskCh.title + '</span>' +
+      '<span style="font-size:13px;font-weight:600;color:' + (taskActive ? '#d97706' : 'var(--text-primary)') + ';">任务5</span>' +
+      '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">后期成片输出</span>' +
     '</div>' +
     (taskLocked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
   '</div>';
 
-  // 实训任务2
-  var task2Ch = chapters[5];
-  var task2Active = learningState.currentChapter === 5;
-  var task2Done = learningState.completedChapters.has(5);
-  var task2Locked = !learningState.unlockedChapters.has(5);
-  var t2Cls = (task2Active ? ' active' : '') + (task2Done ? ' completed' : '') + (task2Locked ? ' locked' : '');
-  html += '<div class="course-nav-item course-nav-item--task' + t2Cls + '"' + (task2Locked ? '' : ' onclick="navigateChapter(5)"') + '>' +
-    '<span class="course-nav-num" style="' + (task2Locked ? '' : 'background:linear-gradient(135deg,#0891b2,#06b6d4);color:#fff;') + '">' + (task2Locked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>' : '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>') + '</span>' +
-    '<div class="course-nav-text">' +
-      '<span style="font-size:13px;font-weight:600;color:' + (task2Active ? '#0891b2' : 'var(--text-primary)') + ';">实训任务2</span>' +
-      '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + task2Ch.title + '</span>' +
-    '</div>' +
-    (task2Locked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
-  '</div>';
   nav.innerHTML = html;
   updateChapterProgress();
 }
@@ -2504,13 +2403,11 @@ function renderChapterContent() {
   var ch = chapters[learningState.currentChapter];
   var topbar = document.getElementById('courseTopbarTitle');
   if (ch.isTask) {
-    if (ch.isTask2) {
-      topbar.textContent = '实训任务2：AI金融聊天机器人';
-    } else {
-      topbar.textContent = '实训任务：AIGC 短剧综合实训';
+    if (ch.isTask) {
+      topbar.textContent = '任务5：后期成片输出';
     }
   } else {
-    topbar.textContent = '第' + (ch.id + 1) + '节：' + ch.title;
+    topbar.textContent = '任务' + (ch.id + 1) + '：' + ch.title;
   }
 
   var content = document.getElementById('courseContent');
@@ -2708,7 +2605,7 @@ function renderLearningChapter(ch) {
 
 		    var btnLabel, btnAction;
 		    if (isLastQ) {
-		      btnLabel = '提交答案 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+		      btnLabel = '下一题 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
 		      btnAction = 'advanceStep()';
 		    } else {
 		      btnLabel = '下一题 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
@@ -2765,7 +2662,7 @@ function renderLearningChapter(ch) {
   if (step === 2 + _quizLen && ch.task) {
     var taskContent = (learningState.chapterTaskContent && learningState.chapterTaskContent[chapterId]) || '';
     return '<div class="module-block">' +
-      '<div class="module-block-title"><span class="module-block-icon">📝</span> 实训任务</div>' +
+      '<div class="module-block-title"><span class="module-block-icon">📝</span> 任务' + (chapterId + 1) + '</div>' +
       '<div class="task-block">' +
         '<div class="task-block-header">' +
           '<span class="task-block-num">' + (chapterId + 1) + '</span>' +
@@ -2780,8 +2677,11 @@ function renderLearningChapter(ch) {
           '<textarea id="chapterTaskEditor' + chapterId + '" class="task-editor" placeholder="请在此编写「' + ch.task.title + '」的方案内容..." oninput="learningState.chapterTaskContent[' + chapterId + ']=this.value">' + taskContent + '</textarea>' +
         '</div>' +
       '</div>' +
-      '<div style="display:flex;justify-content:flex-end;margin-top:16px;">' +
-        '<button class="btn btn-primary" onclick="advanceStep()">保存并继续 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">' +
+        '<button class="btn btn-primary" onclick="learningState.currentStep=' + (1 + _quizLen) + ';renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polyline points="15 18 9 12 15 6"/></svg> 上一题' +
+        '</button>' +
+        '<button class="btn btn-primary" onclick="advanceStep()">提交作业 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
       '</div>' +
     '</div>';
   }
@@ -2790,17 +2690,17 @@ function renderLearningChapter(ch) {
   if (step === 3 + _quizLen) {
     var _hasQ = _quizLen > 0;
     var returnStep = (ch.task ? (2 + _quizLen) : (_hasQ ? (1 + _quizLen) : 1));
-    var returnLabel = ch.task ? '返回实训任务' : '返回题目';
+    var returnLabel = ch.task ? '返回任务' : '返回题目';
     return '<div style="text-align:center;padding:40px 20px;">' +
       '<div style="font-size:72px;margin-bottom:20px;">🎉</div>' +
-      '<h2 style="font-size:26px;font-weight:800;margin-bottom:12px;color:var(--text-primary);">真棒！你已完成第' + (ch.id + 1) + '章节的学习</h2>' +
-      '<p style="font-size:15px;color:var(--text-secondary);margin-bottom:8px;">你已掌握「<strong>' + ch.title + '</strong>」的全部核心知识点' + (ch.task ? '并完成实训任务' : '') + '</p>' +
+      '<h2 style="font-size:26px;font-weight:800;margin-bottom:12px;color:var(--text-primary);">真棒！你已完成任务' + (ch.id + 1) + '的学习</h2>' +
+      '<p style="font-size:15px;color:var(--text-secondary);margin-bottom:8px;">你已掌握「<strong>' + ch.title + '</strong>」的全部核心知识点' + (ch.task ? '并提交作业' : '') + '</p>' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">' +
-        '<button class="btn btn-secondary" onclick="learningState.currentStep=' + returnStep + ';renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;" style="font-size:13px;padding:10px 20px;">' +
+        '<button class="btn btn-primary" onclick="learningState.currentStep=' + returnStep + ';renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;">' +
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polyline points="15 18 9 12 15 6"/></svg> ' + returnLabel +
         '</button>' +
         (chapterId === 3 ?
-          '<button class="btn btn-primary" onclick="goToTask()" style="font-size:14px;padding:12px 28px;">进入实训任务（后期成片输出） <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg></button>' :
+          '<button class="btn btn-primary" onclick="goToTask()" style="font-size:14px;padding:12px 28px;">进入任务5（后期成片输出） <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg></button>' :
           '<button class="btn btn-primary" onclick="advanceChapter()" style="font-size:14px;padding:12px 28px;">下一章节 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg></button>') +
       '</div>' +
     '</div>';
@@ -2810,7 +2710,6 @@ function renderLearningChapter(ch) {
 }
 
 function renderTaskChapter(ch) {
-  if (ch.isTask2) return renderTask2Chapter(ch);
   var submitted = learningState.taskSubmitted;
   var task = ch.tasks && ch.tasks[0];
 
@@ -2872,74 +2771,7 @@ function renderTaskChapter(ch) {
 
   return editorHtml;
 }
-function renderTask2Chapter(ch) {
-  var submitted = learningState.task2Submitted;
-  var taskContents = learningState.task2Contents || ['', '', '', ''];
-  var taskFiles = learningState.task2Files || [null, null, null, null];
-  var taskFileNames = learningState.task2FileNames || [null, null, null, null];
 
-  var editorHtml = '';
-  if (submitted) {
-    editorHtml += '<div class="task-submitted-badge" style="margin-bottom:12px;">✅ 已提交</div>';
-  }
-  editorHtml += '<div class="task-blocks">';
-  var scoringCriteria2 = [
-    '前期准备与数据回顾（15 分）：财务数据回顾全面准确，Python 环境及必要库（pandas、Flask）正确安装配置，能够熟练读取与查看数据。',
-    '聊天机器人设计与数据准备（25 分）：3~5 个财务查询问题定义合理、覆盖核心指标；问题-答案映射表准确完整，回复内容基于真实数据分析结果。',
-    '基础聊天机器人开发（35 分）：if-else 逻辑正确匹配用户输入，命令行或 Flask Web 界面可正常运行；代码结构清晰，无语法错误，对未定义查询有兜底回复。',
-    '演示与文档编写（25 分）：测试覆盖所有预设查询且回复准确；文档清晰说明机器人原理、查询范围与局限；最终打包提交完整（代码+测试结果+文档）。'
-  ];
-  ch.tasks.forEach(function(task, i) {
-    var content = taskContents[i] || '';
-    var hasFile = !!(taskFiles[i] && taskFileNames[i]);
-    var acceptInfo = task.accept ? task.accept.replace(/,/g, ', ') : '';
-    editorHtml += '<div class="task-block">' +
-      '<div class="task-block-header">' +
-        '<span class="task-block-num">' + task.label + '</span>' +
-        '<span class="task-block-title">' + task.title + '</span>' +
-        '<button class="task-scoring-btn" onclick="toggleScoring(event, ' + i + ')">评分标准<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>' +
-      '</div>' +
-      '<div class="task-scoring-dropdown" id="scoringDropdown' + i + '" style="display:none;">' +
-        '<div class="task-scoring-content">' + scoringCriteria2[i] + '</div>' +
-      '</div>' +
-      '<div class="task-block-desc">' + task.desc + '</div>';
-    if (submitted) {
-      if (hasFile) {
-        editorHtml += '<div class="task2-file-uploaded">' +
-          '<span class="task2-file-uploaded-icon">📎</span>' +
-          '<span class="task2-file-uploaded-name">' + taskFileNames[i] + '</span>' +
-          '</div>';
-      } else {
-        editorHtml += '<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px;color:var(--text-muted);text-align:center;">未上传文件</div>';
-      }
-    } else {
-      editorHtml += '<div class="task2-file-upload">' +
-        (hasFile ?
-          '<div class="task2-file-upload-row">' +
-            '<span class="task2-file-uploaded-icon">📎</span>' +
-            '<span class="task2-file-uploaded-name">' + taskFileNames[i] + '</span>' +
-            '<button class="task2-file-replace-btn" onclick="event.stopPropagation();triggerTask2FileUpload(' + i + ')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>替换</button>' +
-          '</div>' :
-          '<button class="task2-file-upload-btn" onclick="event.stopPropagation();triggerTask2FileUpload(' + i + ')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>上传文件</button>' +
-          '<span class="task2-file-upload-hint">支持格式：' + acceptInfo + '</span>') +
-      '</div>';
-    }
-    editorHtml += '</div>';
-  });
-  editorHtml += '</div>';
-  // Hidden file input for task2 (shared, target set dynamically)
-  editorHtml += '<input type="file" id="task2FileInput" style="display:none;" onchange="handleTask2FileSelect(event)">';
-
-  // ---- Buttons after task blocks ----
-  if (!submitted) {
-    editorHtml += '<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">' +
-      '<button class="btn btn-secondary" onclick="saveTask2Draft()" style="font-size:13px;padding:11px 20px;">保存草稿</button>' +
-      '<button class="btn btn-primary" onclick="submitTask2()" style="font-size:14px;padding:13px 20px;">提交任务</button>' +
-    '</div>';
-  }
-
-  return editorHtml;
-}
 
 function tagInputHtml(tags) {
   var chipsHtml = (tags || []).map(function(t, i) {
@@ -3033,7 +2865,6 @@ function saveChapterProgress() {
   var p = {};
   learningState.completedChapters.forEach(function(c) { p[String(c)] = true; });
   if (learningState.taskSubmitted) p['task'] = true;
-  if (learningState.task2Submitted) p['task2'] = true;
   sessionStorage.setItem('chapterProgress', JSON.stringify(p));
   // Save unlocked chapters separately
   var unlocked = [];
@@ -3104,7 +2935,6 @@ function submitTask() {
   learningState.taskContents = [videoVal];
   learningState.taskSubmitted = true;
   learningState.completedChapters.add(4);
-  learningState.unlockedChapters.add(5);
   saveChapterProgress();
   document.getElementById('successOverlay').classList.add('active');
 }
@@ -3123,57 +2953,7 @@ function saveTaskDraft() {
   showToast('草稿已保存');
 }
 
-// ---- 实训任务2 submit / save / file upload ----
-function submitTask2() {
-  var taskContents = [];
-  var hasFile = false;
-  for (var i = 0; i < 4; i++) {
-    taskContents.push('');
-  }
-  var taskFiles = learningState.task2Files || [null, null, null, null];
-  for (var fi = 0; fi < 4; fi++) {
-    if (taskFiles[fi]) hasFile = true;
-  }
-  if (!hasFile) {
-    showToast('请至少上传一个文件再提交');
-    return;
-  }
-  learningState.task2Contents = taskContents;
-  learningState.task2Submitted = true;
-  learningState.completedChapters.add(5);
-  saveChapterProgress();
-  document.getElementById('successOverlay').classList.add('active');
-}
 
-function saveTask2Draft() {
-  saveChapterProgress();
-  showToast('草稿已保存');
-}
-
-
-var _activeTask2FileIdx = 0;
-
-function triggerTask2FileUpload(idx) {
-  if (typeof idx === 'number') _activeTask2FileIdx = idx;
-  document.getElementById('task2FileInput').click();
-}
-
-function handleTask2FileSelect(event) {
-  var file = event.target.files && event.target.files[0];
-  if (!file) return;
-  if (file.size > 100 * 1024 * 1024) { showToast('文件不能超过 100MB'); event.target.value = ''; return; }
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    if (!learningState.task2Files) learningState.task2Files = [null, null, null, null];
-    if (!learningState.task2FileNames) learningState.task2FileNames = [null, null, null, null];
-    learningState.task2Files[_activeTask2FileIdx] = e.target.result;
-    learningState.task2FileNames[_activeTask2FileIdx] = file.name;
-    renderChapterContent();
-    showToast('文件已上传');
-  };
-  reader.readAsDataURL(file);
-  event.target.value = '';
-}
 
 // ---- Editor upload helpers ----
 var _activeTaskEditorIdx = 0;
