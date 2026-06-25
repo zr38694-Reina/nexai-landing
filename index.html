@@ -240,6 +240,169 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
   background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-light);
 }
 .confirm-dialog-btn--no:hover { background: var(--bg-card); color: var(--text-primary); }
+
+/* ===== Review Loading Overlay ===== */
+.review-loading-overlay {
+  position: fixed; inset: 0; z-index: 600; background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.review-loading-overlay.active { opacity: 1; pointer-events: auto; }
+.review-loading-dialog {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 40px 36px; max-width: 440px; width: 90%; text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25); transform: translateY(10px);
+  transition: transform 0.3s ease;
+}
+.review-loading-overlay.active .review-loading-dialog { transform: translateY(0); }
+.review-loading-icon { font-size: 48px; margin-bottom: 16px; animation: reviewPulse 2s ease-in-out infinite; }
+@keyframes reviewPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+}
+.review-loading-text { font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 20px; }
+.review-progress-bar-wrap {
+  width: 100%; height: 12px; background: var(--bg-secondary); border-radius: 100px;
+  overflow: hidden; margin-bottom: 12px;
+}
+.review-progress-bar-fill {
+  height: 100%; width: 0%; background: linear-gradient(90deg, #818cf8, #4f46e5, #7c3aed);
+  border-radius: 100px; transition: width 0.6s ease;
+  box-shadow: 0 0 12px rgba(99,102,241,0.4);
+}
+.review-progress-pct { font-size: 24px; font-weight: 800; color: #4f46e5; margin-bottom: 4px; }
+.review-progress-hint { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+/* ===== Review Result Overlay ===== */
+.review-result-overlay {
+  position: fixed; inset: 0; z-index: 600; background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+}
+.review-result-overlay.active { opacity: 1; pointer-events: auto; }
+.review-result-dialog {
+  position: relative;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 32px 28px; max-width: 640px; width: 92%; max-height: 85vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25); transform: translateY(10px);
+  transition: transform 0.3s ease;
+}
+.review-result-close-x {
+  position: absolute; top: 12px; right: 16px;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: none; background: transparent;
+  font-size: 20px; color: var(--text-muted);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s ease; line-height: 1; z-index: 10;
+}
+.review-result-close-x:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.review-result-overlay.active .review-result-dialog { transform: translateY(0); }
+
+/* Scenario tabs */
+.result-scenario-tabs {
+  display: flex; gap: 8px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap;
+}
+.result-scenario-btn {
+  padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: 2px solid var(--border); background: var(--bg-secondary);
+  color: var(--text-secondary); transition: all 0.15s ease;
+}
+.result-scenario-btn:hover { border-color: #4f46e5; color: #4f46e5; }
+.result-scenario-btn.active {
+  background: linear-gradient(180deg, #818cf8 0%, #4f46e5 100%); color: #fff;
+  border-color: transparent; box-shadow: 0 4px 0 #3730a3, 0 6px 16px rgba(99,102,241,0.3);
+}
+
+/* Result header */
+.result-header { text-align: center; margin-bottom: 20px; }
+.result-header-icon { font-size: 48px; margin-bottom: 8px; }
+.result-header-title { font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px; }
+.result-badge {
+  display: inline-block; padding: 6px 20px; border-radius: 100px; font-size: 14px; font-weight: 700;
+  margin-bottom: 4px;
+}
+.result-badge-pass { background: rgba(5,150,105,0.1); color: #059669; border: 1px solid rgba(5,150,105,0.2); }
+.result-badge-fail { background: rgba(220,38,38,0.08); color: #dc2626; border: 1px solid rgba(220,38,38,0.15); }
+
+/* Task result items */
+.result-section-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 20px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.result-task-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+  background: var(--bg-secondary); border-radius: 10px; margin-bottom: 8px;
+}
+.result-task-num { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.result-task-info { flex: 1; min-width: 0; }
+.result-task-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+.result-task-comment { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+.result-task-grade {
+  font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 100px; flex-shrink: 0;
+}
+.grade-pass { background: rgba(5,150,105,0.08); color: #059669; }
+.grade-excellent { background: rgba(99,102,241,0.08); color: #4f46e5; }
+.grade-fail { background: rgba(220,38,38,0.08); color: #dc2626; }
+
+/* Expert comment */
+.result-expert-comment {
+  background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px;
+  padding: 16px; margin-top: 8px;
+}
+.result-expert-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.result-expert-text { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+.result-expert-text p { margin-bottom: 8px; }
+.result-expert-text p:last-child { margin-bottom: 0; }
+
+/* Ability dimensions */
+.result-dimension-item {
+  display: flex; align-items: center; gap: 10px; padding: 8px 12px;
+  background: var(--bg-secondary); border-radius: 8px; margin-bottom: 6px;
+}
+.result-dim-icon { font-size: 18px; flex-shrink: 0; }
+.result-dim-name { font-size: 13px; font-weight: 600; color: var(--text-primary); flex: 1; }
+.result-dim-score { font-size: 14px; font-weight: 800; color: #4f46e5; }
+.result-dim-bar-wrap { width: 80px; height: 6px; background: var(--border); border-radius: 100px; overflow: hidden; flex-shrink: 0; }
+.result-dim-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #818cf8, #4f46e5); }
+
+.result-radar-wrap { display: flex; justify-content: center; margin-top: 20px; }
+.result-radar-wrap canvas { max-width: 300px; max-height: 300px; }
+
+/* Skill badges */
+.skill-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.skill-badge {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 20px 24px; border-radius: 16px; min-width: 110px;
+  background: linear-gradient(180deg, rgba(99,102,241,0.06) 0%, rgba(99,102,241,0.02) 100%);
+  border: 1px solid rgba(99,102,241,0.12);
+  transition: all 0.2s ease;
+}
+.skill-badge:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,102,241,0.12); }
+.skill-badge-icon { font-size: 32px; }
+.skill-badge-name { font-size: 13px; font-weight: 700; color: var(--accent-light); }
+
+/* Certificate section */
+.certificate-section {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, rgba(217,119,6,0.06) 0%, rgba(245,158,11,0.03) 100%);
+  border: 1px solid rgba(217,119,6,0.15); border-radius: 12px;
+  padding: 16px 20px; margin-top: 8px;
+}
+.certificate-info { display: flex; align-items: center; gap: 10px; }
+.certificate-info-icon { font-size: 28px; }
+.certificate-info-text { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.certificate-info-hint { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* Close button for result */
+.result-close-btn {
+  display: block; margin: 24px auto 0; padding: 10px 36px;
+  border-radius: 100px; font-size: 14px; font-weight: 600; cursor: pointer;
+  border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary);
+  transition: all 0.15s ease;
+}
+.result-close-btn:hover { background: var(--bg-card); color: var(--text-primary); }
+
 .modal-body { padding: 28px; }
 .modal-footer { padding: 20px 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 
@@ -710,17 +873,21 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
   border-color: var(--amber);
 }
 .task-scoring-btn svg { width: 12px; height: 12px; }
-.task-scoring-dropdown {
-  margin-bottom: 10px;
+.task-scoring-table {
+  width: 100%; border-collapse: collapse; margin-top: 12px;
+  font-size: 12px; border-radius: 8px; overflow: hidden;
+  border: 1px solid var(--border);
 }
-.task-scoring-content {
-  background: rgba(217,119,6,0.04);
-  border: 1px solid rgba(217,119,6,0.15);
-  border-radius: 10px;
-  padding: 12px 16px;
-  font-size: 12px; line-height: 1.8;
-  color: var(--text-secondary);
+.task-scoring-table th {
+  background: rgba(99,102,241,0.08); color: var(--accent-light);
+  font-weight: 700; padding: 10px 12px; text-align: center;
+  border: 1px solid var(--border); white-space: nowrap;
 }
+.task-scoring-table td {
+  padding: 10px 12px; text-align: center; color: var(--text-secondary);
+  border: 1px solid var(--border); line-height: 1.6;
+}
+.task-scoring-table td:first-child { font-weight: 600; color: var(--text-primary); }
 
 
 
@@ -1185,6 +1352,7 @@ body.publish-mode .publish-page { display: flex; }
     <span class="course-tab" data-tab="members" onclick="switchCourseTab('members')">报名人员</span>
     <span class="course-tab" data-tab="homework" onclick="switchCourseTab('homework')">作业</span>
     <span class="course-tab" data-tab="gallery" onclick="switchCourseTab('gallery')">活动花絮</span>
+    <span class="course-tab" data-tab="review" onclick="switchCourseTab('review')">评审结果</span>
     <span class="course-tab" data-tab="portfolio" onclick="switchCourseTab('portfolio')">AI求职作品集</span>
     <span style="flex:1;"></span>
   </div>
@@ -1229,6 +1397,7 @@ body.publish-mode .publish-page { display: flex; }
         <p style="color:var(--text-muted);font-size:14px;">实训过程中的精彩瞬间将在此展示，功能开发中</p>
       </div>
     </div>
+    <div class="course-tab-content" id="tab-review" style="padding:20px 12px;overflow-y:auto;"></div>
     <div class="course-tab-content" id="tab-portfolio" style="padding:20px 12px;overflow-y:auto;" onrender="renderPortfolioTab()"></div>
     </div>
     <div class="course-progress-card" id="courseProgressCard">
@@ -1366,6 +1535,49 @@ body.publish-mode .publish-page { display: flex; }
     <div class="confirm-dialog-actions">
       <button class="confirm-dialog-btn confirm-dialog-btn--yes" onclick="viewSynthesizedWork()">点击查看</button>
     </div>
+  </div>
+</div>
+
+<!-- Review Loading Overlay -->
+<div class="review-loading-overlay" id="reviewLoadingOverlay">
+  <div class="review-loading-dialog">
+    <div class="review-loading-icon">⏳</div>
+    <div class="review-loading-text">正在等待评审结果</div>
+    <div class="review-progress-bar-wrap">
+      <div class="review-progress-bar-fill" id="reviewProgressFill"></div>
+    </div>
+    <div class="review-progress-pct" id="reviewProgressPct">30%</div>
+    <div class="review-progress-hint">预计等待时间 3 分钟<br>请注意及时查看评审结果</div>
+  </div>
+</div>
+
+<!-- Review Result Overlay -->
+<div class="review-result-overlay" id="reviewResultOverlay">
+  <div class="review-result-dialog" id="reviewResultContent"></div>
+</div>
+
+<div class="review-result-overlay" id="certificateOverlay">
+  <div class="review-result-dialog" id="certificateContent" style="text-align:center;">
+    <button class="review-result-close-x" onclick="closeCertificate()" title="关闭">✕</button>
+    <div style="padding:20px 0;">
+      <div style="font-size:56px;margin-bottom:12px;">📜</div>
+      <h2 style="font-size:24px;font-weight:800;color:var(--text-primary);margin-bottom:4px;">项目实训证书</h2>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;">NexAI AIGC 短剧创作实训</p>
+      <div style="border:2px solid rgba(217,119,6,0.2);border-radius:16px;padding:24px;background:linear-gradient(180deg,rgba(249,250,251,1) 0%,rgba(249,250,251,0.6) 100%);margin-bottom:20px;">
+        <p style="font-size:14px;color:var(--text-secondary);line-height:2;margin-bottom:16px;">
+          学员已完成 <strong style="color:var(--text-primary);">AIGC 短剧创作全流程实训</strong>，涵盖行业调研、剧本创作、分镜设计、视频生成与后期成片五大模块，并通过全部任务评审，达到<strong style="color:#059669;">达标</strong>标准。
+        </p>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.8;">
+          本证书证明持证者具备独立完成 AIGC 短剧从选题到成片的完整创作能力，掌握主流 AI 视频生成工具与后期制作技能。
+        </p>
+      </div>
+      <div style="display:flex;justify-content:center;gap:40px;font-size:12px;color:var(--text-muted);margin-bottom:20px;">
+        <div><span style="color:var(--text-secondary);font-weight:600;">颁发机构</span><br>NexAI 人才认证中心</div>
+        <div><span style="color:var(--text-secondary);font-weight:600;">证书编号</span><br>NEX-AIGC-2026-0001</div>
+        <div><span style="color:var(--text-secondary);font-weight:600;">颁发日期</span><br>2026年6月</div>
+      </div>
+    </div>
+    <button class="result-close-btn" onclick="closeCertificate()">关闭</button>
   </div>
 </div>
 
@@ -1592,6 +1804,9 @@ const learningState = {
   correctAnswers: {},    // { chapterId: { qi: true } } — tracks correctly answered questions
   multiSelectAnswers: {}, // { chapterId: { qi: { oi: true } } } — tracks multi-select choices
   taskSubmitted: false,  // for 实训任务
+  task5Congrats: false,  // show task 5 congratulations page
+  reviewReady: false,    // review result available in sidebar
+  showingReview: false,  // inline review result is displayed
   showingIntro: false,   // for course intro page
   taskWorkTitle: '',     // 作品标题
   taskCoverUrl: '',      // 作品封面 (data URL)
@@ -1660,7 +1875,7 @@ const chapters = [
     task: {
       title: '行业与工具规划',
       desc: '自选热门短剧题材，梳理赛道创作难度；分类整理 AI 视频生成、剪辑、修图工具清单并标注适用场景，结合课程四步制作流程写出完整前期创作方案。',
-      scoring: '前期规划（15 分）：题材贴合市场热点，工具分类准确，四步制作流程方案逻辑清晰、可落地，无行业常识错误。'
+      scoring: { name: '前期规划', pass: '题材贴合市场热点，工具分类准确，四步制作流程方案逻辑清晰、可落地', fail: '工具分类混乱，流程方案逻辑不清，存在行业常识错误', excellent: '题材精准把握市场趋势，工具选型专业，流程方案逻辑严密、创新性强' }
     }
   },
   { // Chapter 2
@@ -1691,7 +1906,7 @@ const chapters = [
     task: {
       title: '原创短剧剧本创作',
       desc: '搜集同赛道爆款拆解热点元素，提炼剧情核心冲突与 2-3 个情绪爆点；选用一段故事 / 小说素材，规避原文大段心理描写，改编为带场景、画面、动作、音效标注的专业短剧剧本，采用老题材创新叙事的思路提升故事看点。',
-      scoring: '短剧剧本创作（25 分）：精准提炼冲突与情绪爆点，区分小说与剧本格式，画面、音效、动作要素齐全，具备老题材新叙事的创新思路，剧情节奏紧凑。'
+      scoring: { name: '短剧剧本创作', pass: '提炼冲突与情绪爆点，区分小说与剧本格式，画面、音效、动作要素齐全', fail: '冲突提炼不到位，未区分小说与剧本格式，关键要素缺失', excellent: '冲突设计精妙，情绪爆点密度高，老题材新叙事创意突出，节奏把控精准' }
     }
   },
   { // Chapter 3
@@ -1722,7 +1937,7 @@ const chapters = [
     task: {
       title: '标准化分镜设计',
       desc: '统一固定主角形象、穿搭、场景美术风格、整体色调；遵循 "剧本 - 分镜 - 成片" 流程，为剧本设计 6-8 组完整分镜；若创作灵感不足，使用 AI 生成分镜初稿并人工调整，全程保证人物、场景风格无割裂。',
-      scoring: '分镜规范设计（20 分）：人物、场景、画风统一标准明确，分镜数量达标且一一对应剧本剧情，画面无形象错乱、风格割裂问题。'
+      scoring: { name: '分镜规范设计', pass: '人物、场景、画风统一标准明确，分镜数量达标且逐一对应剧本剧情', fail: '人物形象不一致，分镜数量不足，画面存在形象错乱、风格割裂', excellent: '人物场景画风高度统一，分镜设计富有创意且完美呼应剧情节奏' }
     }
   },
   { // Chapter 4
@@ -1753,7 +1968,7 @@ const chapters = [
     task: {
       title: 'AI 视频生成与镜头优化',
       desc: '使用首尾帧关联法生成分镜视频片段，实现镜头无缝衔接；根据剧情情绪切换远景、特写、多角度镜头，用镜头语言烘托氛围；借助 AI 生成贴合人设、带有情绪起伏的人物对白配音。',
-      scoring: '视频生成与镜头运用（20 分）：分段视频首尾帧衔接流畅无断层；镜头远近、视角切换贴合人物情绪与剧情氛围；AI 人声自然有情绪，无机械生硬感。'
+      scoring: { name: '视频生成与镜头运用', pass: '分段视频首尾帧衔接流畅，镜头切换贴合人物情绪与剧情氛围，AI人声自然', fail: '首尾帧衔接有断层，镜头切换生硬不贴合情绪，AI人声机械生硬', excellent: '镜头语言丰富多变，情绪表达精准到位，AI人声富有感染力且完全融入角色' }
     }
   },
   { // Chapter 5 - 实训任务
@@ -1835,6 +2050,9 @@ function startLearning() {
   learningState.wrongAnswers = {};
   learningState.correctAnswers = {};
   learningState.taskSubmitted = false;
+  learningState.task5Congrats = false;
+  learningState.reviewReady = false;
+  learningState.showingReview = false;
   learningState.taskWorkTitle = '';
   learningState.taskCoverUrl = '';
   learningState.taskContents = ['', '', '', '', ''];
@@ -1877,6 +2095,7 @@ function switchCourseTab(tab) {
   if (tab === 'homework') renderHomeworkTab();
   if (tab === 'portfolio') renderPortfolioTab();
   if (tab === 'progress') renderProgressTab();
+  if (tab === 'review') renderReviewTab();
 }
 
 function renderHomeworkTab() {
@@ -2088,6 +2307,7 @@ function restoreProgressFromStorage() {
   var savedProgress = JSON.parse(sessionStorage.getItem('chapterProgress') || '{}');
   Object.keys(savedProgress).forEach(function(k) {
     if (k === 'task') { learningState.taskSubmitted = true; }
+    else if (k === 'reviewReady') { learningState.reviewReady = true; }
     else { learningState.completedChapters.add(parseInt(k)); }
   });
   // Restore explicitly unlocked chapters
@@ -2196,6 +2416,104 @@ function renderProgressTab() {
       itemsHtml +
     '</div>' +
   '</div>';
+}
+
+var _tabReviewScenario = 1;
+
+function renderReviewTab() {
+  var el = document.getElementById('tab-review');
+  if (!el) return;
+  if (!learningState.taskSubmitted) {
+    el.innerHTML = '<div style="max-width:720px;margin:0 auto;text-align:center;padding:60px 0;">' +
+      '<div style="font-size:48px;margin-bottom:16px;">📋</div>' +
+      '<h3 style="font-size:18px;font-weight:700;margin-bottom:8px;">评审结果</h3>' +
+      '<p style="color:var(--text-muted);font-size:14px;">提交任务5后可查看评审结果</p>' +
+    '</div>';
+    return;
+  }
+  var scenario = _tabReviewScenario;
+  var taskResults = getTaskResults(scenario);
+  var expertComment = getExpertComment(scenario);
+  var dimensions = (scenario === 3) ? null : getAbilityDimensions(scenario);
+  var isPass = scenario !== 3;
+  var badgeClass = isPass ? 'result-badge-pass' : 'result-badge-fail';
+  var badgeText = isPass ? '达标' : '未达标';
+  var headerIcon = isPass ? '🎉' : '😔';
+  var headerTitle = isPass ? '恭喜！评审结果' : '很遗憾！评审结果';
+
+  var html = '<div style="max-width:640px;margin:0 auto;">';
+
+  // Scenario tabs
+  html += '<div class="result-scenario-tabs">';
+  for (var s = 1; s <= 3; s++) {
+    html += '<button class="result-scenario-btn' + (s === scenario ? ' active' : '') + '" onclick="_tabReviewScenario=' + s + ';renderReviewTab()">场景' + s + '</button>';
+  }
+  html += '</div>';
+
+  // Header
+  html += '<div class="result-header">';
+  html += '<div class="result-header-icon">' + headerIcon + '</div>';
+  html += '<div class="result-header-title">' + headerTitle + '</div>';
+  html += '<div class="result-badge ' + badgeClass + '">【' + badgeText + '】</div>';
+  html += '</div>';
+
+  // Task results
+  html += '<div class="result-section-title">📋 各任务评审结果</div>';
+  for (var t = 0; t < taskResults.length; t++) {
+    var tr = taskResults[t];
+    var gradeClass = tr.grade === '优秀' ? 'grade-excellent' : (tr.grade === '未达标' ? 'grade-fail' : 'grade-pass');
+    html += '<div class="result-task-item">';
+    html += '<div class="result-task-num">' + (t + 1) + '</div>';
+    html += '<div class="result-task-info">';
+    html += '<div class="result-task-name">' + tr.name + '</div>';
+    html += '<div class="result-task-comment">' + tr.comment + '</div>';
+    html += '</div>';
+    html += '<div class="result-task-grade ' + gradeClass + '">' + tr.grade + '</div>';
+    html += '</div>';
+  }
+
+  // Expert comment
+  html += '<div class="result-section-title">💬 专家评语</div>';
+  html += '<div class="result-expert-comment">';
+  html += '<div class="result-expert-label">📝 整体评语</div>';
+  html += '<div class="result-expert-text"><p>' + expertComment.overall + '</p></div>';
+  html += '<div class="result-expert-label" style="margin-top:12px;">💡 改进意见</div>';
+  html += '<div class="result-expert-text"><p>' + expertComment.improvement + '</p></div>';
+  html += '</div>';
+
+  // Project certificate (passing only)
+  if (isPass) {
+    html += '<div class="result-section-title" style="margin-top:24px;">📜 项目证书</div>';
+    html += '<div class="certificate-section">';
+    html += '<div class="certificate-info"><span class="certificate-info-icon">📜</span><div><div class="certificate-info-text">NexAI AIGC 短剧创作实训证书</div><div class="certificate-info-hint">恭喜完成全部实训任务，通过评审</div></div></div>';
+    html += '<button class="btn btn-primary" onclick="showCertificate()" style="font-size:13px;padding:10px 24px;flex-shrink:0;">📜 点击查看</button>';
+    html += '</div>';
+  }
+
+  // Ability dimensions — radar chart (scenario 1 & 2 only)
+  if (dimensions) {
+    html += '<div class="result-section-title" style="margin-top:24px;">📊 五维能力雷达图</div>';
+    html += '<div class="result-radar-wrap"><canvas id="tabRadarCanvas"></canvas></div>';
+  }
+
+  // Skill badges (passing only)
+  if (isPass) {
+    html += '<div class="result-section-title" style="margin-top:24px;">🏅 技能徽章</div>';
+    html += '<div class="skill-badges">';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">🎬</span><span class="skill-badge-name">首作诞生</span></div>';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">🔍</span><span class="skill-badge-name">启程探索</span></div>';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">⚔️</span><span class="skill-badge-name">初试锋芒</span></div>';
+    html += '</div>';
+  }
+
+  html += '</div>';
+  el.innerHTML = html;
+
+  if (dimensions) {
+    setTimeout(function() {
+      drawRadarChart(document.getElementById('tabRadarCanvas'), dimensions);
+    }, 50);
+  }
 }
 
 function renderPortfolioTab() {
@@ -2321,6 +2639,18 @@ function renderChapterNav() {
     (taskLocked ? '<span style="font-size:10px;color:var(--text-muted);flex-shrink:0;">🔒</span>' : '') +
   '</div>';
 
+  // 评审结果 (shown after task 5 review is ready)
+  if (learningState.reviewReady) {
+    var reviewActive = learningState.showingReview === true;
+    html += '<div class="course-nav-item' + (reviewActive ? ' active' : '') + '" onclick="showReviewFromSidebar()" style="margin-top:4px;">' +
+      '<span class="course-nav-num" style="background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;">📋</span>' +
+      '<div class="course-nav-text">' +
+        '<span style="font-size:13px;font-weight:600;color:' + (reviewActive ? 'var(--accent-light)' : 'var(--text-primary)') + ';">评审结果</span>' +
+        '<span style="font-size:11px;color:var(--text-muted);line-height:1.3;">查看任务评审与证书</span>' +
+      '</div>' +
+    '</div>';
+  }
+
   nav.innerHTML = html;
   updateChapterProgress();
 }
@@ -2331,6 +2661,8 @@ function navigateChapter(i) {
     return;
   }
   learningState.showingIntro = false;
+  learningState.showingReview = false;
+  if (i === 4) learningState.task5Congrats = false;
   learningState.currentChapter = i;
   learningState.currentStep = 0;
   learningState.startedChapters.add(i);
@@ -2382,7 +2714,22 @@ function renderCourseIntro() {
         '</div>' +
       '</div>' +
     '</div>' +
+    '<div style="display:flex;justify-content:flex-end;margin-top:24px;">' +
+      '<button class="btn btn-primary" onclick="startLearningFromIntro()" style="font-size:15px;padding:14px 36px;">🚀 开始学习</button>' +
+    '</div>' +
   '</div>';
+}
+
+function startLearningFromIntro() {
+  learningState.showingIntro = false;
+  learningState.currentChapter = 0;
+  learningState.currentStep = 0;
+  learningState.unlockedChapters.add(0);
+  learningState.startedChapters.add(0);
+  saveChapterProgress();
+  renderChapterNav();
+  renderChapterContent();
+  document.getElementById('courseContent').scrollTop = 0;
 }
 
 function updateChapterProgress() {
@@ -2399,7 +2746,22 @@ function renderChapterContent() {
     renderCourseIntro();
     return;
   }
+  // Inline review result
+  if (learningState.showingReview) {
+    var topbar = document.getElementById('courseTopbarTitle');
+    topbar.textContent = '评审结果';
+    document.getElementById('courseContent').innerHTML = renderReviewInline(_reviewScenario);
+    renderChapterNav();
+    var dims = (_reviewScenario === 3) ? null : getAbilityDimensions(_reviewScenario);
+    if (dims) {
+      setTimeout(function() {
+        drawRadarChart(document.getElementById('inlineRadarCanvas'), dims);
+      }, 50);
+    }
+    return;
+  }
   learningState.showingIntro = false;
+  learningState.showingReview = false;
   var ch = chapters[learningState.currentChapter];
   var topbar = document.getElementById('courseTopbarTitle');
   if (ch.isTask) {
@@ -2634,6 +2996,10 @@ function renderLearningChapter(ch) {
 		      var isActive = qi === di;
 		      dotsHtml += '<button onclick="learningState.currentStep=' + (2 + di) + ';renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;" style="width:28px;height:28px;border-radius:50%;border:2px solid ' + (isActive ? 'var(--accent)' : 'var(--border)') + ';background:' + (isActive ? 'var(--accent)' : 'transparent') + ';color:' + (isActive ? '#fff' : 'var(--text-muted)') + ';font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.2s ease;" title="跳转到第' + (di+1) + '题">' + (di+1) + '</button>';
 		    }
+		    // Add task dot if chapter has a task
+		    if (ch.task) {
+		      dotsHtml += '<button onclick="learningState.currentStep=' + (2 + quizLen) + ';renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:transparent;color:var(--text-muted);font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.2s ease;" title="跳转到任务">' + (quizLen + 1) + '</button>';
+		    }
 
 		    var quizBlock = '<div class="module-block">' +
 		      '<div style="margin-bottom:14px;">' +
@@ -2661,18 +3027,22 @@ function renderLearningChapter(ch) {
   var _quizLen = ch.quiz ? ch.quiz.length : 0;
   if (step === 2 + _quizLen && ch.task) {
     var taskContent = (learningState.chapterTaskContent && learningState.chapterTaskContent[chapterId]) || '';
+    // Build numbered navigation dots for jumping to any quiz question + task
+    var _taskDotsHtml = '';
+    for (var _tdi = 0; _tdi < _quizLen; _tdi++) {
+      _taskDotsHtml += '<button onclick="learningState.currentStep=' + (2 + _tdi) + ';renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;" style="width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:transparent;color:var(--text-muted);font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all 0.2s ease;" title="跳转到第' + (_tdi+1) + '题">' + (_tdi+1) + '</button>';
+    }
+    // Active task dot
+    _taskDotsHtml += '<button style="width:28px;height:28px;border-radius:50%;border:2px solid var(--accent);background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:default;display:inline-flex;align-items:center;justify-content:center;" title="当前：任务">' + (_quizLen + 1) + '</button>';
     return '<div class="module-block">' +
       '<div class="module-block-title"><span class="module-block-icon">📝</span> 任务' + (chapterId + 1) + '</div>' +
       '<div class="task-block">' +
         '<div class="task-block-header">' +
           '<span class="task-block-num">' + (chapterId + 1) + '</span>' +
           '<span class="task-block-title">' + ch.task.title + '</span>' +
-          '<button class="task-scoring-btn" onclick="toggleScoring(event, ' + (10 + chapterId) + ')">评分标准<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>' +
-        '</div>' +
-        '<div class="task-scoring-dropdown" id="scoringDropdown' + (10 + chapterId) + '" style="display:none;">' +
-          '<div class="task-scoring-content">' + ch.task.scoring + '</div>' +
         '</div>' +
         '<div class="task-block-desc">' + ch.task.desc + '</div>' +
+        renderScoringTable(ch.task.scoring) +
         '<div class="task-editor-wrapper">' +
           '<textarea id="chapterTaskEditor' + chapterId + '" class="task-editor" placeholder="请在此编写「' + ch.task.title + '」的方案内容..." oninput="learningState.chapterTaskContent[' + chapterId + ']=this.value">' + taskContent + '</textarea>' +
         '</div>' +
@@ -2681,7 +3051,10 @@ function renderLearningChapter(ch) {
         '<button class="btn btn-primary" onclick="learningState.currentStep=' + (1 + _quizLen) + ';renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;">' +
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polyline points="15 18 9 12 15 6"/></svg> 上一题' +
         '</button>' +
-        '<button class="btn btn-primary" onclick="advanceStep()">提交作业 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+        '<div style="display:flex;align-items:center;gap:12px;">' +
+          '<div style="display:flex;gap:8px;">' + _taskDotsHtml + '</div>' +
+          '<button class="btn btn-primary" onclick="advanceStep()">提交作业 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+        '</div>' +
       '</div>' +
     '</div>';
   }
@@ -2713,6 +3086,21 @@ function renderTaskChapter(ch) {
   var submitted = learningState.taskSubmitted;
   var task = ch.tasks && ch.tasks[0];
 
+  // Task 5 congratulations page
+  if (learningState.task5Congrats) {
+    return '<div style="text-align:center;padding:40px 20px;">' +
+      '<div style="font-size:72px;margin-bottom:20px;">🎉</div>' +
+      '<h2 style="font-size:26px;font-weight:800;margin-bottom:12px;color:var(--text-primary);">真棒！你已完成任务5的学习</h2>' +
+      '<p style="font-size:15px;color:var(--text-secondary);margin-bottom:8px;">你已掌握「<strong>后期成片输出</strong>」的全部核心知识点并提交作业</p>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">' +
+        '<button class="btn btn-primary" onclick="learningState.task5Congrats=false;renderChapterContent();document.getElementById(\'courseContent\').scrollTop=0;">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polyline points="15 18 9 12 15 6"/></svg> 返回任务' +
+        '</button>' +
+        '<button class="btn btn-primary" onclick="viewReviewFromCongrats()" style="font-size:14px;padding:12px 28px;">📋 查看评审结果 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+      '</div>' +
+    '</div>';
+  }
+
   var editorHtml = '';
   if (submitted) {
     editorHtml += '<div class="task-submitted-badge" style="margin-bottom:12px;">✅ 已提交</div>';
@@ -2723,13 +3111,10 @@ function renderTaskChapter(ch) {
         '<div class="task-block-header">' +
           '<span class="task-block-num">5</span>' +
           '<span class="task-block-title">' + task.title + '</span>' +
-          '<button class="task-scoring-btn" onclick="toggleScoring(event, 0)">评分标准<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>' +
         '</div>' +
-        '<div class="task-scoring-dropdown" id="scoringDropdown0" style="display:none;">' +
-          '<div class="task-scoring-content">后期剪辑与完整成片（20 分）：剪辑流程完整，字幕、配乐、音效搭配适配；整体剧情连贯、风格统一，成片完成度高，符合商业化 AIGC 短剧出品标准。</div>' +
-        '</div>' +
-        '<div class="task-block-desc">' + task.desc + '</div>';
-    if (submitted) {
+        '<div class="task-block-desc">' + task.desc + '</div>' +
+        '<div style="margin-top:12px;">' + renderScoringTable({ name: '后期剪辑与完整成片', pass: '剪辑流程完整，字幕、配乐、音效搭配适配，成片完成度高', fail: '剪辑流程不完整，字幕配乐音效搭配不当，成片完成度低', excellent: '剪辑节奏精准，视听元素高度融合，成片达到商业短剧出品标准' }) + '</div>';
+    if (submitted && !learningState.reviewReady) {
       editorHtml += '<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.8;color:var(--text-secondary);min-height:80px;">' +
         (learningState.taskVideoName ? '🎬 已上传视频：' + learningState.taskVideoName : '（未上传）') + '</div>';
     } else {
@@ -2762,12 +3147,10 @@ function renderTaskChapter(ch) {
   editorHtml += '<input type="file" id="taskVideoInput" accept="video/mp4" style="display:none;" onchange="handleTaskVideoFileSelect(event)">';
 
   // Buttons
-  if (!submitted) {
-    editorHtml += '<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">' +
-      '<button class="btn btn-secondary" onclick="saveTaskDraft()" style="font-size:13px;padding:11px 20px;">保存草稿</button>' +
-      '<button class="btn btn-primary" onclick="submitTask()" style="font-size:14px;padding:13px 20px;">提交任务</button>' +
-    '</div>';
-  }
+  editorHtml += '<div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">' +
+    '<button class="btn btn-secondary" onclick="saveTaskDraft()" style="font-size:13px;padding:11px 20px;">保存草稿</button>' +
+    '<button class="btn btn-primary" onclick="submitTask()" style="font-size:14px;padding:13px 20px;">提交任务</button>' +
+  '</div>';
 
   return editorHtml;
 }
@@ -2865,6 +3248,7 @@ function saveChapterProgress() {
   var p = {};
   learningState.completedChapters.forEach(function(c) { p[String(c)] = true; });
   if (learningState.taskSubmitted) p['task'] = true;
+  if (learningState.reviewReady) p['reviewReady'] = true;
   sessionStorage.setItem('chapterProgress', JSON.stringify(p));
   // Save unlocked chapters separately
   var unlocked = [];
@@ -2908,21 +3292,22 @@ function goToTask() {
   showToast('前四节已完成！开始实训任务');
 }
 
-// ---- Scoring criteria toggle ----
-function toggleScoring(event, idx) {
-  event.stopPropagation();
-  var dropdown = document.getElementById('scoringDropdown' + idx);
-  if (!dropdown) return;
-  // Close all other dropdowns first (0-4 for task chapters, 10-13 for in-chapter tasks)
-  for (var j = 0; j < 14; j++) {
-    if (j >= 5 && j <= 9) continue; // skip unused range
-    var other = document.getElementById('scoringDropdown' + j);
-    if (other && other !== dropdown) {
-      other.style.display = 'none';
-    }
+// ---- Scoring table renderer ----
+function renderScoringTable(scoring) {
+  if (!scoring || typeof scoring === 'string') {
+    return '<div style="background:rgba(217,119,6,0.04);border:1px solid rgba(217,119,6,0.15);border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.8;color:var(--text-secondary);margin-top:12px;">' + (scoring || '') + '</div>';
   }
-  // Toggle current
-  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+  return '<table class="task-scoring-table">' +
+    '<thead><tr>' +
+      '<th>评分指标名称</th><th>达标要求</th><th>未达标要求</th><th>优秀要求</th>' +
+    '</tr></thead>' +
+    '<tbody><tr>' +
+      '<td>' + scoring.name + '</td>' +
+      '<td>' + scoring.pass + '</td>' +
+      '<td>' + scoring.fail + '</td>' +
+      '<td>' + scoring.excellent + '</td>' +
+    '</tr></tbody>' +
+    '</table>';
 }
 
 function submitTask() {
@@ -2934,9 +3319,11 @@ function submitTask() {
   }
   learningState.taskContents = [videoVal];
   learningState.taskSubmitted = true;
+  learningState.task5Congrats = true;
   learningState.completedChapters.add(4);
   saveChapterProgress();
-  document.getElementById('successOverlay').classList.add('active');
+  renderChapterContent();
+  document.getElementById('courseContent').scrollTop = 0;
 }
 
 function viewSynthesizedWork() {
@@ -2946,11 +3333,427 @@ function viewSynthesizedWork() {
   updateChapterProgress();
 }
 
+function viewReviewFromCongrats() {
+  learningState.task5Congrats = false;
+  learningState.reviewReady = true;
+  saveChapterProgress();
+  showReviewResult(1);
+}
+
+function showReviewFromSidebar() {
+  showReviewResult(1);
+}
+
 function saveTaskDraft() {
   // Save task 5 video name
   learningState.taskContents[4] = learningState.taskVideoName || '';
   saveChapterProgress();
   showToast('草稿已保存');
+}
+
+// ===== Review Progress & Result =====
+var _reviewTimer = null;
+var _reviewProgress = 30;
+var _reviewScenario = 1;
+
+function startReviewProgress() {
+  _reviewScenario = 1;
+  showReviewResult(1);
+}
+
+function showReviewResult(scenario) {
+  _reviewScenario = scenario;
+  learningState.showingReview = true;
+  renderChapterNav();
+  renderChapterContent();
+}
+
+function switchReviewScenario(n) {
+  _reviewScenario = n;
+  document.getElementById('courseContent').innerHTML = renderReviewInline(n);
+  // Redraw radar chart
+  var dims = (n === 3) ? null : getAbilityDimensions(n);
+  if (dims) {
+    setTimeout(function() {
+      drawRadarChart(document.getElementById('inlineRadarCanvas'), dims);
+    }, 50);
+  }
+}
+
+function renderReviewInline(scenario) {
+  var taskResults = getTaskResults(scenario);
+  var expertComment = getExpertComment(scenario);
+  var dimensions = (scenario === 3) ? null : getAbilityDimensions(scenario);
+  var isPass = scenario !== 3;
+  var badgeClass = isPass ? 'result-badge-pass' : 'result-badge-fail';
+  var badgeText = isPass ? '达标' : '未达标';
+  var headerIcon = isPass ? '🎉' : '😔';
+  var headerTitle = isPass ? '恭喜！评审结果' : '很遗憾！评审结果';
+
+  var html = '<div style="max-width:640px;margin:0 auto;padding:20px 0;">';
+
+  // Scenario tabs
+  html += '<div class="result-scenario-tabs">';
+  for (var s = 1; s <= 3; s++) {
+    html += '<button class="result-scenario-btn' + (s === scenario ? ' active' : '') + '" onclick="switchReviewScenario(' + s + ')">场景' + s + '</button>';
+  }
+  html += '</div>';
+
+  // Header
+  html += '<div class="result-header">';
+  html += '<div class="result-header-icon">' + headerIcon + '</div>';
+  html += '<div class="result-header-title">' + headerTitle + '</div>';
+  html += '<div class="result-badge ' + badgeClass + '">【' + badgeText + '】</div>';
+  html += '</div>';
+
+  // Task results
+  html += '<div class="result-section-title">📋 各任务评审结果</div>';
+  for (var t = 0; t < taskResults.length; t++) {
+    var tr = taskResults[t];
+    var gradeClass = tr.grade === '优秀' ? 'grade-excellent' : (tr.grade === '未达标' ? 'grade-fail' : 'grade-pass');
+    html += '<div class="result-task-item">';
+    html += '<div class="result-task-num">' + (t + 1) + '</div>';
+    html += '<div class="result-task-info">';
+    html += '<div class="result-task-name">' + tr.name + '</div>';
+    html += '<div class="result-task-comment">' + tr.comment + '</div>';
+    html += '</div>';
+    html += '<div class="result-task-grade ' + gradeClass + '">' + tr.grade + '</div>';
+    html += '</div>';
+  }
+
+  // Expert comment
+  html += '<div class="result-section-title">💬 专家评语</div>';
+  html += '<div class="result-expert-comment">';
+  html += '<div class="result-expert-label">📝 整体评语</div>';
+  html += '<div class="result-expert-text"><p>' + expertComment.overall + '</p></div>';
+  html += '<div class="result-expert-label" style="margin-top:12px;">💡 改进意见</div>';
+  html += '<div class="result-expert-text"><p>' + expertComment.improvement + '</p></div>';
+  html += '</div>';
+
+  // Project certificate
+  if (isPass) {
+    html += '<div class="result-section-title" style="margin-top:24px;">📜 项目证书</div>';
+    html += '<div class="certificate-section">';
+    html += '<div class="certificate-info"><span class="certificate-info-icon">📜</span><div><div class="certificate-info-text">NexAI AIGC 短剧创作实训证书</div><div class="certificate-info-hint">恭喜完成全部实训任务，通过评审</div></div></div>';
+    html += '<button class="btn btn-primary" onclick="showCertificate()" style="font-size:13px;padding:10px 24px;flex-shrink:0;">📜 点击查看</button>';
+    html += '</div>';
+  }
+
+  // Radar chart
+  if (dimensions) {
+    html += '<div class="result-section-title" style="margin-top:24px;">📊 五维能力雷达图</div>';
+    html += '<div class="result-radar-wrap"><canvas id="inlineRadarCanvas"></canvas></div>';
+  }
+
+  // Skill badges
+  if (isPass) {
+    html += '<div class="result-section-title" style="margin-top:24px;">🏅 技能徽章</div>';
+    html += '<div class="skill-badges">';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">🎬</span><span class="skill-badge-name">首作诞生</span></div>';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">🔍</span><span class="skill-badge-name">启程探索</span></div>';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">⚔️</span><span class="skill-badge-name">初试锋芒</span></div>';
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function renderReviewResult(scenario) {
+  var container = document.getElementById('reviewResultContent');
+  var taskResults = getTaskResults(scenario);
+  var expertComment = getExpertComment(scenario);
+  var dimensions = (scenario === 3) ? null : getAbilityDimensions(scenario);
+  var isPass = scenario !== 3;
+  var badgeClass = isPass ? 'result-badge-pass' : 'result-badge-fail';
+  var badgeText = isPass ? '达标' : '未达标';
+  var headerIcon = isPass ? '🎉' : '😔';
+  var headerTitle = isPass ? '恭喜！评审结果' : '很遗憾！评审结果';
+
+  // Scenario tabs
+  var html = '<button class="review-result-close-x" onclick="closeReviewResult()" title="关闭">✕</button>';
+  html += '<div class="result-scenario-tabs">';
+  for (var s = 1; s <= 3; s++) {
+    html += '<button class="result-scenario-btn' + (s === scenario ? ' active' : '') + '" onclick="switchReviewScenario(' + s + ')">场景' + s + '</button>';
+  }
+  html += '</div>';
+
+  // Header
+  html += '<div class="result-header">';
+  html += '<div class="result-header-icon">' + headerIcon + '</div>';
+  html += '<div class="result-header-title">' + headerTitle + '</div>';
+  html += '<div class="result-badge ' + badgeClass + '">【' + badgeText + '】</div>';
+  html += '</div>';
+
+  // Task results
+  html += '<div class="result-section-title">📋 各任务评审结果</div>';
+  for (var t = 0; t < taskResults.length; t++) {
+    var tr = taskResults[t];
+    var gradeClass = tr.grade === '优秀' ? 'grade-excellent' : (tr.grade === '未达标' ? 'grade-fail' : 'grade-pass');
+    html += '<div class="result-task-item">';
+    html += '<div class="result-task-num">' + (t + 1) + '</div>';
+    html += '<div class="result-task-info">';
+    html += '<div class="result-task-name">' + tr.name + '</div>';
+    html += '<div class="result-task-comment">' + tr.comment + '</div>';
+    html += '</div>';
+    html += '<div class="result-task-grade ' + gradeClass + '">' + tr.grade + '</div>';
+    html += '</div>';
+  }
+
+  // Expert comment
+  html += '<div class="result-section-title">💬 专家评语</div>';
+  html += '<div class="result-expert-comment">';
+  html += '<div class="result-expert-label">📝 整体评语</div>';
+  html += '<div class="result-expert-text"><p>' + expertComment.overall + '</p></div>';
+  html += '<div class="result-expert-label" style="margin-top:12px;">💡 改进意见</div>';
+  html += '<div class="result-expert-text"><p>' + expertComment.improvement + '</p></div>';
+  html += '</div>';
+
+  // Project certificate (passing only)
+  if (isPass) {
+    html += '<div class="result-section-title" style="margin-top:24px;">📜 项目证书</div>';
+    html += '<div class="certificate-section">';
+    html += '<div class="certificate-info"><span class="certificate-info-icon">📜</span><div><div class="certificate-info-text">NexAI AIGC 短剧创作实训证书</div><div class="certificate-info-hint">恭喜完成全部实训任务，通过评审</div></div></div>';
+    html += '<button class="btn btn-primary" onclick="showCertificate()" style="font-size:13px;padding:10px 24px;flex-shrink:0;">📜 点击查看</button>';
+    html += '</div>';
+  }
+
+  // Ability dimensions — radar chart (scenario 1 & 2 only)
+  if (dimensions) {
+    html += '<div class="result-section-title" style="margin-top:24px;">📊 五维能力雷达图</div>';
+    html += '<div class="result-radar-wrap"><canvas id="reviewRadarCanvas"></canvas></div>';
+  }
+
+  // Skill badges (scenario 1 & 2 only)
+  if (isPass) {
+    html += '<div class="result-section-title" style="margin-top:24px;">🏅 技能徽章</div>';
+    html += '<div class="skill-badges">';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">🎬</span><span class="skill-badge-name">首作诞生</span></div>';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">🔍</span><span class="skill-badge-name">启程探索</span></div>';
+    html += '<div class="skill-badge"><span class="skill-badge-icon">⚔️</span><span class="skill-badge-name">初试锋芒</span></div>';
+    html += '</div>';
+  }
+
+  // Close button
+  html += '<button class="result-close-btn" onclick="closeReviewResult()">关闭</button>';
+
+  container.innerHTML = html;
+
+  // Draw radar chart after DOM update
+  if (dimensions) {
+    setTimeout(function() {
+      drawRadarChart(document.getElementById('reviewRadarCanvas'), dimensions);
+    }, 50);
+  }
+}
+
+function closeReviewResult() {
+  document.getElementById('reviewResultOverlay').classList.remove('active');
+  renderChapterContent();
+  renderChapterNav();
+  updateChapterProgress();
+}
+
+function showCertificate() {
+  document.getElementById('certificateOverlay').classList.add('active');
+}
+
+function closeCertificate() {
+  document.getElementById('certificateOverlay').classList.remove('active');
+}
+
+function drawRadarChart(canvas, dimensions) {
+  if (!canvas || !dimensions || !dimensions.length) return;
+  var ctx = canvas.getContext('2d');
+  var size = Math.min(canvas.parentNode.clientWidth, 300);
+  canvas.width = size * 2;
+  canvas.height = size * 2;
+  canvas.style.width = size + 'px';
+  canvas.style.height = size + 'px';
+
+  var cx = size, cy = size, radius = size * 0.7;
+  var n = dimensions.length;
+  var maxScore = 10;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Background pentagons
+  var levels = 5;
+  for (var l = 1; l <= levels; l++) {
+    var r = radius * (l / levels);
+    ctx.beginPath();
+    for (var i = 0; i < n; i++) {
+      var angle = -Math.PI / 2 + (2 * Math.PI * i) / n;
+      var x = cx + r * Math.cos(angle);
+      var y = cy + r * Math.sin(angle);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = l % 2 === 0 ? 'rgba(99,102,241,0.02)' : 'transparent';
+    ctx.fill();
+  }
+
+  // Axis lines
+  for (var i = 0; i < n; i++) {
+    var angle = -Math.PI / 2 + (2 * Math.PI * i) / n;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + radius * Math.cos(angle), cy + radius * Math.sin(angle));
+    ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Data polygon
+  ctx.beginPath();
+  for (var i = 0; i < n; i++) {
+    var angle = -Math.PI / 2 + (2 * Math.PI * i) / n;
+    var score = Math.min(dimensions[i].score, maxScore);
+    var r = radius * (score / maxScore);
+    var x = cx + r * Math.cos(angle);
+    var y = cy + r * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(99,102,241,0.2)';
+  ctx.fill();
+  ctx.strokeStyle = '#6366f1';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Data points
+  for (var i = 0; i < n; i++) {
+    var angle = -Math.PI / 2 + (2 * Math.PI * i) / n;
+    var score = Math.min(dimensions[i].score, maxScore);
+    var r = radius * (score / maxScore);
+    var dotX = cx + r * Math.cos(angle);
+    var dotY = cy + r * Math.sin(angle);
+    ctx.beginPath();
+    ctx.arc(dotX, dotY, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = '#4f46e5';
+    ctx.fill();
+  }
+
+  // Labels
+  var dimIcons = ['🧠', '🔧', '🤝', '⚖️', '🏗️'];
+  ctx.font = 'bold 22px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (var i = 0; i < n; i++) {
+    var angle = -Math.PI / 2 + (2 * Math.PI * i) / n;
+    var labelR = radius + 38;
+    var lx = cx + labelR * Math.cos(angle);
+    var ly = cy + labelR * Math.sin(angle);
+    ctx.fillText(dimIcons[i], lx, ly);
+  }
+  // Dimension names
+  ctx.font = '12px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillStyle = '#475569';
+  for (var i = 0; i < n; i++) {
+    var angle = -Math.PI / 2 + (2 * Math.PI * i) / n;
+    var nameR = radius + 62;
+    var nx = cx + nameR * Math.cos(angle);
+    var ny = cy + nameR * Math.sin(angle);
+    ctx.fillText(dimensions[i].name, nx, ny);
+  }
+  // Score labels
+  ctx.font = 'bold 14px "PingFang SC","Microsoft YaHei",sans-serif';
+  ctx.fillStyle = '#4f46e5';
+  for (var i = 0; i < n; i++) {
+    var angle = -Math.PI / 2 + (2 * Math.PI * i) / n;
+    var score = Math.min(dimensions[i].score, maxScore);
+    var sr = radius * (score / maxScore) + 16;
+    var sx = cx + sr * Math.cos(angle);
+    var sy = cy + sr * Math.sin(angle);
+    ctx.fillText('+' + dimensions[i].score, sx, sy);
+  }
+}
+
+// ---- Review data ----
+function getTaskResults(scenario) {
+  var tasks = [
+    { name: '行业与工具规划', comment: '', grade: '达标' },
+    { name: '剧本创作', comment: '', grade: '达标' },
+    { name: '分镜设计', comment: '', grade: '达标' },
+    { name: '视频生成与镜头优化', comment: '', grade: '达标' },
+    { name: '后期成片输出', comment: '', grade: '达标' }
+  ];
+  if (scenario === 1) {
+    tasks[0].comment = '行业现状分析全面，工具选型合理，制作流程理解到位。';
+    tasks[0].grade = '达标';
+    tasks[1].comment = '剧本结构清晰，人物设定生动，情节节奏把控出色，展现了较强的叙事能力。';
+    tasks[1].grade = '优秀';
+    tasks[2].comment = '分镜画面设计合理，镜头衔接自然，视觉表达力良好。';
+    tasks[2].grade = '达标';
+    tasks[3].comment = 'AI视频生成效果良好，镜头远近切换到位，人物对白情感表达到位。';
+    tasks[3].grade = '达标';
+    tasks[4].comment = '成片剪辑完整，字幕排版规范，配乐与画面节奏契合，整体观感优秀。';
+    tasks[4].grade = '达标';
+  } else if (scenario === 2) {
+    tasks[0].comment = '工具选型精准，对行业趋势有独到见解，制作流程规划周到细致。';
+    tasks[0].grade = '优秀';
+    tasks[1].comment = '剧本主题鲜明，冲突设计有层次，人物成长弧线完整。';
+    tasks[1].grade = '优秀';
+    tasks[2].comment = '分镜设计专业，镜头语言丰富，画面构图具有电影质感。';
+    tasks[2].grade = '优秀';
+    tasks[3].comment = '视频片段衔接流畅，人物特写表情生动，AI配音自然富有感染力。';
+    tasks[3].grade = '达标';
+    tasks[4].comment = '后期剪辑节奏精准，画面调色统一，音效层次丰富，成品质量高。';
+    tasks[4].grade = '达标';
+  } else {
+    tasks[0].comment = '行业分析较为基础，对部分工具功能理解不够深入。';
+    tasks[0].grade = '未达标';
+    tasks[1].comment = '剧本情节略显平淡，人物设定缺少层次感，冲突设计不够有力。';
+    tasks[1].grade = '未达标';
+    tasks[2].comment = '分镜构图较为单一，镜头切换节奏不够流畅，视觉表达力有待提升。';
+    tasks[2].grade = '未达标';
+    tasks[3].comment = '视频片段衔接有断层，部分镜头画面模糊，AI配音机械感较强。';
+    tasks[3].grade = '未达标';
+    tasks[4].comment = '成片剪辑拼接痕迹明显，字幕有漏字错误，配乐与画面脱节。';
+    tasks[4].grade = '未达标';
+  }
+  return tasks;
+}
+
+function getExpertComment(scenario) {
+  if (scenario === 1) {
+    return {
+      overall: '学员在本训练营中表现出扎实的 AIGC 短视频创作能力。从前期行业分析到最终成片输出，整个制作流程完整规范，尤其在剧本创作环节展现了突出的叙事才华。AI 工具运用熟练，最终成片质量达到了实践训练的目标要求，具备独立完成 AIGC 短剧项目的基本能力。',
+      improvement: '建议在分镜设计阶段进一步尝试更多样化的镜头语言（如长镜头、跟镜头等），丰富画面表现力；在剪辑环节可加强对色彩调色和音效细节的把控，提升成片的电影质感。后续可挑战更复杂的剧情结构和多人物场景调度。'
+    };
+  } else if (scenario === 2) {
+    return {
+      overall: '学员展现了出色的综合创作能力和优秀的审美素养。从选题策划、剧本创作到分镜设计，每个环节都体现了专业水准和独到创意。AI 工具运用驾轻就熟，能够灵活组合多种工具优势服务于创作目标。最终成片叙事完整、画面精致、情感饱满，达到了较高的商业短剧制作水准。',
+      improvement: '可以在多人对话场景的 AI 生成上进一步打磨，注意人物之间视线匹配和空间关系的一致性。建议尝试探索不同题材类型（如悬疑、科幻）来拓宽创作边界，同时在音效设计上增加更多环境音层次。'
+    };
+  } else {
+    return {
+      overall: '学员完成了训练营的基本流程，但在多个环节尚未达到实践训练的要求。行业分析深度不足，剧本创作缺乏亮点，分镜设计较为单一，AI 工具运用不够熟练，成片质量与训练目标存在明显差距。需要在各环节进行系统性的强化练习。',
+      improvement: '建议回到基础环节重新学习：1) 深入研究标杆 AIGC 短剧案例，分析其成功要素；2) 加强剧本写作练习，重点提升人物塑造和冲突设计能力；3) 系统学习分镜语言，掌握镜头叙事的核心技法；4) 反复练习 AI 工具操作，提高生成质量和效率。建议重新提交各环节作业进行二次评审。'
+    };
+  }
+}
+
+function getAbilityDimensions(scenario) {
+  if (scenario === 1) {
+    return [
+      { name: '认知素养', score: 8, desc: '对AIGC行业有较全面的认知，工具选型判断准确' },
+      { name: '工具驾驭', score: 7, desc: '能熟练使用主流AI视频工具完成制作流程' },
+      { name: '协作深度', score: 6, desc: '作品具备团队协作的基础，沟通表达清晰' },
+      { name: '伦理思辨', score: 7, desc: '对AI生成内容的版权和伦理问题有基本意识' },
+      { name: '系统构建', score: 5, desc: '初步建立了从创意到成片的系统化工作流程' }
+    ];
+  } else {
+    return [
+      { name: '认知素养', score: 9, desc: '对AIGC行业趋势有深刻洞察，创作方向判断精准' },
+      { name: '工具驾驭', score: 8, desc: '精通多种AI工具，能灵活组合运用实现创意目标' },
+      { name: '协作深度', score: 7, desc: '作品结构完整，具备商业化协作的基础素质' },
+      { name: '伦理思辨', score: 8, desc: '对AI创作伦理有深入思考，作品原创性高' },
+      { name: '系统构建', score: 7, desc: '已形成成熟的创作方法论和标准化工作流程' }
+    ];
+  }
 }
 
 
