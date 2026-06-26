@@ -325,12 +325,26 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
 }
 .result-badge-pass { background: rgba(5,150,105,0.1); color: #059669; border: 1px solid rgba(5,150,105,0.2); }
 .result-badge-fail { background: rgba(220,38,38,0.08); color: #dc2626; border: 1px solid rgba(220,38,38,0.15); }
+.result-badge-excellent { background: rgba(99,102,241,0.08); color: #4f46e5; border: 1px solid rgba(99,102,241,0.2); }
+
+.result-two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
+.result-two-col .result-section-title { margin-top: 0 !important; }
+.result-two-col > * { min-width: 0; }
+.result-two-col > .result-module { margin-bottom: 0; }
 
 /* Task result items */
-.result-section-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 20px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.result-section-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 0 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+
+/* Result module wrapper */
+.result-module {
+  border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+  background: var(--bg-card); margin-bottom: 16px;
+}
+.result-module .result-section-title { margin-top: 0; }
 .result-task-item {
   display: flex; align-items: center; gap: 12px; padding: 10px 12px;
   background: var(--bg-secondary); border-radius: 10px; margin-bottom: 8px;
+  position: relative; overflow: hidden;
 }
 .result-task-num { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
   display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0;
@@ -339,11 +353,19 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
 .result-task-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
 .result-task-comment { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
 .result-task-grade {
-  font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 100px; flex-shrink: 0;
+  position: absolute; right: 76px; bottom: 10px;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 900; line-height: 1.1; text-align: center;
+  border: 2px solid; border-radius: 50%;
+  transform: rotate(-12deg);
+  opacity: 0.32;
+  pointer-events: none;
+  letter-spacing: 1px;
 }
-.grade-pass { background: rgba(5,150,105,0.08); color: #059669; }
-.grade-excellent { background: rgba(99,102,241,0.08); color: #4f46e5; }
-.grade-fail { background: rgba(220,38,38,0.08); color: #dc2626; }
+.grade-pass { border-color: #059669; color: #059669; }
+.grade-excellent { border-color: #4f46e5; color: #4f46e5; }
+.grade-fail { border-color: #dc2626; color: #dc2626; }
 
 /* Expert comment */
 .result-expert-comment {
@@ -354,6 +376,33 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
 .result-expert-text { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
 .result-expert-text p { margin-bottom: 8px; }
 .result-expert-text p:last-child { margin-bottom: 0; }
+
+/* Task detail dropdown */
+.task-detail-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; color: #6366f1;
+  background: rgba(99,102,241,0.06);
+  border: 1px solid rgba(99,102,241,0.15);
+  border-radius: 6px; padding: 3px 10px;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s;
+  margin-left: 8px; flex-shrink: 0;
+}
+.task-detail-btn:hover { background: rgba(99,102,241,0.12); }
+.task-detail-dropdown {
+  display: none; margin-top: 8px; padding: 12px;
+  background: rgba(0,0,0,0.02); border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.task-detail-dropdown.open { display: block; }
+.task-detail-label {
+  font-size: 12px; font-weight: 600; margin-bottom: 4px;
+  color: var(--text-primary);
+}
+.task-detail-text {
+  font-size: 12px; color: var(--text-secondary);
+  line-height: 1.6; margin-bottom: 10px;
+}
+.task-detail-text:last-child { margin-bottom: 0; }
 
 /* Ability dimensions */
 .result-dimension-item {
@@ -366,11 +415,11 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
 .result-dim-bar-wrap { width: 80px; height: 6px; background: var(--border); border-radius: 100px; overflow: hidden; flex-shrink: 0; }
 .result-dim-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, #818cf8, #4f46e5); }
 
-.result-radar-wrap { display: flex; justify-content: center; margin-top: 20px; }
+.result-radar-wrap { display: flex; justify-content: center; margin-top: 8px; }
 .result-radar-wrap canvas { max-width: 300px; max-height: 300px; }
 
 /* Skill badges */
-.skill-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.skill-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
 .skill-badge {
   display: flex; flex-direction: column; align-items: center; gap: 8px;
   padding: 20px 24px; border-radius: 16px; min-width: 110px;
@@ -637,7 +686,7 @@ body.sidebar-collapsed .main-content { margin-left: 0; }
 .course-topbar-title { font-size: 14px; font-weight: 600; }
 .course-topbar-badge { font-size: 11px; color: var(--text-muted); }
 .course-content {
-  flex: 1; overflow-y: auto; padding: 32px;
+  flex: 1; overflow-y: auto; padding: 24px;
 }
 
 /* Module Sections */
@@ -2436,12 +2485,12 @@ function renderReviewTab() {
   var expertComment = getExpertComment(scenario);
   var dimensions = (scenario === 3) ? null : getAbilityDimensions(scenario);
   var isPass = scenario !== 3;
-  var badgeClass = isPass ? 'result-badge-pass' : 'result-badge-fail';
-  var badgeText = isPass ? '达标' : '未达标';
+  var badgeClass = scenario === 2 ? 'result-badge-excellent' : (isPass ? 'result-badge-pass' : 'result-badge-fail');
+  var badgeText = scenario === 2 ? '优秀' : (isPass ? '达标' : '未达标');
   var headerIcon = isPass ? '🎉' : '😔';
   var headerTitle = isPass ? '恭喜！评审结果' : '很遗憾！评审结果';
 
-  var html = '<div style="max-width:640px;margin:0 auto;">';
+  var html = '<div style="max-width:800px;margin:0 auto;">';
 
   // Scenario tabs
   html += '<div class="result-scenario-tabs">';
@@ -2458,7 +2507,7 @@ function renderReviewTab() {
   html += '</div>';
 
   // Task results
-  html += '<div class="result-section-title">📋 各任务评审结果</div>';
+  html += '<div class="result-section-title">' + iconSVG('list') + '各任务评审结果</div>';
   for (var t = 0; t < taskResults.length; t++) {
     var tr = taskResults[t];
     var gradeClass = tr.grade === '优秀' ? 'grade-excellent' : (tr.grade === '未达标' ? 'grade-fail' : 'grade-pass');
@@ -2473,11 +2522,11 @@ function renderReviewTab() {
   }
 
   // Expert comment
-  html += '<div class="result-section-title">💬 专家评语</div>';
+  html += '<div class="result-section-title">' + iconSVG('chat') + '专家评语</div>';
   html += '<div class="result-expert-comment">';
-  html += '<div class="result-expert-label">📝 整体评语</div>';
+  html += '<div class="result-expert-label">' + iconSVG('doc') + '整体评语</div>';
   html += '<div class="result-expert-text"><p>' + expertComment.overall + '</p></div>';
-  html += '<div class="result-expert-label" style="margin-top:12px;">💡 改进意见</div>';
+  html += '<div class="result-expert-label" style="margin-top:12px;">' + iconSVG('bulb') + '改进意见</div>';
   html += '<div class="result-expert-text"><p>' + expertComment.improvement + '</p></div>';
   html += '</div>';
 
@@ -2486,7 +2535,7 @@ function renderReviewTab() {
     html += '<div class="result-section-title" style="margin-top:24px;">📜 项目证书</div>';
     html += '<div class="certificate-section">';
     html += '<div class="certificate-info"><span class="certificate-info-icon">📜</span><div><div class="certificate-info-text">NexAI AIGC 短剧创作实训证书</div><div class="certificate-info-hint">恭喜完成全部实训任务，通过评审</div></div></div>';
-    html += '<button class="btn btn-primary" onclick="showCertificate()" style="font-size:13px;padding:10px 24px;flex-shrink:0;">📜 点击查看</button>';
+    html += '<button class="btn btn-primary" onclick="downloadCertificatePDF()" style="font-size:13px;padding:10px 24px;flex-shrink:0;">📥 下载PDF</button>';
     html += '</div>';
   }
 
@@ -3385,12 +3434,12 @@ function renderReviewInline(scenario) {
   var expertComment = getExpertComment(scenario);
   var dimensions = (scenario === 3) ? null : getAbilityDimensions(scenario);
   var isPass = scenario !== 3;
-  var badgeClass = isPass ? 'result-badge-pass' : 'result-badge-fail';
-  var badgeText = isPass ? '达标' : '未达标';
+  var badgeClass = scenario === 2 ? 'result-badge-excellent' : (isPass ? 'result-badge-pass' : 'result-badge-fail');
+  var badgeText = scenario === 2 ? '优秀' : (isPass ? '达标' : '未达标');
   var headerIcon = isPass ? '🎉' : '😔';
   var headerTitle = isPass ? '恭喜！评审结果' : '很遗憾！评审结果';
 
-  var html = '<div style="max-width:640px;margin:0 auto;padding:20px 0;">';
+  var html = '<div style="max-width:900px;margin:0 auto;padding:10px 0;">';
 
   // Scenario tabs
   html += '<div class="result-scenario-tabs">';
@@ -3406,52 +3455,101 @@ function renderReviewInline(scenario) {
   html += '<div class="result-badge ' + badgeClass + '">【' + badgeText + '】</div>';
   html += '</div>';
 
-  // Task results
-  html += '<div class="result-section-title">📋 各任务评审结果</div>';
-  for (var t = 0; t < taskResults.length; t++) {
-    var tr = taskResults[t];
-    var gradeClass = tr.grade === '优秀' ? 'grade-excellent' : (tr.grade === '未达标' ? 'grade-fail' : 'grade-pass');
-    html += '<div class="result-task-item">';
-    html += '<div class="result-task-num">' + (t + 1) + '</div>';
-    html += '<div class="result-task-info">';
-    html += '<div class="result-task-name">' + tr.name + '</div>';
-    html += '<div class="result-task-comment">' + tr.comment + '</div>';
+  if (scenario === 2) {
+    // Scenario 2: unified two-column grid for rows 1 & 2
+    html += '<div class="result-two-col" style="margin-top:20px;">';
+    // Row 1 Col 1: Expert comment
+    html += '<div class="result-module"><div class="result-section-title">' + iconSVG('chat') + '专家评语</div>';
+    html += '<div class="result-expert-comment">';
+    html += '<div class="result-expert-label">' + iconSVG('doc') + '整体评语</div>';
+    html += '<div class="result-expert-text"><p>' + expertComment.overall + '</p></div>';
+    html += '<div class="result-expert-label" style="margin-top:12px;">' + iconSVG('bulb') + '改进意见</div>';
+    html += '<div class="result-expert-text"><p>' + expertComment.improvement + '</p></div>';
+    html += '</div></div>';
+    // Row 1 Col 2: Task results
+    html += '<div class="result-module"><div class="result-section-title">' + iconSVG('list') + '各任务评审结果</div>';
+    for (var t = 0; t < taskResults.length; t++) {
+      var tr = taskResults[t];
+      var gradeClass = tr.grade === '优秀' ? 'grade-excellent' : (tr.grade === '未达标' ? 'grade-fail' : 'grade-pass');
+      html += '<div class="result-task-item">';
+      html += '<div class="result-task-num">' + (t + 1) + '</div>';
+      html += '<div class="result-task-info">';
+      html += '<div class="result-task-name">' + tr.name + '</div>';
+      html += '<div class="result-task-comment">' + tr.comment + '</div>';
+      html += '</div>';
+      html += '<div class="result-task-grade ' + gradeClass + '">' + tr.grade + '</div>';
+      html += '</div>';
+    }
     html += '</div>';
-    html += '<div class="result-task-grade ' + gradeClass + '">' + tr.grade + '</div>';
+    // Row 2 Col 1: Radar chart
+    html += '<div class="result-module"><div class="result-section-title">📊 五维能力雷达图</div>';
+    if (dimensions) {
+      html += '<div class="result-radar-wrap"><canvas id="inlineRadarCanvas"></canvas></div>';
+    }
     html += '</div>';
-  }
-
-  // Expert comment
-  html += '<div class="result-section-title">💬 专家评语</div>';
-  html += '<div class="result-expert-comment">';
-  html += '<div class="result-expert-label">📝 整体评语</div>';
-  html += '<div class="result-expert-text"><p>' + expertComment.overall + '</p></div>';
-  html += '<div class="result-expert-label" style="margin-top:12px;">💡 改进意见</div>';
-  html += '<div class="result-expert-text"><p>' + expertComment.improvement + '</p></div>';
-  html += '</div>';
-
-  // Project certificate
-  if (isPass) {
-    html += '<div class="result-section-title" style="margin-top:24px;">📜 项目证书</div>';
-    html += '<div class="certificate-section">';
-    html += '<div class="certificate-info"><span class="certificate-info-icon">📜</span><div><div class="certificate-info-text">NexAI AIGC 短剧创作实训证书</div><div class="certificate-info-hint">恭喜完成全部实训任务，通过评审</div></div></div>';
-    html += '<button class="btn btn-primary" onclick="showCertificate()" style="font-size:13px;padding:10px 24px;flex-shrink:0;">📜 点击查看</button>';
-    html += '</div>';
-  }
-
-  // Radar chart
-  if (dimensions) {
-    html += '<div class="result-section-title" style="margin-top:24px;">📊 五维能力雷达图</div>';
-    html += '<div class="result-radar-wrap"><canvas id="inlineRadarCanvas"></canvas></div>';
-  }
-
-  // Skill badges
-  if (isPass) {
-    html += '<div class="result-section-title" style="margin-top:24px;">🏅 技能徽章</div>';
-    html += '<div class="skill-badges">';
+    // Row 2 Col 2: Skill badges
+    html += '<div class="result-module"><div class="result-section-title">🏅 技能徽章</div>';
+    html += '<div class="skill-badges" style="flex-direction:row;gap:8px;">';
     html += '<div class="skill-badge"><span class="skill-badge-icon">🎬</span><span class="skill-badge-name">首作诞生</span></div>';
     html += '<div class="skill-badge"><span class="skill-badge-icon">🔍</span><span class="skill-badge-name">启程探索</span></div>';
     html += '<div class="skill-badge"><span class="skill-badge-icon">⚔️</span><span class="skill-badge-name">初试锋芒</span></div>';
+    html += '</div></div>';
+    html += '</div>';
+    // Row 3: 项目证书 + 能力卡片 + 面试小技巧 in one row
+    html += '<div style="display:flex;gap:16px;margin-top:16px;align-items:flex-start;">';
+    // Left: Project certificate (compact)
+    html += '<div class="result-module" style="flex-shrink:0;width:220px;"><div class="result-section-title">📜 项目证书</div>';
+    html += '<div class="certificate-section" style="flex-direction:column;align-items:flex-start;gap:10px;">';
+    html += '<div class="certificate-info"><span class="certificate-info-icon">📜</span><div><div class="certificate-info-text">NexAI AIGC 短剧创作实训证书</div><div class="certificate-info-hint">恭喜完成全部实训任务，通过评审</div></div></div>';
+    html += '<button class="btn btn-primary" onclick="downloadCertificatePDF()" style="font-size:12px;padding:8px 18px;">📥 下载PDF</button>';
+    html += '</div></div>';
+    // Middle: 能力卡片
+    html += '<div class="result-module" style="flex:1;min-width:0;"><div class="result-section-title">📌 添加到AI能力档案</div>';
+    html += '<div style="display:flex;align-items:center;justify-content:center;padding:24px 0;">';
+    html += '<button class="btn btn-primary" onclick="viewAIProfile()" style="font-size:14px;padding:12px 32px;">📋 去查看</button>';
+    html += '</div></div>';
+    // Right: 面试小技巧
+    html += '<div class="result-module" style="flex:1;min-width:0;"><div class="result-section-title">💡 面试小技巧</div>';
+    html += '<div class="result-expert-comment" style="font-size:12px;line-height:1.7;">';
+    html += '<p style="margin-bottom:6px;"><strong>Q: 如何展示AIGC项目经验？</strong></p>';
+    html += '<p style="color:var(--text-secondary);margin-bottom:10px;">A: 展示全流程作品集，强调方法论和工具选型逻辑。</p>';
+    html += '<p style="margin-bottom:6px;"><strong>Q: 面试官关注哪些能力？</strong></p>';
+    html += '<p style="color:var(--text-secondary);">A: ① Prompt工程 ② 审美判断力 ③ 流程整合能力。</p>';
+    html += '</div></div>';
+    html += '</div>';
+  } else {
+    // Scenario 1: 专家评语在上, 各任务评审结果在下
+    html += '<div class="result-module"><div class="result-section-title">' + iconSVG('chat') + '专家评语</div>';
+    html += '<div class="result-expert-comment">';
+    html += '<div class="result-expert-label">' + iconSVG('doc') + '整体评语</div>';
+    html += '<div class="result-expert-text"><p>' + expertComment.overall + '</p></div>';
+    html += '<div class="result-expert-label" style="margin-top:12px;">' + iconSVG('check') + '优点</div>';
+    html += '<div class="result-expert-text"><p>' + expertComment.strengths + '</p></div>';
+    html += '<div class="result-expert-label" style="margin-top:12px;">' + iconSVG('alert') + '缺点</div>';
+    html += '<div class="result-expert-text"><p>' + expertComment.weaknesses + '</p></div>';
+    html += '<div class="result-expert-label" style="margin-top:12px;">' + iconSVG('bulb') + '改进意见</div>';
+    html += '<div class="result-expert-text"><p>' + expertComment.improvement + '</p></div>';
+    html += '</div></div>';
+    html += '<div class="result-module"><div class="result-section-title">' + iconSVG('list') + '各任务评审结果</div>';
+    for (var t2 = 0; t2 < taskResults.length; t2++) {
+      var tr2 = taskResults[t2];
+      var gradeClass2 = tr2.grade === '优秀' ? 'grade-excellent' : (tr2.grade === '未达标' ? 'grade-fail' : 'grade-pass');
+      html += '<div class="result-task-item">';
+      html += '<div class="result-task-num">' + (t2 + 1) + '</div>';
+      html += '<div class="result-task-info">';
+      html += '<div class="result-task-name">' + tr2.name + '</div>';
+      html += '<div class="result-task-comment">' + tr2.comment + '</div>';
+      html += '</div>';
+      html += '<div class="result-task-grade ' + gradeClass2 + '">' + tr2.grade + '</div>';
+      html += '<button class="task-detail-btn" onclick="toggleTaskDetail(this,\'taskDetailE' + t2 + '\')">详情 ▼</button>';
+      html += '</div>';
+      html += '<div class="task-detail-dropdown" id="taskDetailE' + t2 + '">';
+      html += '<div class="task-detail-label">' + iconSVG('doc') + '整体评语</div><div class="task-detail-text">' + tr2.detailOverall + '</div>';
+      html += '<div class="task-detail-label">' + iconSVG('check') + '优点</div><div class="task-detail-text">' + tr2.detailStrengths + '</div>';
+      html += '<div class="task-detail-label">' + iconSVG('alert') + '缺点</div><div class="task-detail-text">' + tr2.detailWeaknesses + '</div>';
+      html += '<div class="task-detail-label">' + iconSVG('bulb') + '改进意见</div><div class="task-detail-text">' + tr2.detailImprovement + '</div>';
+      html += '</div>';
+    }
     html += '</div>';
   }
 
@@ -3464,8 +3562,8 @@ function renderReviewResult(scenario) {
   var expertComment = getExpertComment(scenario);
   var dimensions = (scenario === 3) ? null : getAbilityDimensions(scenario);
   var isPass = scenario !== 3;
-  var badgeClass = isPass ? 'result-badge-pass' : 'result-badge-fail';
-  var badgeText = isPass ? '达标' : '未达标';
+  var badgeClass = scenario === 2 ? 'result-badge-excellent' : (isPass ? 'result-badge-pass' : 'result-badge-fail');
+  var badgeText = scenario === 2 ? '优秀' : (isPass ? '达标' : '未达标');
   var headerIcon = isPass ? '🎉' : '😔';
   var headerTitle = isPass ? '恭喜！评审结果' : '很遗憾！评审结果';
 
@@ -3485,7 +3583,7 @@ function renderReviewResult(scenario) {
   html += '</div>';
 
   // Task results
-  html += '<div class="result-section-title">📋 各任务评审结果</div>';
+  html += '<div class="result-section-title">' + iconSVG('list') + '各任务评审结果</div>';
   for (var t = 0; t < taskResults.length; t++) {
     var tr = taskResults[t];
     var gradeClass = tr.grade === '优秀' ? 'grade-excellent' : (tr.grade === '未达标' ? 'grade-fail' : 'grade-pass');
@@ -3500,11 +3598,11 @@ function renderReviewResult(scenario) {
   }
 
   // Expert comment
-  html += '<div class="result-section-title">💬 专家评语</div>';
+  html += '<div class="result-section-title">' + iconSVG('chat') + '专家评语</div>';
   html += '<div class="result-expert-comment">';
-  html += '<div class="result-expert-label">📝 整体评语</div>';
+  html += '<div class="result-expert-label">' + iconSVG('doc') + '整体评语</div>';
   html += '<div class="result-expert-text"><p>' + expertComment.overall + '</p></div>';
-  html += '<div class="result-expert-label" style="margin-top:12px;">💡 改进意见</div>';
+  html += '<div class="result-expert-label" style="margin-top:12px;">' + iconSVG('bulb') + '改进意见</div>';
   html += '<div class="result-expert-text"><p>' + expertComment.improvement + '</p></div>';
   html += '</div>';
 
@@ -3513,7 +3611,7 @@ function renderReviewResult(scenario) {
     html += '<div class="result-section-title" style="margin-top:24px;">📜 项目证书</div>';
     html += '<div class="certificate-section">';
     html += '<div class="certificate-info"><span class="certificate-info-icon">📜</span><div><div class="certificate-info-text">NexAI AIGC 短剧创作实训证书</div><div class="certificate-info-hint">恭喜完成全部实训任务，通过评审</div></div></div>';
-    html += '<button class="btn btn-primary" onclick="showCertificate()" style="font-size:13px;padding:10px 24px;flex-shrink:0;">📜 点击查看</button>';
+    html += '<button class="btn btn-primary" onclick="downloadCertificatePDF()" style="font-size:13px;padding:10px 24px;flex-shrink:0;">📥 下载PDF</button>';
     html += '</div>';
   }
 
@@ -3559,6 +3657,58 @@ function showCertificate() {
 
 function closeCertificate() {
   document.getElementById('certificateOverlay').classList.remove('active');
+}
+
+function downloadCertificatePDF() {
+  var w = window.open('', '_blank', 'width=800,height=600');
+  var html = '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>NexAI 项目实训证书</title>' +
+    '<style>body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;text-align:center;padding:60px 40px;color:#0f172a;}' +
+    '.cert-icon{font-size:56px;margin-bottom:12px;}' +
+    'h2{font-size:26px;font-weight:800;margin-bottom:4px;}' +
+    '.cert-sub{font-size:14px;color:#64748b;margin-bottom:24px;}' +
+    '.cert-body{border:2px solid rgba(217,119,6,.2);border-radius:16px;padding:28px;background:#f8fafc;max-width:560px;margin:0 auto 20px;text-align:left;}' +
+    '.cert-body p{font-size:14px;line-height:2;margin-bottom:12px;}' +
+    '.cert-body .note{font-size:13px;color:#94a3b8;line-height:1.8;}' +
+    '.cert-meta{display:flex;justify-content:center;gap:48px;font-size:12px;color:#94a3b8;margin-bottom:20px;}' +
+    '.cert-meta span{color:#475569;font-weight:600;}' +
+    '@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}' +
+    '</style></head><body>' +
+    '<div class="cert-icon">📜</div>' +
+    '<h2>项目实训证书</h2>' +
+    '<p class="cert-sub">NexAI AIGC 短剧创作实训</p>' +
+    '<div class="cert-body">' +
+      '<p>学员已完成 <strong>AIGC 短剧创作全流程实训</strong>，涵盖行业调研、剧本创作、分镜设计、视频生成与后期成片五大模块，并通过全部任务评审，达到<strong style="color:#059669;">达标</strong>标准。</p>' +
+      '<p class="note">本证书证明持证者具备独立完成 AIGC 短剧从选题到成片的完整创作能力，掌握主流 AI 视频生成工具与后期制作技能。</p>' +
+    '</div>' +
+    '<div class="cert-meta"><div><span>颁发机构</span><br>NexAI 人才认证中心</div><div><span>证书编号</span><br>NEX-AIGC-2026-0001</div><div><span>颁发日期</span><br>2026年6月</div></div>' +
+    '</body></html>';
+  w.document.write(html);
+  w.document.close();
+  setTimeout(function() { w.print(); }, 300);
+}
+
+function viewAIProfile() {
+  showToast('AI能力档案功能即将上线，敬请期待！');
+}
+
+function iconSVG(name) {
+  var icons = {
+    chat: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    doc: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:3px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+    check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:3px;"><circle cx="12" cy="12" r="10"/><polyline points="16 8 10.5 15 8 11"/></svg>',
+    alert: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:3px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+    bulb: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:3px;"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>',
+    list: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
+  };
+  return icons[name] || '';
+}
+
+function toggleTaskDetail(btn, detailId) {
+  var dropdown = document.getElementById(detailId);
+  if (!dropdown) return;
+  dropdown.classList.toggle('open');
+  var isOpen = dropdown.classList.contains('open');
+  btn.textContent = isOpen ? '收起 ▲' : '详情 ▼';
 }
 
 function drawRadarChart(canvas, dimensions) {
@@ -3683,36 +3833,96 @@ function getTaskResults(scenario) {
   if (scenario === 1) {
     tasks[0].comment = '行业现状分析全面，工具选型合理，制作流程理解到位。';
     tasks[0].grade = '达标';
+    tasks[0].detailOverall = '该学员对AIGC短剧行业现状有较全面的认知，能够准确梳理主流工具的功能定位和适用场景。';
+    tasks[0].detailStrengths = '行业调研覆盖面广，数据来源可靠；工具对比分析维度合理，选型逻辑清晰；制作流程规划完整，阶段性目标明确。';
+    tasks[0].detailWeaknesses = '对工具底层技术原理的理解深度有待加强；竞品分析中缺少对差异化功能的深入对比。';
+    tasks[0].detailImprovement = '建议深入研读主流AI视频工具的技术白皮书，关注行业前沿动态和技术迭代趋势。';
     tasks[1].comment = '剧本结构清晰，人物设定生动，情节节奏把控出色，展现了较强的叙事能力。';
     tasks[1].grade = '优秀';
+    tasks[1].detailOverall = '剧本主题鲜明，叙事结构完整，人物成长弧线清晰，冲突设计具有感染力，展现了扎实的编剧功底。';
+    tasks[1].detailStrengths = '人物塑造立体饱满，性格特征鲜明；情节推进节奏得当，冲突设置自然合理；对话设计生动，符合角色身份。';
+    tasks[1].detailWeaknesses = '副线人物的戏份分配可更均衡；部分过渡场景的戏剧张力略显不足。';
+    tasks[1].detailImprovement = '可尝试多线叙事结构，增加支线人物与主线的情感关联度，丰富戏剧层次。';
     tasks[2].comment = '分镜画面设计合理，镜头衔接自然，视觉表达力良好。';
     tasks[2].grade = '达标';
+    tasks[2].detailOverall = '分镜设计思路清晰，能够根据剧情需要选择合适的镜头类型，场景转换过渡自然。';
+    tasks[2].detailStrengths = '镜头节奏把控适度，远近景切换合理；人物站位和视线方向设计准确；关键情节点的视觉强调到位。';
+    tasks[2].detailWeaknesses = '镜头语言运用偏保守，缺乏长镜头、跟踪镜头等复杂技法；部分镜头画面构图可更具设计感。';
+    tasks[2].detailImprovement = '建议学习经典电影分镜案例，丰富镜头语言储备；尝试在非关键场景中探索更具风格化的构图。';
     tasks[3].comment = 'AI视频生成效果良好，镜头远近切换到位，人物对白情感表达到位。';
     tasks[3].grade = '达标';
+    tasks[3].detailOverall = 'AI视频生成质量稳定，能够有效运用提示词控制画面风格和人物表现，基本实现了分镜设计要求。';
+    tasks[3].detailStrengths = 'Prompt工程能力扎实，画面风格控制一致性好；人物面部表情和肢体动作生成自然；多镜头切换流畅。';
+    tasks[3].detailWeaknesses = '复杂场景（多人同框、快速运动）生成效果偶有瑕疵；光影氛围的统一性可进一步提升。';
+    tasks[3].detailImprovement = '建议针对复杂场景编写更精细的Prompt模板，利用ControlNet等工具加强画面可控性。';
     tasks[4].comment = '成片剪辑完整，字幕排版规范，配乐与画面节奏契合，整体观感优秀。';
     tasks[4].grade = '达标';
+    tasks[4].detailOverall = '后期制作流程规范，剪辑节奏合理，音频处理到位，最终成片具有较好的整体观感和完成度。';
+    tasks[4].detailStrengths = '剪辑节奏与叙事节奏配合默契；字幕样式设计规范，阅读体验良好；配乐选曲与情绪氛围高度契合。';
+    tasks[4].detailWeaknesses = '色彩调色处理较为统一但缺乏风格化倾向；音效细节（环境音、转场音效）层次不够丰富。';
+    tasks[4].detailImprovement = '推荐使用DaVinci Resolve进行专业调色练习，建立自己的LUT预设库；增加环境音采样和拟音实践。';
   } else if (scenario === 2) {
     tasks[0].comment = '工具选型精准，对行业趋势有独到见解，制作流程规划周到细致。';
     tasks[0].grade = '优秀';
+    tasks[0].detailOverall = '该学员对AIGC行业趋势具有敏锐的洞察力，工具选型精准且具有前瞻性，制作流程规划全方位覆盖创作各环节。';
+    tasks[0].detailStrengths = '行业分析具有独立见解，不囿于常规认知框架；工具功能对比深入详尽，选型理由充分；流程规划考虑周全，预留了灵活调整空间。';
+    tasks[0].detailWeaknesses = '对新发布工具的动态追踪可更及时；跨工具协同工作流可进一步优化效率。';
+    tasks[0].detailImprovement = '建议建立个人工具评测体系，定期更新工具库，关注AI视频领域的技术突破新闻。';
     tasks[1].comment = '剧本主题鲜明，冲突设计有层次，人物成长弧线完整。';
     tasks[1].grade = '优秀';
+    tasks[1].detailOverall = '剧本创作水平优秀，主题深刻且具有现实关照，人物塑造丰满有力，叙事结构精巧，展现了成熟的编剧思维和原创能力。';
+    tasks[1].detailStrengths = '主题立意深刻，具有社会价值与人文关怀；冲突设计多层嵌套，层层递进；人物成长轨迹真实可信，情感共鸣强烈；对白凝练且富有潜台词。';
+    tasks[1].detailWeaknesses = '部分副线情节收束略显仓促；喜剧元素的融入可更加自然。';
+    tasks[1].detailImprovement = '可尝试在保持主线力度的同时给副线更多展开空间；研究经典剧作结构模型，进一步提升戏剧张力控制能力。';
     tasks[2].comment = '分镜设计专业，镜头语言丰富，画面构图具有电影质感。';
     tasks[2].grade = '优秀';
+    tasks[2].detailOverall = '分镜设计达到专业水准，镜头语言运用娴熟，画面构图具有高度审美价值，能够通过视觉语言有效传递情绪和叙事信息。';
+    tasks[2].detailStrengths = '镜头语言丰富多变，能灵活运用推拉摇移跟等多种技法；画面构图讲究，光影运用具有电影质感；镜头节奏与情绪曲线高度同步。';
+    tasks[2].detailWeaknesses = '在极限时长约束下的镜头取舍决策可更果断；特殊视觉效果（如慢镜头、快切）的使用频次可适当增加。';
+    tasks[2].detailImprovement = '建议建立分镜参考图库，系统积累不同情绪场景的视觉方案；学习动画分镜和广告分镜的节奏控制技法。';
     tasks[3].comment = '视频片段衔接流畅，人物特写表情生动，AI配音自然富有感染力。';
     tasks[3].grade = '达标';
+    tasks[3].detailOverall = 'AI视频生成效果优良，能够精确控制画面细节，人物表现自然，AI配音与角色匹配度高，整体视觉质量接近商业短剧标准。';
+    tasks[3].detailStrengths = '人物面部表情细腻自然，情感传达准确；AI配音语调丰富，与角色性格匹配度高；多镜头画面风格一致性控制出色。';
+    tasks[3].detailWeaknesses = '大场景多人交互画面的空间关系偶有不合理之处；夜景和暗光场景的噪点控制有待提升。';
+    tasks[3].detailImprovement = '建议针对复杂场景建立分步生成策略，先定构图再细化人物；探索AI降噪和画质增强工具的使用。';
     tasks[4].comment = '后期剪辑节奏精准，画面调色统一，音效层次丰富，成品质量高。';
     tasks[4].grade = '达标';
+    tasks[4].detailOverall = '后期制作精良，剪辑节奏精准有力，调色风格统一且具有辨识度，音效设计层次分明，最终成品达到了较高的商业短剧制作水准。';
+    tasks[4].detailStrengths = '剪辑节奏把控精准，张弛有度；调色风格统一，色彩情绪与剧情高度契合；音效设计层次感强，环境音、拟音、音乐配比合理。';
+    tasks[4].detailWeaknesses = '片头片尾包装设计可更具品牌辨识度；输出格式的跨平台适配性可进一步优化。';
+    tasks[4].detailImprovement = '建议建立个人调色预设和音效素材库，提升后期效率；学习动态图形设计基础，提升片头片尾包装质感。';
   } else {
     tasks[0].comment = '行业分析较为基础，对部分工具功能理解不够深入。';
     tasks[0].grade = '未达标';
+    tasks[0].detailOverall = '行业分析停留在信息罗列层面，缺少对行业趋势的独立判断，工具选型缺乏充分的对比论证。';
+    tasks[0].detailStrengths = '能够收集和整理基本的行业信息和工具资料；对AIGC短剧的基本概念有初步认知。';
+    tasks[0].detailWeaknesses = '分析深度不足，缺少对数据背后趋势的洞察；工具评估维度单一，未考虑实际项目需求的适配性。';
+    tasks[0].detailImprovement = '建议系统学习行业分析方法论，使用SWOT、PEST等框架进行结构化分析；建立工具评测表格，从多维度量化对比。';
     tasks[1].comment = '剧本情节略显平淡，人物设定缺少层次感，冲突设计不够有力。';
     tasks[1].grade = '未达标';
+    tasks[1].detailOverall = '剧本基本结构完整但缺乏亮点，情节推进平铺直叙，人物形象单薄，冲突解决方案过于简单。';
+    tasks[1].detailStrengths = '具备基本的剧本结构意识，起承转合框架完整；故事逻辑基本自洽，无明显逻辑漏洞。';
+    tasks[1].detailWeaknesses = '人物性格单一，缺乏成长弧线；冲突设计力度不够，解决方式缺乏惊喜；对白口语化但缺少个性化特征。';
+    tasks[1].detailImprovement = '建议从改编经典短篇故事开始练习，重点学习人物塑造技法；使用人物小传和关系图工具深度构建角色。';
     tasks[2].comment = '分镜构图较为单一，镜头切换节奏不够流畅，视觉表达力有待提升。';
     tasks[2].grade = '未达标';
+    tasks[2].detailOverall = '分镜设计思路清晰但执行效果一般，镜头类型使用较为单一，画面视觉冲击力不足。';
+    tasks[2].detailStrengths = '具备基本的分镜叙事逻辑，场景空间关系交代清楚；关键情节点有意识地使用特写镜头进行强调。';
+    tasks[2].detailWeaknesses = '镜头角度和景别变化不足，视觉节奏单调；缺乏通过镜头语言传递情绪的技巧；画面构图缺少设计感。';
+    tasks[2].detailImprovement = '建议大量临摹经典影视作品的分镜，积累镜头语言语汇；使用分镜模板工具规范设计流程。';
     tasks[3].comment = '视频片段衔接有断层，部分镜头画面模糊，AI配音机械感较强。';
     tasks[3].grade = '未达标';
+    tasks[3].detailOverall = 'AI视频生成效果不稳定，部分镜头质量较差，画面衔接存在明显问题，整体视觉体验有待提升。';
+    tasks[3].detailStrengths = '能够独立完成AI视频生成的基本操作流程；对Prompt的基本构成有所了解。';
+    tasks[3].detailWeaknesses = 'Prompt编写不够精细，对画面风格和细节的控制力不足；镜头衔接处风格突变，一致性差；AI参数调优经验不足。';
+    tasks[3].detailImprovement = '建议从简单的单镜头Prompt开始反复练习，逐步增加复杂度；整理Prompt模板库，记录每种效果的Prompt写法。';
     tasks[4].comment = '成片剪辑拼接痕迹明显，字幕有漏字错误，配乐与画面脱节。';
     tasks[4].grade = '未达标';
+    tasks[4].detailOverall = '后期制作基本功有待加强，剪辑流畅度不足，字幕质量把控不严，音频处理经验欠缺。';
+    tasks[4].detailStrengths = '能够使用剪辑软件完成基本的剪切和拼接操作；对字幕添加和基础调色有初步了解。';
+    tasks[4].detailWeaknesses = '转场效果生硬，节奏把控不佳；字幕存在错漏，排版不规范；配乐选择与画面情绪不匹配；音频电平控制不稳定。';
+    tasks[4].detailImprovement = '建议从剪辑基础理论学起，理解蒙太奇原理和节奏控制；使用剪辑模板辅助学习；建立字幕质检清单，逐项核对。';
   }
   return tasks;
 }
@@ -3721,16 +3931,22 @@ function getExpertComment(scenario) {
   if (scenario === 1) {
     return {
       overall: '学员在本训练营中表现出扎实的 AIGC 短视频创作能力。从前期行业分析到最终成片输出，整个制作流程完整规范，尤其在剧本创作环节展现了突出的叙事才华。AI 工具运用熟练，最终成片质量达到了实践训练的目标要求，具备独立完成 AIGC 短剧项目的基本能力。',
+      strengths: '剧本创作能力突出，情节设计富有层次感，人物塑造生动立体；行业分析全面细致，对主流AI视频工具的功能特性理解深入；后期剪辑节奏把控到位，字幕与配乐搭配协调。',
+      weaknesses: '分镜设计中镜头语言运用偏保守，缺乏长镜头、跟踪镜头等多样化技法运用；色彩调色处理较为平淡，画面风格统一性有待加强；音效细节处理不够丰富，环境音层次感不足。',
       improvement: '建议在分镜设计阶段进一步尝试更多样化的镜头语言（如长镜头、跟镜头等），丰富画面表现力；在剪辑环节可加强对色彩调色和音效细节的把控，提升成片的电影质感。后续可挑战更复杂的剧情结构和多人物场景调度。'
     };
   } else if (scenario === 2) {
     return {
       overall: '学员展现了出色的综合创作能力和优秀的审美素养。从选题策划、剧本创作到分镜设计，每个环节都体现了专业水准和独到创意。AI 工具运用驾轻就熟，能够灵活组合多种工具优势服务于创作目标。最终成片叙事完整、画面精致、情感饱满，达到了较高的商业短剧制作水准。',
+      strengths: '综合创作能力出色，从选题到成片各环节均表现优秀；剧本创作具有鲜明的个人风格，冲突设计层次分明；分镜设计专业性强，镜头语言丰富，画面构图具有电影质感；工具驾驭能力强，能灵活组合多种AI工具实现创意目标。',
+      weaknesses: '多人对话场景中人物视线匹配和空间关系一致性偶有偏差；在非现实题材（如悬疑、科幻等）领域的创作经验相对不足；音效设计方面环境音层次可进一步丰富。',
       improvement: '可以在多人对话场景的 AI 生成上进一步打磨，注意人物之间视线匹配和空间关系的一致性。建议尝试探索不同题材类型（如悬疑、科幻）来拓宽创作边界，同时在音效设计上增加更多环境音层次。'
     };
   } else {
     return {
       overall: '学员完成了训练营的基本流程，但在多个环节尚未达到实践训练的要求。行业分析深度不足，剧本创作缺乏亮点，分镜设计较为单一，AI 工具运用不够熟练，成片质量与训练目标存在明显差距。需要在各环节进行系统性的强化练习。',
+      strengths: '能够完整走通AIGC短剧创作的全流程，具备基本的工作链路认知；有持续学习和改进的意愿，对手头工具的常规功能有一定了解。',
+      weaknesses: '行业分析停留在表层信息收集，缺乏对趋势的独立判断能力；剧本创作情节平淡，人物设定缺少层次感和记忆点；分镜构图单一，镜头叙事逻辑不清晰；AI工具操作熟练度不足，生成质量不稳定；成片整体质感和专业水准有待大幅提升。',
       improvement: '建议回到基础环节重新学习：1) 深入研究标杆 AIGC 短剧案例，分析其成功要素；2) 加强剧本写作练习，重点提升人物塑造和冲突设计能力；3) 系统学习分镜语言，掌握镜头叙事的核心技法；4) 反复练习 AI 工具操作，提高生成质量和效率。建议重新提交各环节作业进行二次评审。'
     };
   }
